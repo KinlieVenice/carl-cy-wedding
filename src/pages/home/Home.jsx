@@ -4,6 +4,9 @@ import WeddingHeader from "../../components/WeddingHeader";
 import NotebookCarousel from "../../components/NotebookCarousel";
 import FilmStrip from "../../components/FilmStrip";
 import BookHalfSlider from "../../components/BookHalfSlider";
+import ScrapbookFAQ from "../../components/ScrapbookFAQ";
+import PolaroidSlider from "../../components/PolaroidSlider";
+import WeddingTimeline from "../../components/WeddingTimeline";
 
 function Home () {
     return (
@@ -121,8 +124,35 @@ function Home () {
             </ImageContainer>
           </div>
         </section>
-        <section className="bg-[url('/images/story-bg.jpg')] bg-cover bg-position-[1%_1%] bg-no-repeat h-[65dvh]">
-          <div className="relative"></div>
+        <section className="bg-[url('/images/story-bg.jpg')] bg-cover bg-position-[1%_1%] bg-no-repeat h-[1300px]">
+          <div className="relative">
+            <PolaroidSlider />
+            <WeddingTimeline />
+            <ImageContainer
+              className="absolute -bottom-35 object-cover"
+              height={150}
+            >
+              <img
+                src="/images/scrapaper.png"
+                alt=""
+                className="h-full w-full object-cover object-left"
+              />
+            </ImageContainer>
+          </div>
+        </section>
+        <section className="relative bg-[url('/images/story-bg.jpg')] bg-cover bg-position-[1%_1%] bg-no-repeat">
+          <ScrapbookFAQ />
+
+          <ImageContainer
+            className="absolute -bottom-25 object-cover"
+            height={150}
+          >
+            <img
+              src="/images/scrapaper.png"
+              alt=""
+              className="h-full w-full object-cover object-left"
+            />
+          </ImageContainer>
         </section>
       </>
     );
