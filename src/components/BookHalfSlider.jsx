@@ -2,7 +2,21 @@ import { useState, useRef } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 export default function BookHalfSlider() {
-  const [progress, setProgress] = useState(0); // 0 = left page, 1 = right page
+  const books = [
+    "/images/notebook.webp",
+    "/images/notebook2.webp",
+    "/images/notebook3.webp",
+  ];
+
+  // 0 = notebook1 left
+  // 1 = notebook1 right
+  // 2 = notebook2 left
+  // 3 = notebook2 right
+  // etc.
+  const totalSlides = books.length * 2;
+
+  const [slide, setSlide] = useState(0);
+
   const startX = useRef(null);
   const isDragging = useRef(false);
 
@@ -18,10 +32,14 @@ export default function BookHalfSlider() {
 
     const diff = currentX - startX.current;
 
-    if (diff > 50) {
-      setProgress(0);
-    } else if (diff < -50) {
-      setProgress(1);
+    if (diff > 50 && slide > 0) {
+      setSlide((prev) => prev - 1);
+      isDragging.current = false;
+    }
+
+    if (diff < -50 && slide < totalSlides - 1) {
+      setSlide((prev) => prev + 1);
+      isDragging.current = false;
     }
   };
 
@@ -30,15 +48,20 @@ export default function BookHalfSlider() {
     startX.current = null;
   };
 
+  // Which notebook image are we showing?
+  const currentBook = Math.floor(slide / 2);
+
+  // 0 = left half, 1 = right half
+  const currentSide = slide % 2;
+
   return (
     <div className="flex flex-col items-center gap-4">
-      {/* BOOK + ARROWS */}
       <div className="flex items-center gap-1">
-        {/* LEFT ARROW */}
+        {/* LEFT */}
         <button
-          onClick={() => setProgress(0)}
-          disabled={progress === 0}
-          className="flex h-11 w-11 items-center justify-center rounded-full border border-neutral-200 bg-white shadow-md transition-all hover:scale-110 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:scale-100"
+          onClick={() => setSlide((prev) => prev - 1)}
+          disabled={slide === 0}
+          className="flex h-11 w-11 items-center justify-center rounded-full border border-neutral-200 bg-white shadow-md transition-all hover:scale-110 disabled:cursor-not-allowed disabled:opacity-40"
         >
           <ChevronLeft size={24} />
         </button>
@@ -55,21 +78,21 @@ export default function BookHalfSlider() {
           onTouchEnd={handleEnd}
         >
           <img
-            src="/images/notebook.png"
+            src={books[currentBook]}
             alt="Open Book"
             draggable={false}
             className="w-[200%] max-w-none transition-transform duration-500 ease-in-out"
             style={{
-              transform: `translateX(-${progress * 50}%)`,
+              transform: `translateX(-${currentSide * 50}%)`,
             }}
           />
         </div>
 
-        {/* RIGHT ARROW */}
+        {/* RIGHT */}
         <button
-          onClick={() => setProgress(1)}
-          disabled={progress === 1}
-          className="flex h-11 w-11 items-center justify-center rounded-full border border-neutral-200 bg-white shadow-md transition-all hover:scale-110 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:scale-100"
+          onClick={() => setSlide((prev) => prev + 1)}
+          disabled={slide === totalSlides - 1}
+          className="flex h-11 w-11 items-center justify-center rounded-full border border-neutral-200 bg-white shadow-md transition-all hover:scale-110 disabled:cursor-not-allowed disabled:opacity-40"
         >
           <ChevronRight size={24} />
         </button>
@@ -77,12 +100,12 @@ export default function BookHalfSlider() {
 
       {/* DOTS */}
       <div className="flex items-center gap-2">
-        {[0, 1].map((i) => (
+        {Array.from({ length: totalSlides }).map((_, i) => (
           <button
             key={i}
-            onClick={() => setProgress(i)}
+            onClick={() => setSlide(i)}
             className={`h-2.5 w-2.5 rounded-full transition-all duration-300 ${
-              progress === i
+              slide === i
                 ? "bg-black scale-125"
                 : "bg-gray-300 hover:bg-gray-400"
             }`}

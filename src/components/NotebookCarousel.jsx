@@ -5,8 +5,8 @@ import "swiper/css";
 import "swiper/css/pagination";
 
 const spreads = [
-  "/images/notebook-1.png", // left + right page together
-  "/images/notebook-2.png",
+  "/images/notebook-1.webp", // left + right page together
+  "/images/notebook-2.webp",
 ];
 
 export default function NotebookCarousel() {

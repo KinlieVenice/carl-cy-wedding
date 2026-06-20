@@ -4,14 +4,14 @@ import { Autoplay } from "swiper/modules";
 import "swiper/css";
 
 const frames = [
-  "/images/groom-carl.png",
-  "/images/bride-cy.png",
-  "/images/groom-carl.png",
-  "/images/bride-cy.png",
-  "/images/groom-carl.png",
-  "/images/bride-cy.png",
-  "/images/groom-carl.png",
-  "/images/bride-cy.png",
+  "/images/groom-carl.webp",
+  "/images/bride-cy.webp",
+  "/images/groom-carl.webp",
+  "/images/bride-cy.webp",
+  "/images/groom-carl.webp",
+  "/images/bride-cy.webp",
+  "/images/groom-carl.webp",
+  "/images/bride-cy.webp",
 ];
 
 export default function FilmStrip() {

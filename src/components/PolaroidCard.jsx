@@ -106,7 +106,7 @@ export default function PolaroidCard({
         }}
       >
         <img
-          src="/images/scrap - Copy.png"
+          src="/images/scrap - Copy.webp"
           alt=""
           className="absolute inset-0 h-full w-full object-fill"
         />
@@ -175,7 +175,7 @@ export default function PolaroidCard({
           className="aspect-[16/10] overflow-hidden"
           style={{ backgroundColor: selectedColor || "#f3f4f6", transition: "background-color 0.4s ease" }}
         >
-          <img src={image} alt="" className="h-full w-full object-contain" />
+          <img src={image} alt="" className="h-full w-full object-cover" />
         </div>
 
         {/* Content */}

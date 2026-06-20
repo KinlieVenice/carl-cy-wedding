@@ -14,6 +14,11 @@ import RSVPModal from "../../components/RSVPModal";
 import StickyControls from "../../components/StickyControls";
 import Sticker from "../../components/Sticker";
 
+// Lock viewport height on first load — ignores browser bar show/hide
+const VH = window.innerHeight;
+// Usable hero height = viewport minus fixed header
+const AH = VH - 88;
+
 function Home () {
   const [isRSVPOpen, setIsRSVPOpen] = useState(false);
   const [color1, setColor1] = useState("#6c3f2e");
@@ -25,39 +30,44 @@ function Home () {
   return (
     <>
       <style>{`@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');`}</style>
-      <section className="bg-[url('/images/banner_bg_sm.jpg')] bg-cover bg-position-[55%_55%] bg-no-repeat h-[90dvh]">
-        <div>
-          <WeddingHeader
-            coupleName="Carl & Cy"
-            weddingDate="June 14, 2025" // optional subtitle
-          />
-        </div>
-
-        <div className="relative flex flex-col items-center pt-10 justify-start h-full">
-          <ImageContainer height={220} rotation={-4}>
+      <WeddingHeader
+        coupleName="Carl & Cy"
+        weddingDate="November 26, 2026"
+        onRSVP={() => setIsRSVPOpen(true)}
+      />
+      <section
+        id="home"
+        className="bg-[url('/images/banner_bg_sm.webp')] bg-cover bg-no-repeat bg-position-[55%_55%] h-[85svh]"
+      >
+        <div className="relative flex flex-col items-center pt-4 justify-start h-full">
+          <ImageContainer height={Math.round(AH * (AH < 412 ? 0.22 : AH < 532 ? 0.27 : AH < 662 ? 0.32 : 0.30))} rotation={-4}>
             <img
-              src="/images/banner_inv.png"
+              src="/images/banner_inv.webp"
               alt=""
               className="h-full object-cover"
+              fetchpriority="high"
+              loading="eager"
             />
           </ImageContainer>
-          <ImageContainer height={200} rotation={1}>
+          <ImageContainer height={Math.round(AH * (AH < 412 ? 0.19 : AH < 532 ? 0.23 : AH < 662 ? 0.27 : 0.26))} rotation={1}>
             <img
-              src="/images/banner_pic.png"
+              src="/images/banner_pic.webp"
               alt=""
               className="h-full object-cover"
+              fetchpriority="high"
+              loading="eager"
             />
           </ImageContainer>
           <Countdown targetDate="2026-11-26T00:00:00" />
           <ImageContainer
-            className="absolute -bottom-30 z-10 object-cover"
+            className="absolute -bottom-53 z-10 object-cover"
             height={300}
           >
             <div
               style={{ position: "relative", height: "100%", width: "100%" }}
             >
               <img
-                src="/images/scrapaper.png"
+                src="/images/scrapaper.webp"
                 alt=""
                 className="h-full w-full object-cover object-left"
               />
@@ -101,13 +111,14 @@ function Home () {
         </div>
       </section>
 
-      <section>
+      <section id="our-story">
         <div className="relative">
           <ImageContainer className="mt-38">
             <img
-              src="/images/bride-cy.png"
+              src="/images/bride-cy.webp"
               alt=""
               className="h-full w-full object-cover"
+              loading=""
             />
           </ImageContainer>
           <ImageContainer
@@ -115,7 +126,7 @@ function Home () {
             height={100}
           >
             <img
-              src="/images/scrapaper.png"
+              src="/images/scrapaper.webp"
               alt=""
               className="h-full w-full object-cover object-left"
             />
@@ -124,9 +135,10 @@ function Home () {
         <div className="relative">
           <ImageContainer className="relative z-20">
             <img
-              src="/images/groom-carl.png"
+              src="/images/groom-carl.webp"
               alt=""
               className="h-full w-full object-cover"
+              loading=""
             />
           </ImageContainer>
           <ImageContainer
@@ -137,7 +149,7 @@ function Home () {
               style={{ position: "relative", height: "100%", width: "100%" }}
             >
               <img
-                src="/images/scrapaper.png"
+                src="/images/scrapaper.webp"
                 alt=""
                 className="h-full w-full object-cover object-left"
               />
@@ -162,13 +174,13 @@ function Home () {
         </div>
       </section>
 
-      <section className="bg-[url('/images/story-bg.jpg')] bg-cover bg-position-[1%_1%] bg-no-repeat h-[80dvh] mt-26">
-        <div className="flex items-center justify-center h-full px-4">
+      <section className="bg-[url('/images/story-bg-sm.webp')] bg-cover bg-position-[1%_1%] bg-no-repeat h-[80svh] mt-26">
+        <div className="flex items-start justify-center h-full px-4 pt-[8vh]">
           <BookHalfSlider />
         </div>
       </section>
 
-      <section>
+      <section id="gallery">
         <div className="relative">
           <FilmStrip />
           <ImageContainer
@@ -176,7 +188,7 @@ function Home () {
             height={600}
           >
             <img
-              src="/images/scrapaper.png"
+              src="/images/scrapaper.webp"
               alt=""
               className="h-full w-full object-cover object-left"
             />
@@ -184,18 +196,21 @@ function Home () {
         </div>
       </section>
 
-      <section className="bg-[url('/images/story-bg.jpg')] bg-cover bg-position-[1%_1%] bg-no-repeat">
-        <div className="relative pb-10">
-          <div className="flex flex-col gap-10">
+      <section
+        id="wedding-overview"
+        className="bg-[url('/images/banner2.webp')] bg-cover bg-center bg-no-repeat"
+      >
+        <div className="relative pb-10 flex flex-col items-center">
+          <div className="flex flex-col items-center gap-10">
             <ImageContainer>
-              <img src="/images/wed-deets.png" alt="" />
+              <img src="/images/wed-deets.webp" alt="" loading="" />
             </ImageContainer>
-            <div className="flex flex-col gap-5 pb-15 px-8">
+            <div className="flex flex-col items-center gap-5 pb-15 px-8">
               <ImageContainer>
-                <img src="/images/chapel-h.png" alt="" />
+                <img src="/images/chapel-h.webp" alt="" loading="" />
               </ImageContainer>
               <ImageContainer>
-                <img src="/images/windsong-t.png" alt="" />
+                <img src="/images/windsong-t.webp" alt="" loading="" />
               </ImageContainer>
             </div>
           </div>
@@ -207,7 +222,7 @@ function Home () {
               style={{ position: "relative", height: "100%", width: "100%" }}
             >
               <img
-                src="/images/scrapaper.png"
+                src="/images/scrapaper.webp"
                 alt=""
                 className="h-full w-full object-cover object-left"
               />
@@ -232,20 +247,23 @@ function Home () {
         </div>
       </section>
 
-      <section className="bg-[url('/images/story-bg.jpg')] bg-cover bg-position-[1%_1%] bg-no-repeat">
+      <section
+        id="wedding-details"
+        className="bg-[url('/images/banner3.webp')] bg-cover bg-position-[1%_1%] bg-no-repeat"
+      >
         <div className="relative pt-40">
           <div className="flex flex-col gap-8 pb-20 px-12">
             <ImageContainer className="shadow-xl">
-              <img src="/images/ento1.png" alt="" />
+              <img src="/images/ento1.webp" alt="" loading="" />
             </ImageContainer>
             <ImageContainer className="shadow-xl">
-              <img src="/images/ento2.png" alt="" />
+              <img src="/images/ento2.webp" alt="" loading="" />
             </ImageContainer>
             <ImageContainer className="shadow-xl">
-              <img src="/images/ento3.png" alt="" />
+              <img src="/images/ento3.webp" alt="" loading="" />
             </ImageContainer>
             <ImageContainer className="shadow-xl">
-              <img src="/images/timeline.png" alt="" />
+              <img src="/images/timeline.webp" alt="" loading="" />
             </ImageContainer>
           </div>
 
@@ -257,7 +275,7 @@ function Home () {
               style={{ position: "relative", height: "100%", width: "100%" }}
             >
               <img
-                src="/images/scrapaper.png"
+                src="/images/scrapaper.webp"
                 alt=""
                 className="h-full w-full object-cover object-left"
               />
@@ -282,12 +300,15 @@ function Home () {
         </div>
       </section>
 
-      <section className="bg-[url('/images/story-bg.jpg')] bg-cover bg-no-repeat flex flex-col gap-20 pb-70 overflow-hidden">
+      <section
+        id="dress-code"
+        className="bg-[url('/images/banner4.webp')] bg-cover bg-no-repeat flex flex-col gap-20 pb-70 overflow-hidden"
+      >
         <div className="relative flex flex-col gap-40">
           {/* LEFT — Parents of the Bride & Groom */}
           <div className="flex justify-start mt-50">
             <PolaroidCard
-              image="/images/dress.png"
+              image="/images/dress-new.webp"
               rotation={-5}
               selectedColor={color1}
               onColorSelect={setColor1}
@@ -311,7 +332,7 @@ function Home () {
           {/* RIGHT — Principal Sponsors */}
           <div className="flex justify-end">
             <PolaroidCard
-              image="/images/dress.png"
+              image="/images/dress-new.webp"
               rotation={5}
               selectedColor={color2}
               onColorSelect={setColor2}
@@ -335,7 +356,7 @@ function Home () {
           {/* LEFT — Secondary Sponsors */}
           <div className="flex justify-start">
             <PolaroidCard
-              image="/images/dress.png"
+              image="/images/dress-new.webp"
               rotation={-4}
               selectedColor={color3}
               onColorSelect={setColor3}
@@ -356,10 +377,10 @@ function Home () {
             />
           </div>
 
-          {/* RIGHT — Entourage / Wedding Party */}
+          {/* RIGHT — Guests */}
           <div className="flex justify-end">
             <PolaroidCard
-              image="/images/dress.png"
+              image="/images/dress-new.webp"
               rotation={6}
               selectedColor={color4}
               onColorSelect={setColor4}
@@ -371,7 +392,7 @@ function Home () {
               scrapClassName="translate-y-14"
               scrapTextMaxWidth={350}
               scrapTextClassName="pl-10"
-              tapeText="Entourage / Wedding Party"
+              tapeText="Guests"
               scrapText={[
                 "Assigned colors per role",
                 "Formal attire required",
@@ -381,9 +402,9 @@ function Home () {
           </div>
 
           {/* LEFT — Guests */}
-          <div className="flex justify-start">
+          {/* <div className="flex justify-start">
             <PolaroidCard
-              image="/images/dress.png"
+              image="/images/dress-new.webp"
               rotation={-5}
               selectedColor={color5}
               onColorSelect={setColor5}
@@ -402,7 +423,7 @@ function Home () {
                 "Muted & warm tones",
               ]}
             />
-          </div>
+          </div> */}
         </div>
       </section>
 
@@ -416,7 +437,7 @@ function Home () {
               style={{ position: "relative", height: "100%", width: "100%" }}
             >
               <img
-                src="/images/scrapaper.png"
+                src="/images/scrapaper.webp"
                 alt=""
                 className="h-full w-full object-cover object-left"
               />
@@ -441,11 +462,22 @@ function Home () {
         </div>
       </section>
 
-      <section className="bg-[url('/images/story-bg.jpg')] bg-cover bg-position-[1%_1%] bg-no-repeat">
+      <section
+        id="faqs"
+        className="bg-[url('/images/banner5.webp')] bg-cover bg-position-[1%_1%] bg-no-repeat"
+      >
         <div className="relative pt-20">
           <div className="flex flex-col gap-8 pb-20 px-5">
             <ScrapbookFAQ></ScrapbookFAQ>
           </div>
+          <Sticker
+            src="/STICKERS/32.webp" // ← your actual sticker PNG
+            width={90} // size in px
+            top="-30px" // hang it above the section edge
+            right="12px" // distance from right
+            rotate={18} // tilt
+            zIndex={30} // above content
+          />
         </div>
       </section>
 

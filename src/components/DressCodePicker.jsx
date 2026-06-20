@@ -423,7 +423,7 @@ export default function DressCodePicker() {
                 className="db fade-in"
                 style={{ backgroundColor: selectedColor.hex }}
               >
-                <img className="di" src="/images/dress.png" alt="Dress preview" />
+                <img className="di" src="/images/dress.webp" alt="Dress preview" />
               </div>
               <div className="dib">
                 <span className="dic">{selectedCategory}</span>

@@ -109,14 +109,7 @@ export default function RSVPModal({ isOpen, onClose }) {
             maxHeight: "90vh",
           }}
         >
-          {/* Olive tape on top */}
-          <div style={{
-            position: "absolute", top: "-13px",
-            left: "50%", transform: "translateX(-50%) rotate(-2deg)",
-            width: "100px", height: "26px",
-            background: "repeating-linear-gradient(to right,rgba(107,112,65,0.35) 0,rgba(107,112,65,0.35) 9px,rgba(107,112,65,0.2) 9px,rgba(107,112,65,0.2) 18px)",
-            zIndex: 2,
-          }} />
+  
 
           {/* Close button */}
           <button

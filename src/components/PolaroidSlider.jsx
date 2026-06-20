@@ -19,22 +19,22 @@ const getColorName = (hex) => colorNames[hex] || "Color";
 
 const photos = [
   {
-    src: "/images/photo1.jpg",
+    src: "/images/photo1.webp",
     label: "Parents of Bride & Groom",
     colors: ["#D7C4A6", "#B99A74", "#F1E7D7"],
   },
   {
-    src: "/images/photo2.jpg",
+    src: "/images/photo2.webp",
     label: "Bridesmaids",
     colors: ["#E6C2C0", "#D8A7A3", "#F2D9D7"],
   },
   {
-    src: "/images/photo3.jpg",
+    src: "/images/photo3.webp",
     label: "Principal Sponsors",
     colors: ["#CBB59B", "#E8DACA", "#B49A80"],
   },
   {
-    src: "/images/photo4.jpg",
+    src: "/images/photo4.webp",
     label: "Guests",
     colors: ["#D8C6B0", "#E7DCCF", "#BBA48A"],
   },

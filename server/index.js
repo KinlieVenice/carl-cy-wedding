@@ -1,5 +1,6 @@
 import express from "express";
 import cors from "cors";
+import rateLimit from "express-rate-limit";
 import { PrismaClient } from "@prisma/client";
 
 const app = express();
@@ -9,8 +10,26 @@ const PORT = 3001;
 app.use(cors());
 app.use(express.json());
 
+// Global: max 100 requests per 15 min per IP
+app.use(rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 100,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: "Too many requests, please try again later." },
+}));
+
+// RSVP-specific: max 5 submissions per hour per IP
+const rsvpLimiter = rateLimit({
+  windowMs: 60 * 60 * 1000,
+  max: 5,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: "Too many RSVP submissions from this device. Please try again later." },
+});
+
 // POST /api/rsvp — save a guest's RSVP
-app.post("/api/rsvp", async (req, res) => {
+app.post("/api/rsvp", rsvpLimiter, async (req, res) => {
   const { name, phone, email, attending, guestCount, message } = req.body;
 
   if (!name?.trim() || !phone?.trim() || !attending) {
