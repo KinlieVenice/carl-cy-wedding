@@ -11,19 +11,20 @@ app.use(express.json());
 
 // POST /api/rsvp — save a guest's RSVP
 app.post("/api/rsvp", async (req, res) => {
-  const { name, attending, guestCount, meal, message } = req.body;
+  const { name, phone, email, attending, guestCount, message } = req.body;
 
-  if (!name?.trim() || !attending) {
-    return res.status(400).json({ error: "Name and attendance are required." });
+  if (!name?.trim() || !phone?.trim() || !attending) {
+    return res.status(400).json({ error: "Name, phone, and attendance are required." });
   }
 
   try {
     const rsvp = await prisma.rSVP.create({
       data: {
         name: name.trim(),
+        phone: phone.trim(),
+        email: email?.trim() || null,
         attending,
         guestCount: attending === "yes" ? (parseInt(guestCount) || 1) : null,
-        meal: attending === "yes" ? (meal || null) : null,
         message: message?.trim() || null,
       },
     });

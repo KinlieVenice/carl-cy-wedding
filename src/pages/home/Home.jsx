@@ -15,6 +15,11 @@ import StickyControls from "../../components/StickyControls";
 
 function Home () {
   const [isRSVPOpen, setIsRSVPOpen] = useState(false);
+  const [color1, setColor1] = useState("#6c3f2e");
+  const [color2, setColor2] = useState("#f3e0c7");
+  const [color3, setColor3] = useState("#808000");
+  const [color4, setColor4] = useState("#722F37");
+  const [color5, setColor5] = useState("#cdc1ba");
 
   return (
     <>
@@ -278,12 +283,14 @@ function Home () {
 
       <section className="bg-[url('/images/story-bg.jpg')] bg-cover bg-no-repeat flex flex-col gap-20 pb-70 overflow-hidden">
         <div className="relative flex flex-col gap-40">
-          {/* LEFT */}
+          {/* LEFT — Parents of the Bride & Groom */}
           <div className="flex justify-start mt-50">
             <PolaroidCard
               image="/images/dress.png"
-              rotation={-6}
-              colors={["#b8a48c", "#7d6e83"]}
+              rotation={-5}
+              selectedColor={color1}
+              onColorSelect={setColor1}
+              colors={["#6c3f2e", "#734f3d", "#826652"]}
               scrapPosition="outside-bottom"
               scrapWidth={300}
               scrapHeight={300}
@@ -291,22 +298,23 @@ function Home () {
               scrapClassName="translate-y-40 -translate-x-45"
               scrapTextMaxWidth={250}
               scrapTextClassName="pl-10 text-start"
-              tapeText="Parents of the Couple"
+              tapeText="Parents of the Bride & Groom"
               scrapText={[
                 "Semi-formal attire",
                 "Earth tones preferred",
                 "Avoid white outfits",
-                "Comfortable footwear",
               ]}
             />
           </div>
 
-          {/* RIGHT */}
+          {/* RIGHT — Principal Sponsors */}
           <div className="flex justify-end">
             <PolaroidCard
               image="/images/dress.png"
-              rotation={6}
-              colors={["#b8a48c", "#7d6e83"]}
+              rotation={5}
+              selectedColor={color2}
+              onColorSelect={setColor2}
+              colors={["#f3e0c7", "#d8c1a5", "#b8a28e"]}
               scrapPosition="outside-bottom"
               scrapWidth={400}
               scrapHeight={300}
@@ -314,22 +322,23 @@ function Home () {
               scrapClassName="translate-y-40 -translate-x-50"
               scrapTextMaxWidth={300}
               scrapTextClassName="pl-10"
-              tapeText="Parents of the Couple"
+              tapeText="Principal Sponsors"
               scrapText={[
-                "Semi-formal attire",
-                "Earth tones preferred",
-                "Avoid white outfits",
-                "Comfortable footwear",
+                "Formal / black-tie attire",
+                "Soft pastels & neutrals",
+                "Elegant floor-length gowns",
               ]}
             />
           </div>
 
-          {/* LEFT */}
+          {/* LEFT — Secondary Sponsors */}
           <div className="flex justify-start">
             <PolaroidCard
               image="/images/dress.png"
-              rotation={-6}
-              colors={["#b8a48c", "#7d6e83"]}
+              rotation={-4}
+              selectedColor={color3}
+              onColorSelect={setColor3}
+              colors={["#808000", "#6B7041", "#9a9c52"]}
               scrapPosition="outside-bottom"
               scrapWidth={300}
               scrapHeight={300}
@@ -337,22 +346,23 @@ function Home () {
               scrapClassName="translate-y-40 -translate-x-20"
               scrapTextMaxWidth={250}
               scrapTextClassName="pl-10 text-start"
-              tapeText="Parents of the Couple"
+              tapeText="Secondary Sponsors"
               scrapText={[
                 "Semi-formal attire",
-                "Earth tones preferred",
-                "Avoid white outfits",
-                "Comfortable footwear",
+                "Olive & sage tones",
+                "Coordinate with partners",
               ]}
             />
           </div>
 
-          {/* RIGHT */}
+          {/* RIGHT — Entourage / Wedding Party */}
           <div className="flex justify-end">
             <PolaroidCard
               image="/images/dress.png"
               rotation={6}
-              colors={["#b8a48c", "#7d6e83"]}
+              selectedColor={color4}
+              onColorSelect={setColor4}
+              colors={["#722F37", "#8c4a50", "#c9a09c"]}
               scrapPosition="outside-left"
               scrapWidth={500}
               scrapHeight={300}
@@ -360,22 +370,23 @@ function Home () {
               scrapClassName="translate-y-14"
               scrapTextMaxWidth={350}
               scrapTextClassName="pl-10"
-              tapeText="Parents of the Couple"
+              tapeText="Entourage / Wedding Party"
               scrapText={[
-                "Semi-formal attire",
-                "Earth tones preferred",
-                "Avoid white outfits",
-                "Comfortable footwear",
+                "Assigned colors per role",
+                "Formal attire required",
+                "Coordinate with the couple",
               ]}
             />
           </div>
 
-          {/* LEFT */}
+          {/* LEFT — Guests */}
           <div className="flex justify-start">
             <PolaroidCard
               image="/images/dress.png"
-              rotation={-6}
-              colors={["#b8a48c", "#7d6e83"]}
+              rotation={-5}
+              selectedColor={color5}
+              onColorSelect={setColor5}
+              colors={["#cdc1ba", "#8f8177", "#c2a35a", "#6f3b3e"]}
               scrapPosition="outside-bottom"
               scrapWidth={300}
               scrapHeight={300}
@@ -383,12 +394,11 @@ function Home () {
               scrapClassName="translate-y-40 -translate-x-45"
               scrapTextMaxWidth={250}
               scrapTextClassName="pl-10 text-start"
-              tapeText="Parents of the Couple"
+              tapeText="Guests"
               scrapText={[
-                "Semi-formal attire",
-                "Earth tones preferred",
-                "Avoid white outfits",
-                "Comfortable footwear",
+                "Smart casual to formal",
+                "Avoid white & black",
+                "Muted & warm tones",
               ]}
             />
           </div>

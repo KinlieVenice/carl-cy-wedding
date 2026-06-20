@@ -63,7 +63,7 @@ export default function DressCodePicker() {
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cinzel+Decorative:wght@700&family=Raleway:wght@300;400;500&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Cormorant+Garamond:ital,wght@1,300;1,400&family=Jost:wght@300;400&display=swap');
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -75,7 +75,7 @@ export default function DressCodePicker() {
           flex-direction: column;
           align-items: center;
           padding: 2rem 1rem 3rem;
-          font-family: 'Raleway', sans-serif;
+          font-family: 'Jost', sans-serif;
           position: relative;
         }
 
@@ -85,12 +85,13 @@ export default function DressCodePicker() {
         }
 
         .gt {
-          font-family: 'Cinzel Decorative', serif;
-          font-size: clamp(1rem, 3vw, 1.7rem);
-          font-weight: 700;
+          font-family: 'Cormorant Garamond', serif;
+          font-style: italic;
+          font-weight: 300;
+          font-size: clamp(1.6rem, 4vw, 2.4rem);
           color: #c9a25a;
-          letter-spacing: 0.08em;
-          text-shadow: 0 0 24px rgba(201,162,90,0.45);
+          letter-spacing: 0.06em;
+          text-shadow: 0 0 28px rgba(201,162,90,0.4);
         }
 
         .go {
@@ -111,10 +112,11 @@ export default function DressCodePicker() {
         }
 
         .gs {
-          font-size: 0.72rem;
+          font-family: 'Jost', sans-serif;
+          font-size: 0.62rem;
           font-weight: 300;
           color: rgba(201,162,90,0.4);
-          letter-spacing: 0.3em;
+          letter-spacing: 0.32em;
           text-transform: uppercase;
         }
 
@@ -134,9 +136,10 @@ export default function DressCodePicker() {
         }
 
         .pl {
-          font-family: 'Cinzel', serif;
-          font-size: 0.58rem;
-          letter-spacing: 0.22em;
+          font-family: 'Jost', sans-serif;
+          font-weight: 300;
+          font-size: 0.55rem;
+          letter-spacing: 0.28em;
           color: rgba(201,162,90,0.38);
           text-transform: uppercase;
           margin-bottom: 0.2rem;
@@ -178,20 +181,23 @@ export default function DressCodePicker() {
         .ci { font-size: 1.15rem; line-height: 1; }
 
         .cn {
-          font-family: 'Cinzel', serif;
-          font-size: 0.72rem;
-          font-weight: 600;
+          font-family: 'Cormorant Garamond', serif;
+          font-style: italic;
+          font-size: 0.88rem;
+          font-weight: 400;
           color: #c8a858;
-          letter-spacing: 0.04em;
+          letter-spacing: 0.03em;
           line-height: 1.3;
         }
         .cb.ca .cn { color: #f0d080; }
 
         .cc {
-          font-size: 0.62rem;
+          font-family: 'Jost', sans-serif;
+          font-size: 0.58rem;
           font-weight: 300;
           color: rgba(201,162,90,0.35);
           margin-top: 1px;
+          letter-spacing: 0.1em;
         }
         .cb.ca .cc { color: rgba(240,208,128,0.5); }
 
@@ -264,24 +270,29 @@ export default function DressCodePicker() {
         }
 
         .dic {
-          font-family: 'Cinzel', serif;
-          font-size: 0.58rem;
-          letter-spacing: 0.1em;
-          color: rgba(201,162,90,0.6);
+          font-family: 'Jost', sans-serif;
+          font-size: 0.55rem;
+          font-weight: 300;
+          letter-spacing: 0.18em;
+          color: rgba(201,162,90,0.55);
           text-transform: uppercase;
         }
 
         .din {
-          font-size: 0.78rem;
-          font-weight: 500;
+          font-family: 'Cormorant Garamond', serif;
+          font-style: italic;
+          font-size: 0.95rem;
+          font-weight: 400;
           color: #f0e0c0;
+          letter-spacing: 0.02em;
         }
 
         .dih {
-          font-size: 0.62rem;
+          font-family: 'Jost', sans-serif;
+          font-size: 0.58rem;
           font-weight: 300;
-          color: rgba(201,162,90,0.42);
-          letter-spacing: 0.04em;
+          color: rgba(201,162,90,0.38);
+          letter-spacing: 0.06em;
         }
 
         .sp {
@@ -295,9 +306,10 @@ export default function DressCodePicker() {
         }
 
         .sh {
-          font-family: 'Cinzel', serif;
-          font-size: 0.58rem;
-          letter-spacing: 0.22em;
+          font-family: 'Jost', sans-serif;
+          font-size: 0.55rem;
+          font-weight: 300;
+          letter-spacing: 0.28em;
           color: rgba(201,162,90,0.38);
           text-transform: uppercase;
           margin-bottom: 0.8rem;
@@ -350,12 +362,14 @@ export default function DressCodePicker() {
         }
 
         .swl {
-          font-size: 0.6rem;
-          font-weight: 400;
-          color: rgba(201,162,90,0.35);
+          font-family: 'Jost', sans-serif;
+          font-size: 0.62rem;
+          font-weight: 300;
+          color: rgba(201,162,90,0.4);
           text-align: center;
-          max-width: 48px;
-          line-height: 1.2;
+          max-width: 52px;
+          line-height: 1.3;
+          letter-spacing: 0.04em;
         }
         .swb.sel .swl { color: rgba(201,162,90,0.75); }
 
