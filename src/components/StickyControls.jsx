@@ -6,6 +6,8 @@ export default function StickyControls({ onOpenRSVP }) {
   const [showMusicTip, setShowMusicTip] = useState(false);
   const [showRsvpTip, setShowRsvpTip] = useState(false);
   const [showNowPlaying, setShowNowPlaying] = useState(false);
+  const [hoverMusicTip, setHoverMusicTip] = useState(false);
+  const [hoverRsvpTip, setHoverRsvpTip] = useState(false);
   const tipsShownRef = useRef(false);
   const nowPlayingTimerRef = useRef(null);
   const audioRef = useRef(null);
@@ -14,6 +16,46 @@ export default function StickyControls({ onOpenRSVP }) {
     const handleScroll = () => setVisible(window.scrollY > 300);
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  // Autoplay on mount — if browser blocks it, retry on first gesture
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    let unlocked = false;
+
+    const onSuccess = () => {
+      setIsPlaying(true);
+      setShowNowPlaying(true);
+      clearTimeout(nowPlayingTimerRef.current);
+      nowPlayingTimerRef.current = setTimeout(() => setShowNowPlaying(false), 4000);
+    };
+
+    const unlock = () => {
+      if (unlocked) return;
+      unlocked = true;
+      removeListeners();
+      audio.play().then(onSuccess).catch(() => {});
+    };
+
+    const removeListeners = () => {
+      document.removeEventListener("touchstart", unlock);
+      document.removeEventListener("touchend", unlock);
+      document.removeEventListener("click", unlock);
+      document.removeEventListener("keydown", unlock);
+    };
+
+    // Try autoplay immediately
+    audio.play().then(onSuccess).catch(() => {
+      // Blocked — wait for any gesture on the document
+      document.addEventListener("touchstart", unlock, { passive: true });
+      document.addEventListener("touchend", unlock, { passive: true });
+      document.addEventListener("click", unlock);
+      document.addEventListener("keydown", unlock);
+    });
+
+    return removeListeners;
   }, []);
 
   // Music tip first, then RSVP tip 10s later — each only once
@@ -180,12 +222,14 @@ export default function StickyControls({ onOpenRSVP }) {
         pointerEvents: visible ? "auto" : "none",
       }}>
         <div style={{ position: "relative", display: "inline-flex" }}>
-          {showRsvpTip && (
+          {(showRsvpTip || hoverRsvpTip) && (
             <span className="tip-bubble tip-rsvp">click to RSVP</span>
           )}
           <button
             onClick={onOpenRSVP}
             className="sticky-rsvp"
+            onMouseEnter={() => setHoverRsvpTip(true)}
+            onMouseLeave={() => setHoverRsvpTip(false)}
             style={{
               display: "flex",
               alignItems: "center",
@@ -229,7 +273,7 @@ export default function StickyControls({ onOpenRSVP }) {
         pointerEvents: visible ? "auto" : "none",
       }}>
         <div style={{ position: "relative", display: "inline-flex" }}>
-          {showMusicTip && (
+          {(showMusicTip || hoverMusicTip) && !isPlaying && (
             <span className="tip-bubble tip-music">click to play our music</span>
           )}
           {showNowPlaying && (
@@ -237,9 +281,34 @@ export default function StickyControls({ onOpenRSVP }) {
               ♪ &nbsp;Now playing &nbsp;<strong>"Wish List" by Taylor Swift</strong>
             </div>
           )}
+          {hoverMusicTip && isPlaying && !showNowPlaying && (
+            <div style={{
+              position: "absolute",
+              right: "calc(100% + 12px)",
+              top: "50%",
+              transform: "translateY(-50%)",
+              whiteSpace: "nowrap",
+              background: "rgba(10,7,5,0.88)",
+              color: "#fffdf8",
+              borderLeft: "2px solid #6B7041",
+              fontFamily: "'Jost', sans-serif",
+              fontWeight: 300,
+              fontSize: "0.68rem",
+              letterSpacing: "0.06em",
+              padding: "6px 14px",
+              borderRadius: "3px",
+              pointerEvents: "none",
+              backdropFilter: "blur(6px)",
+              boxShadow: "0 4px 16px rgba(0,0,0,0.3)",
+            }}>
+              ♪ &nbsp;Now playing &nbsp;<strong style={{ fontWeight: 400, fontStyle: "italic", fontFamily: "'Cormorant Garamond', serif", fontSize: "0.82rem", color: "#c8d4a0" }}>"Wish List" by Taylor Swift</strong>
+            </div>
+          )}
           <button
             onClick={toggleMusic}
             className="sticky-music"
+            onMouseEnter={() => setHoverMusicTip(true)}
+            onMouseLeave={() => setHoverMusicTip(false)}
             title={isPlaying ? "Pause music" : "Play music"}
             style={{
               width: "52px",

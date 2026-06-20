@@ -12,6 +12,7 @@ import DressCodePicker from "../../components/DressCodePicker";
 import PolaroidCard from "../../components/PolaroidCard";
 import RSVPModal from "../../components/RSVPModal";
 import StickyControls from "../../components/StickyControls";
+import Sticker from "../../components/Sticker";
 
 function Home () {
   const [isRSVPOpen, setIsRSVPOpen] = useState(false);
@@ -24,7 +25,7 @@ function Home () {
   return (
     <>
       <style>{`@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');`}</style>
-      <section className="bg-[url('/images/banner_bg.jpg')] bg-cover bg-position-[55%_55%] bg-no-repeat h-[90dvh]">
+      <section className="bg-[url('/images/banner_bg_sm.jpg')] bg-cover bg-position-[55%_55%] bg-no-repeat h-[90dvh]">
         <div>
           <WeddingHeader
             coupleName="Carl & Cy"

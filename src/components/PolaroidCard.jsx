@@ -64,7 +64,7 @@ export default function PolaroidCard({
           background-image:
             url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.18'/%3E%3C/svg%3E"),
             linear-gradient(180deg, rgba(255,253,248,0.12) 0%, rgba(0,0,0,0.06) 100%);
-          background-color: rgba(140, 60, 68, 0.72);
+          background-color: rgba(140, 60, 68, 0.82);
           background-blend-mode: overlay, normal;
           /* subtle torn-edge shadow */
           box-shadow:
@@ -106,7 +106,7 @@ export default function PolaroidCard({
         }}
       >
         <img
-          src="/images/scrap.png"
+          src="/images/scrap - Copy.png"
           alt=""
           className="absolute inset-0 h-full w-full object-fill"
         />
