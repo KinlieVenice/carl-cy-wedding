@@ -43,7 +43,7 @@ export default function ScrapbookFAQ() {
 
   return (
     <section className="mx-auto max-w-4xl px-6 py-16">
-      {/* Title */}
+      {/* Title
       <div className="mb-14 flex justify-center">
         <div className="relative">
           <div className="absolute -top-3 left-1/2 h-8 w-24 -translate-x-1/2 rotate-[-6deg] bg-[#f6d9a6]/70" />
@@ -52,7 +52,7 @@ export default function ScrapbookFAQ() {
             FAQs
           </h2>
         </div>
-      </div>
+      </div> */}
 
       {/* FAQ Cards */}
       <div className="space-y-8">
