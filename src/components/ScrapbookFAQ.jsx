@@ -36,69 +36,143 @@ const faqs = [
   },
 ];
 
-const rotations = ["-rotate-1", "rotate-1", "-rotate-2", "rotate-2"];
+// One delicate tape strip per card — thin, translucent, refined
+const TAPE_CONFIGS = [
+  { left: "22px",           top: "-11px", width: "90px",  rotate: "-6deg"  },
+  { left: "calc(50% - 50px)", top: "-10px", width: "100px", rotate: "-1deg"  },
+  { left: "18px",           top: "-11px", width: "80px",  rotate: "-8deg"  },
+  { right: "28px",          top: "-10px", width: "88px",  rotate: "5deg"   },
+  { left: "26px",           top: "-11px", width: "76px",  rotate: "-5deg"  },
+  { left: "calc(50% - 55px)", top: "-10px", width: "110px", rotate: "2deg"   },
+  { left: "20px",           top: "-11px", width: "84px",  rotate: "-7deg"  },
+  { right: "22px",          top: "-10px", width: "92px",  rotate: "4deg"   },
+];
+
+const ROTATIONS = ["-0.6deg", "0.8deg", "-0.9deg", "0.5deg", "-0.7deg", "0.6deg", "-0.8deg", "0.7deg"];
 
 export default function ScrapbookFAQ() {
-  const [open, setOpen] = useState(0);
+  const [open, setOpen] = useState(null);
 
   return (
-    <section className="mx-auto max-w-4xl px-6 py-16">
-      {/* Title
-      <div className="mb-14 flex justify-center">
-        <div className="relative">
-          <div className="absolute -top-3 left-1/2 h-8 w-24 -translate-x-1/2 rotate-[-6deg] bg-[#f6d9a6]/70" />
+    <>
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400;1,500&family=Jost:wght@300;400&display=swap');
 
-          <h2 className="relative bg-[#fffdf8] px-8 py-4 text-4xl font-light tracking-[0.2em] shadow-lg">
-            FAQs
-          </h2>
-        </div>
-      </div> */}
+        .faq-card {
+          transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+        .faq-card:hover {
+          box-shadow: 0 10px 40px rgba(114,47,55,0.12), 0 2px 8px rgba(0,0,0,0.07) !important;
+        }
+        .faq-btn { background: none; border: none; cursor: pointer; padding: 0; width: 100%; text-align: left; }
+        .faq-chevron {
+          color: rgba(114,47,55,0.5);
+          transition: transform 0.35s ease, color 0.2s ease;
+          flex-shrink: 0;
+        }
+        .faq-chevron.open { transform: rotate(180deg); color: #722F37; }
+        .faq-answer { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.35s ease; }
+        .faq-answer.open { grid-template-rows: 1fr; }
+        .faq-answer-inner { overflow: hidden; }
+      `}</style>
 
-      {/* FAQ Cards */}
-      <div className="space-y-8">
-        {faqs.map((faq, index) => {
-          const isOpen = open === index;
+      <section style={{ position: "relative", maxWidth: "660px", margin: "0 auto", padding: "2rem 1.5rem 5rem" }}>
 
-          return (
-            <div
-              key={index}
-              className={`relative bg-[#fffdf8] p-6 shadow-xl transition-all duration-300 ${rotations[index % rotations.length]}`}
-            >
-              {/* Tape */}
-              <div className="absolute -top-3 left-10 h-8 w-24 rotate-[-8deg] bg-[#f4dcb4]/70 backdrop-blur-sm" />
+        {/* ── Cards ── */}
+        <div style={{ display: "flex", flexDirection: "column", gap: "2rem", position: "relative", zIndex: 1 }}>
+          {faqs.map((faq, i) => {
+            const isOpen = open === i;
+            const tape = TAPE_CONFIGS[i % TAPE_CONFIGS.length];
 
-              {/* Border */}
-              <div className="pointer-events-none absolute inset-2 border border-[#e6d8c3]" />
-
-              <button
-                onClick={() => setOpen(isOpen ? null : index)}
-                className="flex w-full items-center justify-between gap-6 text-left"
-              >
-                <span className="text-lg font-medium text-[#5b5147]">
-                  {faq.q}
-                </span>
-
-                <ChevronDown
-                  size={20}
-                  className={`shrink-0 text-[#8d7f71] transition-transform duration-300 ${
-                    isOpen ? "rotate-180" : ""
-                  }`}
-                />
-              </button>
-
+            return (
               <div
-                className={`grid overflow-hidden transition-all duration-300 ${
-                  isOpen ? "mt-4 grid-rows-[1fr]" : "grid-rows-[0fr]"
-                }`}
+                key={i}
+                className="faq-card"
+                style={{
+                  position: "relative",
+                  background: "#fffdf8",
+                  transform: `rotate(${ROTATIONS[i % ROTATIONS.length]})`,
+                  boxShadow: "0 4px 24px rgba(0,0,0,0.08), 0 1px 4px rgba(0,0,0,0.05)",
+                  padding: "1.6rem 1.5rem 1.4rem",
+                }}
               >
-                <div className="overflow-hidden">
-                  <p className="leading-8 text-[#7a6f64]">{faq.a}</p>
+                {/* Tape — single thin translucent strip */}
+                <div style={{
+                  position: "absolute",
+                  top: tape.top,
+                  left: tape.left,
+                  right: tape.right,
+                  width: tape.width,
+                  height: "14px",
+                  transform: `rotate(${tape.rotate})`,
+                  background: "rgba(114,47,55,0.13)",
+                  backdropFilter: "blur(1px)",
+                }} />
+
+                {/* Inner border */}
+                <div style={{
+                  position: "absolute", inset: "9px",
+                  border: "1px solid rgba(114,47,55,0.08)",
+                  pointerEvents: "none",
+                }} />
+
+                {/* Question row */}
+                <button
+                  className="faq-btn"
+                  onClick={() => setOpen(isOpen ? null : i)}
+                  style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: "1rem" }}
+                >
+                  <div style={{ display: "flex", alignItems: "baseline", gap: "10px" }}>
+                    <span style={{
+                      fontFamily: "'Cormorant Garamond', serif",
+                      color: "rgba(114,47,55,0.35)",
+                      fontSize: "0.75rem",
+                      flexShrink: 0,
+                      lineHeight: 1.6,
+                    }}>✦</span>
+                    <span style={{
+                      fontFamily: "'Cormorant Garamond', serif",
+                      fontStyle: "italic",
+                      fontWeight: 400,
+                      fontSize: "1.12rem",
+                      color: "#3d1a1e",
+                      letterSpacing: "0.01em",
+                      lineHeight: 1.45,
+                    }}>
+                      {faq.q}
+                    </span>
+                  </div>
+                  <ChevronDown size={16} className={`faq-chevron ${isOpen ? "open" : ""}`} />
+                </button>
+
+                {/* Divider */}
+                <div style={{
+                  height: "1px",
+                  margin: "0.9rem 0 0",
+                  background: "linear-gradient(to right, transparent, rgba(114,47,55,0.1), transparent)",
+                }} />
+
+                {/* Answer */}
+                <div className={`faq-answer ${isOpen ? "open" : ""}`}>
+                  <div className="faq-answer-inner">
+                    <p style={{
+                      fontFamily: "'Cormorant Garamond', serif",
+                      fontWeight: 300,
+                      fontSize: "1rem",
+                      color: "#6b5c5e",
+                      lineHeight: 1.9,
+                      paddingTop: "0.85rem",
+                      letterSpacing: "0.01em",
+                    }}>
+                      {faq.a}
+                    </p>
+                  </div>
                 </div>
               </div>
-            </div>
-          );
-        })}
-      </div>
-    </section>
+            );
+          })}
+        </div>
+      </section>
+    </>
   );
 }

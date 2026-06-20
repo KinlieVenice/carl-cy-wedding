@@ -1,0 +1,19 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./rsvp.db"
+}
+
+model RSVP {
+  id         Int      @id @default(autoincrement())
+  name       String
+  phone      String
+  email      String?
+  attending  String
+  guestCount Int?
+  message    String?
+  createdAt  DateTime @default(now())
+}
