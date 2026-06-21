@@ -15,6 +15,23 @@ export default function WeddingHeader({ coupleName = "Carl & Cy", weddingDate = 
   const [scrolled, setScrolled] = useState(false);
   const [activeLink, setActiveLink] = useState("Home");
   const observerRef = useRef(null);
+  const navRef = useRef(null);
+
+  useEffect(() => {
+    const nav = navRef.current;
+    if (!nav) return;
+    const active = nav.querySelector(".wh-nav-link.active");
+    if (!active) return;
+    const navLeft = nav.scrollLeft;
+    const navRight = navLeft + nav.offsetWidth;
+    const linkLeft = active.offsetLeft;
+    const linkRight = linkLeft + active.offsetWidth;
+    if (linkLeft < navLeft) {
+      nav.scrollTo({ left: linkLeft - 24, behavior: "smooth" });
+    } else if (linkRight > navRight) {
+      nav.scrollTo({ left: linkRight - nav.offsetWidth + 24, behavior: "smooth" });
+    }
+  }, [activeLink]);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 30);
@@ -328,7 +345,7 @@ export default function WeddingHeader({ coupleName = "Carl & Cy", weddingDate = 
         </div>
 
         {/* ── NAV ROW (desktop only) ── */}
-        <nav className="wh-nav hidden lg:flex">
+        <nav ref={navRef} className="wh-nav hidden lg:flex">
           {NAV_LINKS.map((link) => (
             <a
               key={link.label}

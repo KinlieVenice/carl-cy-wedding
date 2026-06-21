@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-function Countdown({ targetDate }) {
+function Countdown({ targetDate, ah }) {
   const calculateTimeLeft = () => {
     const difference = +new Date(targetDate) - +new Date();
     if (difference <= 0) return { days: 0, hours: 0, minutes: 0 };
@@ -18,15 +18,15 @@ function Countdown({ targetDate }) {
     return () => clearInterval(timer);
   }, [targetDate]);
 
-  const vh = window.screen.height; // use screen height — unaffected by browser bar
-  const small = vh < 750;
-  const tiny = vh < 620;
-  const micro = vh < 500;
+  const AH = ah ?? (window.innerHeight - 88);
+  const small = AH < 662;
+  const tiny  = AH < 532;
+  const micro = AH < 412;
 
   const Box = ({ value, label }) => (
     <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "4px" }}>
       <div style={{
-        border: "1.5px solid rgba(255,255,255,0.9)",
+        border: "2.5px solid rgba(255,255,255,1)",
         borderRadius: "6px",
         minWidth: micro ? "34px" : tiny ? "42px" : small ? "52px" : "72px",
         padding: micro ? "3px 3px 3px" : tiny ? "4px 4px 4px" : small ? "6px 6px 5px" : "10px 8px 8px",
@@ -34,7 +34,7 @@ function Countdown({ targetDate }) {
         flexDirection: "column",
         alignItems: "center",
         gap: "3px",
-        background: "rgba(0,0,0,0.35)",
+        background: "none",
       }}>
         <span style={{
           fontFamily: "'Cormorant Garamond', serif",
@@ -43,7 +43,6 @@ function Countdown({ targetDate }) {
           lineHeight: 1,
           color: "#fff",
           letterSpacing: "0.02em",
-          textShadow: "0 1px 8px rgba(0,0,0,0.5)",
         }}>
           {String(value).padStart(2, "0")}
         </span>
@@ -55,7 +54,6 @@ function Countdown({ targetDate }) {
           letterSpacing: "0.18em",
           color: "#fff",
           textTransform: "uppercase",
-          textShadow: "0 1px 4px rgba(0,0,0,0.5)",
         }}>
           {label}
         </span>
@@ -69,19 +67,31 @@ function Countdown({ targetDate }) {
         @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;1,300&family=Jost:wght@300&display=swap');
       `}</style>
 
-      <p style={{
-        fontFamily: "'Cormorant Garamond', serif",
-        fontWeight: 500,
-        fontStyle: "italic",
-        fontSize: micro ? "0.65rem" : tiny ? "0.85rem" : small ? "1.1rem" : "1.6rem",
-        letterSpacing: "0.06em",
-        color: "#fff",
-        textShadow: "0 2px 12px rgba(0,0,0,0.8), 0 1px 3px rgba(0,0,0,0.9)",
+      <div style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        gap: micro ? "1px" : tiny ? "2px" : "4px",
         marginTop: micro ? "0.05rem" : tiny ? "0.1rem" : small ? "0.25rem" : "0.6rem",
         marginBottom: micro ? "0.05rem" : tiny ? "0.1rem" : small ? "0.2rem" : "0.4rem",
       }}>
-        counting down to
-      </p>
+        <div style={{ display: "flex", alignItems: "center", gap: micro ? "4px" : "8px" }}>
+          <div style={{ width: micro ? "18px" : small ? "28px" : "40px", height: "1px", background: "rgba(255,255,255,0.6)" }} />
+          <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: micro ? "0.45rem" : small ? "0.55rem" : "0.7rem", color: "rgba(255,255,255,0.8)", lineHeight: 1 }}>✦</span>
+          <div style={{ width: micro ? "18px" : small ? "28px" : "40px", height: "1px", background: "rgba(255,255,255,0.6)" }} />
+        </div>
+        <p style={{
+          fontFamily: "'Cormorant Garamond', serif",
+          fontWeight: 400,
+          fontStyle: "italic",
+          fontSize: micro ? "0.65rem" : tiny ? "0.85rem" : small ? "1.1rem" : "1.6rem",
+          letterSpacing: "0.12em",
+          color: "#fff",
+          margin: 0,
+        }}>
+          Counting Down To
+        </p>
+      </div>
 
       <div style={{ display: "flex", gap: micro ? "6px" : tiny ? "8px" : "12px", alignItems: "center" }}>
         <Box value={timeLeft.days} label="Days" />

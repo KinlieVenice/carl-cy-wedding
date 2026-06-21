@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ImageContainer from "../../components/ImageContainer";
 import Countdown from "../../components/Countdown";
 import WeddingHeader from "../../components/WeddingHeader";
@@ -14,13 +14,15 @@ import RSVPModal from "../../components/RSVPModal";
 import StickyControls from "../../components/StickyControls";
 import Sticker from "../../components/Sticker";
 
-// Lock viewport height on first load — ignores browser bar show/hide
-const VH = window.innerHeight;
-// Usable hero height = viewport minus fixed header
-const AH = VH - 88;
-
 function Home () {
   const [isRSVPOpen, setIsRSVPOpen] = useState(false);
+  const [AH, setAH] = useState(() => window.innerHeight - 88);
+
+  useEffect(() => {
+    const handler = () => setAH(window.innerHeight - 88);
+    window.addEventListener("resize", handler);
+    return () => window.removeEventListener("resize", handler);
+  }, []);
   const [color1, setColor1] = useState("#6c3f2e");
   const [color2, setColor2] = useState("#f3e0c7");
   const [color3, setColor3] = useState("#808000");
@@ -37,10 +39,10 @@ function Home () {
       />
       <section
         id="home"
-        className="bg-[url('/images/banner_bg_sm.webp')] bg-cover bg-no-repeat bg-position-[55%_55%] h-[85svh]"
+        className="bg-[url('/images/banner_bg_sm.webp')] bg-cover bg-no-repeat bg-position-[55%_55%] h-[80svh]"
       >
         <div className="relative flex flex-col items-center pt-4 justify-start h-full">
-          <ImageContainer height={Math.round(AH * (AH < 412 ? 0.22 : AH < 532 ? 0.27 : AH < 662 ? 0.32 : 0.30))} rotation={-4}>
+          <ImageContainer height={Math.round(AH * (AH < 412 ? 0.37 : AH < 532 ? 0.32 : AH < 662 ? 0.33 : 0.31))} rotation={-4}>
             <img
               src="/images/banner_inv.webp"
               alt=""
@@ -49,7 +51,7 @@ function Home () {
               loading="eager"
             />
           </ImageContainer>
-          <ImageContainer height={Math.round(AH * (AH < 412 ? 0.19 : AH < 532 ? 0.23 : AH < 662 ? 0.27 : 0.26))} rotation={1}>
+          <ImageContainer height={Math.round(AH * (AH < 412 ? 0.32 : AH < 532 ? 0.32 : AH < 662 ? 0.29 : 0.28))} rotation={1}>
             <img
               src="/images/banner_pic.webp"
               alt=""
@@ -58,10 +60,10 @@ function Home () {
               loading="eager"
             />
           </ImageContainer>
-          <Countdown targetDate="2026-11-26T00:00:00" />
+          <Countdown targetDate="2026-11-26T00:00:00" ah={AH} />
           <ImageContainer
-            className="absolute -bottom-53 z-10 object-cover"
-            height={300}
+            className="absolute -bottom-35 z-10 object-cover"
+            height={170}
           >
             <div
               style={{ position: "relative", height: "100%", width: "100%" }}
@@ -81,12 +83,12 @@ function Home () {
                   fontFamily: "'Cormorant Garamond', serif",
                   fontStyle: "italic",
                   fontWeight: 500,
-                  fontSize: "1.15rem",
+                  fontSize: "1rem",
                   letterSpacing: "0.22em",
                   color: "#fffdf8",
                   border: "1.5px solid rgba(255,253,248,0.6)",
                   background: "#722F37",
-                  padding: "0.55rem 2.4rem",
+                  padding: "0.40rem 1.8rem",
                   cursor: "pointer",
                   whiteSpace: "nowrap",
                   borderRadius: "2px",
@@ -113,7 +115,7 @@ function Home () {
 
       <section id="our-story">
         <div className="relative">
-          <ImageContainer className="mt-38">
+          <ImageContainer className="mt-25">
             <img
               src="/images/bride-cy.webp"
               alt=""
@@ -174,13 +176,13 @@ function Home () {
         </div>
       </section>
 
-      <section className="bg-[url('/images/story-bg-sm.webp')] bg-cover bg-position-[1%_1%] bg-no-repeat h-[80svh] mt-26">
+      <section className="bg-[url('/images/story-bg-sm.webp')] bg-cover bg-position-[1%_1%] bg-no-repeat h-[95svh] mt-26">
         <div className="flex items-start justify-center h-full px-4 pt-[8vh]">
           <BookHalfSlider />
         </div>
       </section>
 
-      <section id="gallery">
+      <section id="gallery" className="pt-5">
         <div className="relative">
           <FilmStrip />
           <ImageContainer
