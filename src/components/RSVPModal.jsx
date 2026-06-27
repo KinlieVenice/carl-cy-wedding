@@ -14,7 +14,6 @@ const INITIAL = {
   phone: "",
   email: "",
   attending: "",
-  guestCount: "1",
   message: "",
 };
 
@@ -241,22 +240,6 @@ export default function RSVPModal({ isOpen, onClose }) {
                     </div>
                     {errors.attending && <span style={{ fontFamily: FONT_BODY, fontSize: "0.75rem", color: BURGUNDY }}>{errors.attending}</span>}
                   </div>
-
-                  {/* Guest count */}
-                  {form.attending === "yes" && (
-                    <div style={{ display: "flex", flexDirection: "column", gap: "5px" }}>
-                      <label style={{ fontFamily: FONT_BODY, fontWeight: 400, fontSize: "0.65rem", letterSpacing: "0.15em", textTransform: "uppercase", color: BURGUNDY_DARK }}>
-                        Number of Guests
-                      </label>
-                      <input
-                        type="number"
-                        min="1" max="10"
-                        value={form.guestCount}
-                        onChange={set("guestCount")}
-                        style={{ ...inputStyle(false), width: "80px" }}
-                      />
-                    </div>
-                  )}
 
                   {/* Message */}
                   <div style={{ display: "flex", flexDirection: "column", gap: "5px" }}>

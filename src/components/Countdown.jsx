@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-function Countdown({ targetDate, ah }) {
+function Countdown({ targetDate }) {
   const calculateTimeLeft = () => {
     const difference = +new Date(targetDate) - +new Date();
     if (difference <= 0) return { days: 0, hours: 0, minutes: 0 };
@@ -18,18 +18,13 @@ function Countdown({ targetDate, ah }) {
     return () => clearInterval(timer);
   }, [targetDate]);
 
-  const AH = ah ?? (window.innerHeight - 88);
-  const small = AH < 662;
-  const tiny  = AH < 532;
-  const micro = AH < 412;
-
   const Box = ({ value, label }) => (
     <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "4px" }}>
       <div style={{
         border: "2.5px solid rgba(255,255,255,1)",
         borderRadius: "6px",
-        minWidth: micro ? "34px" : tiny ? "42px" : small ? "52px" : "72px",
-        padding: micro ? "3px 3px 3px" : tiny ? "4px 4px 4px" : small ? "6px 6px 5px" : "10px 8px 8px",
+        minWidth: "72px",
+        padding: "10px 8px 8px",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
@@ -39,7 +34,7 @@ function Countdown({ targetDate, ah }) {
         <span style={{
           fontFamily: "'Cormorant Garamond', serif",
           fontWeight: 300,
-          fontSize: micro ? "0.85rem" : tiny ? "1.1rem" : small ? "1.5rem" : "2.4rem",
+          fontSize: "2.4rem",
           lineHeight: 1,
           color: "#fff",
           letterSpacing: "0.02em",
@@ -50,7 +45,7 @@ function Countdown({ targetDate, ah }) {
         <span style={{
           fontFamily: "'Jost', sans-serif",
           fontWeight: 400,
-          fontSize: micro ? "0.3rem" : tiny ? "0.38rem" : small ? "0.45rem" : "0.58rem",
+          fontSize: "0.58rem",
           letterSpacing: "0.18em",
           color: "#fff",
           textTransform: "uppercase",
@@ -71,20 +66,20 @@ function Countdown({ targetDate, ah }) {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        gap: micro ? "1px" : tiny ? "2px" : "4px",
-        marginTop: micro ? "0.05rem" : tiny ? "0.1rem" : small ? "0.25rem" : "0.6rem",
-        marginBottom: micro ? "0.05rem" : tiny ? "0.1rem" : small ? "0.2rem" : "0.4rem",
+        gap: "4px",
+        marginTop: "0.6rem",
+        marginBottom: "0.4rem",
       }}>
-        <div style={{ display: "flex", alignItems: "center", gap: micro ? "4px" : "8px" }}>
-          <div style={{ width: micro ? "18px" : small ? "28px" : "40px", height: "1px", background: "rgba(255,255,255,0.6)" }} />
-          <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: micro ? "0.45rem" : small ? "0.55rem" : "0.7rem", color: "rgba(255,255,255,0.8)", lineHeight: 1 }}>✦</span>
-          <div style={{ width: micro ? "18px" : small ? "28px" : "40px", height: "1px", background: "rgba(255,255,255,0.6)" }} />
+        <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+          <div style={{ width: "40px", height: "1px", background: "rgba(255,255,255,0.6)" }} />
+          <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "0.7rem", color: "rgba(255,255,255,0.8)", lineHeight: 1 }}>✦</span>
+          <div style={{ width: "40px", height: "1px", background: "rgba(255,255,255,0.6)" }} />
         </div>
         <p style={{
           fontFamily: "'Cormorant Garamond', serif",
           fontWeight: 400,
           fontStyle: "italic",
-          fontSize: micro ? "0.65rem" : tiny ? "0.85rem" : small ? "1.1rem" : "1.6rem",
+          fontSize: "1.6rem",
           letterSpacing: "0.12em",
           color: "#fff",
           margin: 0,
@@ -93,12 +88,12 @@ function Countdown({ targetDate, ah }) {
         </p>
       </div>
 
-      <div style={{ display: "flex", gap: micro ? "6px" : tiny ? "8px" : "12px", alignItems: "center" }}>
+      <div style={{ display: "flex", gap: "12px", alignItems: "center" }}>
         <Box value={timeLeft.days} label="Days" />
 
         <span style={{
           fontFamily: "'Cormorant Garamond', serif",
-          fontSize: micro ? "1.2rem" : "1.8rem", fontWeight: 300,
+          fontSize: "1.8rem", fontWeight: 300,
           color: "rgba(255,255,255,0.5)",
           marginBottom: "18px",
         }}>·</span>
@@ -107,7 +102,7 @@ function Countdown({ targetDate, ah }) {
 
         <span style={{
           fontFamily: "'Cormorant Garamond', serif",
-          fontSize: micro ? "1.2rem" : "1.8rem", fontWeight: 300,
+          fontSize: "1.8rem", fontWeight: 300,
           color: "rgba(255,255,255,0.5)",
           marginBottom: "18px",
         }}>·</span>

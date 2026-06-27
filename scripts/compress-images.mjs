@@ -1,9 +1,11 @@
 import sharp from "sharp";
-import { readdirSync, statSync, renameSync } from "fs";
+import { readdirSync, statSync } from "fs";
 import { join, extname, basename } from "path";
 
-const INPUT_DIR = "./public/images";
+const INPUT_DIR = process.argv[2] ?? "./public/images";
 const QUALITY = 80;
+
+console.log(`\nProcessing: ${INPUT_DIR}\n`);
 
 const files = readdirSync(INPUT_DIR).filter(f =>
   [".jpg", ".jpeg", ".png", ".PNG", ".JPG", ".JPEG"].includes(extname(f))

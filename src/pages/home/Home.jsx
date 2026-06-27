@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import ImageContainer from "../../components/ImageContainer";
 import Countdown from "../../components/Countdown";
 import WeddingHeader from "../../components/WeddingHeader";
@@ -16,13 +16,6 @@ import Sticker from "../../components/Sticker";
 
 function Home () {
   const [isRSVPOpen, setIsRSVPOpen] = useState(false);
-  const [AH, setAH] = useState(() => window.innerHeight - 88);
-
-  useEffect(() => {
-    const handler = () => setAH(window.innerHeight - 88);
-    window.addEventListener("resize", handler);
-    return () => window.removeEventListener("resize", handler);
-  }, []);
   const [color1, setColor1] = useState("#6c3f2e");
   const [color2, setColor2] = useState("#f3e0c7");
   const [color3, setColor3] = useState("#808000");
@@ -39,19 +32,29 @@ function Home () {
       />
       <section
         id="home"
-        className="bg-[url('/images/banner_bg_sm.webp')] bg-cover bg-no-repeat bg-position-[55%_55%] h-[80svh]"
+        className="bg-[url('/images/banner_bg_sm.webp')] bg-cover bg-no-repeat bg-position-[55%_55%] h-[650px]"
       >
-        <div className="relative flex flex-col items-center pt-4 justify-start h-full">
-          <ImageContainer height={Math.round(AH * (AH < 412 ? 0.37 : AH < 532 ? 0.32 : AH < 662 ? 0.33 : 0.31))} rotation={-4}>
-            <img
-              src="/images/banner_inv.webp"
-              alt=""
-              className="h-full object-cover"
-              fetchpriority="high"
-              loading="eager"
+        <div className="relative flex flex-col items-center pt-8 justify-start h-full">
+          <div className="relative w-full flex justify-center">
+            <ImageContainer height={210} rotation={-4}>
+              <img
+                src="/images/banner_inv.webp"
+                alt=""
+                className="h-full object-cover"
+                fetchpriority="high"
+                loading="eager"
+              />
+            </ImageContainer>
+            <Sticker
+              src="/STICKERS/MONOG.png"
+              width={90}
+              bottom="-40px"
+              left="38px"
+              rotate={-8}
+              zIndex={20}
             />
-          </ImageContainer>
-          <ImageContainer height={Math.round(AH * (AH < 412 ? 0.32 : AH < 532 ? 0.32 : AH < 662 ? 0.29 : 0.28))} rotation={1}>
+          </div>
+          <ImageContainer height={185} rotation={1}>
             <img
               src="/images/banner_pic.webp"
               alt=""
@@ -60,7 +63,7 @@ function Home () {
               loading="eager"
             />
           </ImageContainer>
-          <Countdown targetDate="2026-11-26T00:00:00" ah={AH} />
+          <Countdown targetDate="2026-11-26T00:00:00" />
           <ImageContainer
             className="absolute -bottom-35 z-10 object-cover"
             height={170}
@@ -68,6 +71,14 @@ function Home () {
             <div
               style={{ position: "relative", height: "100%", width: "100%" }}
             >
+              <Sticker
+                src="/STICKERS/19.png"
+                width={250}
+                bottom="-50px"
+                right="-80px"
+                rotate={-20}
+                zIndex={30}
+              />
               <img
                 src="/images/scrapaper.webp"
                 alt=""
@@ -115,14 +126,32 @@ function Home () {
 
       <section id="our-story">
         <div className="relative">
-          <ImageContainer className="mt-25">
-            <img
-              src="/images/bride-cy.webp"
-              alt=""
-              className="h-full w-full object-cover"
-              loading=""
+          <div className="relative">
+            <ImageContainer className="mt-25">
+              <img
+                src="/images/bride-cy.webp"
+                alt=""
+                className="h-full w-full object-cover"
+                loading="lazy"
+              />
+            </ImageContainer>
+            <Sticker
+              src="/STICKERS/camera.png"
+              width={220}
+              bottom="-75px"
+              right="12px"
+              rotate={-10}
+              zIndex={40}
             />
-          </ImageContainer>
+            <Sticker
+              src="/STICKERS/15.png"
+              width={180}
+              bottom="-85px"
+              left="-90px"
+              rotate={-12}
+              zIndex={40}
+            />
+          </div>
           <ImageContainer
             className="absolute -bottom-17 z-10 object-cover"
             height={100}
@@ -140,7 +169,7 @@ function Home () {
               src="/images/groom-carl.webp"
               alt=""
               className="h-full w-full object-cover"
-              loading=""
+              loading="lazy"
             />
           </ImageContainer>
           <ImageContainer
@@ -200,19 +229,39 @@ function Home () {
 
       <section
         id="wedding-overview"
-        className="bg-[url('/images/banner2.webp')] bg-cover bg-center bg-no-repeat"
+        className="bg-[url('/images/banner5cp.webp')] bg-cover bg-no-repeat bg-[position:50%_top] relative z-10"
       >
         <div className="relative pb-10 flex flex-col items-center">
           <div className="flex flex-col items-center gap-10">
-            <ImageContainer>
-              <img src="/images/wed-deets.webp" alt="" loading="" />
-            </ImageContainer>
-            <div className="flex flex-col items-center gap-5 pb-15 px-8">
+            <div className="relative">
               <ImageContainer>
-                <img src="/images/chapel-h.webp" alt="" loading="" />
+                <img src="/images/wed-deets.webp" alt="" loading="lazy" />
+              </ImageContainer>
+              <Sticker
+                src="/STICKERS/32.png"
+                width={280}
+                top="-35px"
+                right="-105px"
+                rotate={-12}
+                zIndex={20}
+              />
+            </div>
+            <div className="flex flex-col items-center gap-5 pb-15">
+              <ImageContainer>
+                <img
+                  src="/images/chapel-h.webp"
+                  alt=""
+                  loading="lazy"
+                  className="w-100"
+                />
               </ImageContainer>
               <ImageContainer>
-                <img src="/images/windsong-t.webp" alt="" loading="" />
+                <img
+                  src="/images/windsong-t.webp"
+                  alt=""
+                  loading="lazy"
+                  className="w-100"
+                />
               </ImageContainer>
             </div>
           </div>
@@ -244,6 +293,14 @@ function Home () {
               >
                 Our Wedding Details
               </span>
+              <Sticker
+                src="/STICKERS/36.png"
+                width={270}
+                bottom="-155px"
+                left="-75px"
+                rotate={-12}
+                zIndex={200}
+              />
             </div>
           </ImageContainer>
         </div>
@@ -251,22 +308,72 @@ function Home () {
 
       <section
         id="wedding-details"
-        className="bg-[url('/images/banner3.webp')] bg-cover bg-position-[1%_1%] bg-no-repeat"
+        className="bg-[url('/images/banner3cp.webp')] bg-cover bg-position-[1%_1%] bg-no-repeat"
       >
         <div className="relative pt-40">
-          <div className="flex flex-col gap-8 pb-20 px-12">
+          <div className="flex flex-col gap-8 pb-20">
             <ImageContainer className="shadow-xl">
-              <img src="/images/ento1.webp" alt="" loading="" />
+              <img
+                src="/images/ento1.webp"
+                alt=""
+                loading="lazy"
+                className="w-90"
+              />
             </ImageContainer>
-            <ImageContainer className="shadow-xl">
-              <img src="/images/ento2.webp" alt="" loading="" />
-            </ImageContainer>
-            <ImageContainer className="shadow-xl">
-              <img src="/images/ento3.webp" alt="" loading="" />
-            </ImageContainer>
-            <ImageContainer className="shadow-xl">
-              <img src="/images/timeline.webp" alt="" loading="" />
-            </ImageContainer>
+            <div className="relative">
+              <ImageContainer className="shadow-xl">
+                <img
+                  src="/images/ento2.webp"
+                  alt=""
+                  loading="lazy"
+                  className="w-90"
+                />
+              </ImageContainer>
+              <Sticker
+                src="/STICKERS/23.png"
+                width={270}
+                top="-115px"
+                right="-95px"
+                rotate={10}
+                zIndex={20}
+              />
+            </div>
+            <div className="relative">
+              <ImageContainer className="shadow-xl">
+                <img
+                  src="/images/ento3.webp"
+                  alt=""
+                  loading="lazy"
+                  className="w-90"
+                />
+              </ImageContainer>
+              <Sticker
+                src="/STICKERS/46.png"
+                width={270}
+                top="-135px"
+                left="-85px"
+                rotate={-10}
+                zIndex={20}
+              />
+            </div>
+            <div className="relative">
+              <ImageContainer className="shadow-xl">
+                <img
+                  src="/images/timeline.webp"
+                  alt=""
+                  loading="lazy"
+                  className="w-90"
+                />
+              </ImageContainer>
+              <Sticker
+                src="/STICKERS/45.png"
+                width={270}
+                top="-115px"
+                right="-95px"
+                rotate={10}
+                zIndex={20}
+              />
+            </div>
           </div>
 
           <ImageContainer
@@ -297,6 +404,14 @@ function Home () {
               >
                 The Dress Code
               </span>
+              <Sticker
+                src="/STICKERS/26.png"
+                width={270}
+                top="-155px"
+                left="-45px"
+                rotate={-10}
+                zIndex={-1}
+              />
             </div>
           </ImageContainer>
         </div>
@@ -304,7 +419,7 @@ function Home () {
 
       <section
         id="dress-code"
-        className="bg-[url('/images/banner4.webp')] bg-cover bg-no-repeat flex flex-col gap-20 pb-70 overflow-hidden"
+        className="bg-[url('/images/banner5.webp')] bg-cover bg-no-repeat flex flex-col gap-20 pb-70 overflow-hidden"
       >
         <div className="relative flex flex-col gap-40">
           {/* LEFT — Parents of the Bride & Groom */}
@@ -332,7 +447,7 @@ function Home () {
           </div>
 
           {/* RIGHT — Principal Sponsors */}
-          <div className="flex justify-end">
+          <div className="relative flex justify-end">
             <PolaroidCard
               image="/images/dress-new.webp"
               rotation={5}
@@ -353,10 +468,18 @@ function Home () {
                 "Elegant floor-length gowns",
               ]}
             />
+            <Sticker
+              src="/STICKERS/27.png"
+              width={220}
+              bottom="-55px"
+              left="-22px"
+              rotate={-10}
+              zIndex={20}
+            />
           </div>
 
           {/* LEFT — Secondary Sponsors */}
-          <div className="flex justify-start">
+          <div className="relative flex justify-start">
             <PolaroidCard
               image="/images/dress-new.webp"
               rotation={-4}
@@ -380,7 +503,7 @@ function Home () {
           </div>
 
           {/* RIGHT — Guests */}
-          <div className="flex justify-end">
+          <div className="relative flex justify-end">
             <PolaroidCard
               image="/images/dress-new.webp"
               rotation={6}
@@ -400,6 +523,14 @@ function Home () {
                 "Formal attire required",
                 "Coordinate with the couple",
               ]}
+            />
+            <Sticker
+              src="/STICKERS/22.png"
+              width={230}
+              top="-155px"
+              right="-72px"
+              rotate={10}
+              zIndex={0}
             />
           </div>
 
@@ -466,19 +597,19 @@ function Home () {
 
       <section
         id="faqs"
-        className="bg-[url('/images/banner5.webp')] bg-cover bg-position-[1%_1%] bg-no-repeat"
+        className="bg-[url('/images/banner4.webp')] bg-cover bg-position-[1%_1%] bg-no-repeat"
       >
-        <div className="relative pt-20">
+        <div className="relative pt-20 overflow-y-hidden">
           <div className="flex flex-col gap-8 pb-20 px-5">
             <ScrapbookFAQ></ScrapbookFAQ>
           </div>
           <Sticker
-            src="/STICKERS/32.webp" // ← your actual sticker PNG
-            width={90} // size in px
-            top="-30px" // hang it above the section edge
-            right="12px" // distance from right
+            src="/STICKERS/33.png" // ← your actual sticker PNG
+            width={320} // size in px
+            bottom="-110px" // hang it above the section edge
+            right="-82px" // distance from right
             rotate={18} // tilt
-            zIndex={30} // above content
+            zIndex={10} // above content
           />
         </div>
       </section>

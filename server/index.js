@@ -30,7 +30,7 @@ const rsvpLimiter = rateLimit({
 
 // POST /api/rsvp — save a guest's RSVP
 app.post("/api/rsvp", rsvpLimiter, async (req, res) => {
-  const { name, phone, email, attending, guestCount, message } = req.body;
+  const { name, phone, email, attending, message } = req.body;
 
   if (!name?.trim() || !phone?.trim() || !attending) {
     return res.status(400).json({ error: "Name, phone, and attendance are required." });
@@ -43,7 +43,6 @@ app.post("/api/rsvp", rsvpLimiter, async (req, res) => {
         phone: phone.trim(),
         email: email?.trim() || null,
         attending,
-        guestCount: attending === "yes" ? (parseInt(guestCount) || 1) : null,
         message: message?.trim() || null,
       },
     });
