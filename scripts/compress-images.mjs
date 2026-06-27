@@ -2,10 +2,14 @@ import sharp from "sharp";
 import { readdirSync, statSync } from "fs";
 import { join, extname, basename } from "path";
 
+// Usage: node scripts/compress-images.mjs <dir> [maxWidth]
+// e.g.:  node scripts/compress-images.mjs ./public/images 1200
+//        node scripts/compress-images.mjs ./public/STICKERS 600
 const INPUT_DIR = process.argv[2] ?? "./public/images";
+const MAX_WIDTH  = process.argv[3] ? parseInt(process.argv[3]) : null;
 const QUALITY = 80;
 
-console.log(`\nProcessing: ${INPUT_DIR}\n`);
+console.log(`\nProcessing: ${INPUT_DIR}${MAX_WIDTH ? ` (max ${MAX_WIDTH}px)` : ""}\n`);
 
 const files = readdirSync(INPUT_DIR).filter(f =>
   [".jpg", ".jpeg", ".png", ".PNG", ".JPG", ".JPEG"].includes(extname(f))
@@ -22,9 +26,9 @@ for (const file of files) {
   const before = statSync(inputPath).size;
 
   try {
-    await sharp(inputPath)
-      .webp({ quality: QUALITY })
-      .toFile(outputPath);
+    let pipeline = sharp(inputPath);
+    if (MAX_WIDTH) pipeline = pipeline.resize({ width: MAX_WIDTH, withoutEnlargement: true });
+    await pipeline.webp({ quality: QUALITY }).toFile(outputPath);
 
     const after = statSync(outputPath).size;
     totalBefore += before;

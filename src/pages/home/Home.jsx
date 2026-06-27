@@ -1,4 +1,4 @@
-import { useState } from "react";
+﻿import { useState } from "react";
 import ImageContainer from "../../components/ImageContainer";
 import Countdown from "../../components/Countdown";
 import WeddingHeader from "../../components/WeddingHeader";
@@ -46,7 +46,7 @@ function Home () {
               />
             </ImageContainer>
             <Sticker
-              src="/STICKERS/MONOG.png"
+              src="/STICKERS/MONOG.webp"
               width={90}
               bottom="-40px"
               left="38px"
@@ -72,7 +72,7 @@ function Home () {
               style={{ position: "relative", height: "100%", width: "100%" }}
             >
               <Sticker
-                src="/STICKERS/19.png"
+                src="/STICKERS/19.webp"
                 width={250}
                 bottom="-50px"
                 right="-80px"
@@ -136,15 +136,15 @@ function Home () {
               />
             </ImageContainer>
             <Sticker
-              src="/STICKERS/camera.png"
+              src="/STICKERS/camera.webp"
               width={220}
               bottom="-75px"
-              right="12px"
+              right="5px"
               rotate={-10}
               zIndex={40}
             />
             <Sticker
-              src="/STICKERS/15.png"
+              src="/STICKERS/15.webp"
               width={180}
               bottom="-85px"
               left="-90px"
@@ -160,6 +160,7 @@ function Home () {
               src="/images/scrapaper.webp"
               alt=""
               className="h-full w-full object-cover object-left"
+              loading="lazy"
             />
           </ImageContainer>
         </div>
@@ -183,6 +184,7 @@ function Home () {
                 src="/images/scrapaper.webp"
                 alt=""
                 className="h-full w-full object-cover object-left"
+              loading="lazy"
               />
               <span
                 style={{
@@ -222,6 +224,7 @@ function Home () {
               src="/images/scrapaper.webp"
               alt=""
               className="h-full w-full object-cover object-left"
+              loading="lazy"
             />
           </ImageContainer>
         </div>
@@ -238,7 +241,7 @@ function Home () {
                 <img src="/images/wed-deets.webp" alt="" loading="lazy" />
               </ImageContainer>
               <Sticker
-                src="/STICKERS/32.png"
+                src="/STICKERS/32.webp"
                 width={280}
                 top="-35px"
                 right="-105px"
@@ -276,6 +279,7 @@ function Home () {
                 src="/images/scrapaper.webp"
                 alt=""
                 className="h-full w-full object-cover object-left"
+              loading="lazy"
               />
               <span
                 style={{
@@ -294,7 +298,7 @@ function Home () {
                 Our Wedding Details
               </span>
               <Sticker
-                src="/STICKERS/36.png"
+                src="/STICKERS/36.webp"
                 width={270}
                 bottom="-155px"
                 left="-75px"
@@ -330,9 +334,9 @@ function Home () {
                 />
               </ImageContainer>
               <Sticker
-                src="/STICKERS/23.png"
+                src="/STICKERS/23.webp"
                 width={270}
-                top="-115px"
+                top="-155px"
                 right="-95px"
                 rotate={10}
                 zIndex={20}
@@ -348,8 +352,8 @@ function Home () {
                 />
               </ImageContainer>
               <Sticker
-                src="/STICKERS/46.png"
-                width={270}
+                src="/STICKERS/46.webp"
+                width={250}
                 top="-135px"
                 left="-85px"
                 rotate={-10}
@@ -366,9 +370,9 @@ function Home () {
                 />
               </ImageContainer>
               <Sticker
-                src="/STICKERS/45.png"
+                src="/STICKERS/45.webp"
                 width={270}
-                top="-115px"
+                top="-145px"
                 right="-95px"
                 rotate={10}
                 zIndex={20}
@@ -387,6 +391,7 @@ function Home () {
                 src="/images/scrapaper.webp"
                 alt=""
                 className="h-full w-full object-cover object-left"
+              loading="lazy"
               />
               <span
                 style={{
@@ -405,7 +410,7 @@ function Home () {
                 The Dress Code
               </span>
               <Sticker
-                src="/STICKERS/26.png"
+                src="/STICKERS/26.webp"
                 width={270}
                 top="-155px"
                 left="-45px"
@@ -469,7 +474,7 @@ function Home () {
               ]}
             />
             <Sticker
-              src="/STICKERS/27.png"
+              src="/STICKERS/27.webp"
               width={220}
               bottom="-55px"
               left="-22px"
@@ -525,7 +530,7 @@ function Home () {
               ]}
             />
             <Sticker
-              src="/STICKERS/22.png"
+              src="/STICKERS/22.webp"
               width={230}
               top="-155px"
               right="-72px"
@@ -573,6 +578,7 @@ function Home () {
                 src="/images/scrapaper.webp"
                 alt=""
                 className="h-full w-full object-cover object-left"
+              loading="lazy"
               />
               <span
                 style={{
@@ -604,7 +610,7 @@ function Home () {
             <ScrapbookFAQ></ScrapbookFAQ>
           </div>
           <Sticker
-            src="/STICKERS/33.png" // ← your actual sticker PNG
+            src="/STICKERS/33.webp" // ← your actual sticker PNG
             width={320} // size in px
             bottom="-110px" // hang it above the section edge
             right="-82px" // distance from right
