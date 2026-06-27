@@ -17,10 +17,102 @@ const INITIAL = {
   message: "",
 };
 
+const PIN = "1020";
+
+function PinScreen({ onUnlock }) {
+  const [digits, setDigits] = useState("");
+  const [shake, setShake] = useState(false);
+
+  const press = (d) => {
+    if (digits.length >= 4) return;
+    const next = digits + d;
+    setDigits(next);
+    if (next.length === 4) {
+      if (next === PIN) {
+        setTimeout(() => onUnlock(), 300);
+      } else {
+        setTimeout(() => { setShake(true); setTimeout(() => { setShake(false); setDigits(""); }, 500); }, 100);
+      }
+    }
+  };
+
+  const del = () => setDigits(d => d.slice(0, -1));
+
+  const keys = ["1","2","3","4","5","6","7","8","9","","0","⌫"];
+
+  return (
+    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "28px", padding: "2.5rem 2rem 2rem" }}>
+      <div style={{ textAlign: "center" }}>
+        <div style={{ fontFamily: FONT_TITLE, fontStyle: "italic", fontWeight: 300, fontSize: "2.2rem", color: BURGUNDY, lineHeight: 1 }}>RSVP</div>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "8px", marginTop: "6px" }}>
+          <div style={{ height: "1px", width: "36px", background: OLIVE, opacity: 0.5 }} />
+          <span style={{ color: OLIVE, fontSize: "0.55rem" }}>✦</span>
+          <div style={{ height: "1px", width: "36px", background: OLIVE, opacity: 0.5 }} />
+        </div>
+        <p style={{ fontFamily: FONT_BODY, fontWeight: 300, fontSize: "0.65rem", letterSpacing: "0.18em", color: OLIVE, textTransform: "uppercase", marginTop: "6px", marginBottom: 0 }}>
+          Enter PIN to continue
+        </p>
+        <p style={{ fontFamily: FONT_TITLE, fontStyle: "italic", fontWeight: 300, fontSize: "0.8rem", color: BURGUNDY_DARK, opacity: 0.6, marginTop: "4px", marginBottom: 0 }}>
+          Clue: Carl &amp; Cy's anniversary
+        </p>
+      </div>
+
+      {/* dots */}
+      <div style={{
+        display: "flex", gap: "18px",
+        animation: shake ? "shake 0.4s ease" : "none",
+      }}>
+        {[0,1,2,3].map(i => (
+          <div key={i} style={{
+            width: "14px", height: "14px", borderRadius: "50%",
+            background: digits.length > i ? BURGUNDY : "none",
+            border: `2px solid ${digits.length > i ? BURGUNDY : "rgba(114,47,55,0.35)"}`,
+            transition: "background 0.15s",
+          }} />
+        ))}
+      </div>
+
+      {/* keypad */}
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "12px", width: "220px" }}>
+        {keys.map((k, i) => (
+          k === "" ? <div key={i} /> :
+          <button
+            key={i}
+            onClick={() => k === "⌫" ? del() : press(k)}
+            style={{
+              width: "64px", height: "64px", borderRadius: "50%",
+              border: k === "⌫" ? "none" : `1.5px solid rgba(114,47,55,0.2)`,
+              background: k === "⌫" ? "none" : CREAM,
+              color: BURGUNDY_DARK,
+              fontFamily: k === "⌫" ? FONT_BODY : FONT_TITLE,
+              fontSize: k === "⌫" ? "1.1rem" : "1.6rem",
+              fontWeight: 300,
+              cursor: "pointer",
+              display: "flex", alignItems: "center", justifyContent: "center",
+              boxShadow: k === "⌫" ? "none" : "0 1px 4px rgba(114,47,55,0.1)",
+              transition: "background 0.15s",
+              justifySelf: "center",
+            }}
+            onMouseDown={e => { if (k !== "⌫") e.currentTarget.style.background = PARCHMENT; }}
+            onMouseUp={e => { if (k !== "⌫") e.currentTarget.style.background = CREAM; }}
+            onTouchStart={e => { if (k !== "⌫") e.currentTarget.style.background = PARCHMENT; }}
+            onTouchEnd={e => { if (k !== "⌫") e.currentTarget.style.background = CREAM; }}
+          >
+            {k}
+          </button>
+        ))}
+      </div>
+
+      <style>{`@keyframes shake { 0%,100%{transform:translateX(0)} 20%{transform:translateX(-8px)} 40%{transform:translateX(8px)} 60%{transform:translateX(-6px)} 80%{transform:translateX(6px)} }`}</style>
+    </div>
+  );
+}
+
 export default function RSVPModal({ isOpen, onClose }) {
   const [form, setForm] = useState(INITIAL);
   const [submitted, setSubmitted] = useState(false);
   const [errors, setErrors] = useState({});
+  const [pinVerified, setPinVerified] = useState(false);
 
   if (!isOpen) return null;
 
@@ -57,6 +149,7 @@ export default function RSVPModal({ isOpen, onClose }) {
     setForm(INITIAL);
     setSubmitted(false);
     setErrors({});
+    setPinVerified(false);
     onClose();
   };
 
@@ -124,6 +217,9 @@ export default function RSVPModal({ isOpen, onClose }) {
             <X size={18} />
           </button>
 
+          {!pinVerified ? (
+            <PinScreen onUnlock={() => setPinVerified(true)} />
+          ) : (
           <div style={{ padding: "2.5rem 2rem 2rem" }}>
             {submitted ? (
               <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "1rem", padding: "2rem 0", textAlign: "center" }}>
@@ -282,6 +378,7 @@ export default function RSVPModal({ isOpen, onClose }) {
               </>
             )}
           </div>
+          )}
 
           {/* Bottom accent bar */}
           <div style={{ height: "3px", background: `linear-gradient(90deg, ${BURGUNDY}, ${OLIVE}, ${BURGUNDY})` }} />

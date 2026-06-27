@@ -139,9 +139,9 @@ function Home () {
             </ImageContainer>
             <Sticker
               src="/STICKERS/camera.webp"
-              width={220}
+              width={170}
               bottom="-75px"
-              right="5px"
+              right="10px"
               rotate={-10}
               zIndex={40}
             />
@@ -299,14 +299,6 @@ function Home () {
               >
                 Our Wedding Details
               </span>
-              <Sticker
-                src="/STICKERS/36.webp"
-                width={230}
-                bottom="-155px"
-                left="-75px"
-                rotate={-12}
-                zIndex={200}
-              />
             </div>
           </ImageContainer>
         </div>
@@ -318,14 +310,12 @@ function Home () {
       >
         <div className="relative pt-40">
           <div className="flex flex-col gap-8 pb-20">
-            <ImageContainer className="shadow-xl">
-              <img
-                src="/images/ento1.webp"
-                alt=""
-                loading="lazy"
-                className="w-80"
-              />
-            </ImageContainer>
+            <div className="flex justify-center">
+              <div className="relative">
+                <img src="/images/ento1.webp" alt="" loading="lazy" className="w-80 shadow-xl" />
+                <Sticker src="/STICKERS/36.webp" width={230} top="-90px" left="-95px" rotate={-12} zIndex={20} />
+              </div>
+            </div>
             <div className="flex justify-center">
               <div className="relative">
                 <img src="/images/ento2.webp" alt="" loading="lazy" className="w-80 shadow-xl" />
@@ -444,7 +434,7 @@ function Home () {
                 src="/STICKERS/27.webp"
                 width={220}
                 bottom="-55px"
-                left="-22px"
+                left="-82px"
                 rotate={-10}
                 zIndex={20}
               />

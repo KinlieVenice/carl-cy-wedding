@@ -53,10 +53,53 @@ app.post("/api/rsvp", rsvpLimiter, async (req, res) => {
   }
 });
 
-// GET /api/rsvp/all — list all RSVPs (admin view)
+// GET /api/rsvp/all — list all RSVPs (legacy)
 app.get("/api/rsvp/all", async (_req, res) => {
   const all = await prisma.rSVP.findMany({ orderBy: { createdAt: "desc" } });
   res.json(all);
+});
+
+// GET /api/rsvp/carycyadmin — list all RSVPs
+app.get("/api/rsvp/carycyadmin", async (_req, res) => {
+  const all = await prisma.rSVP.findMany({ orderBy: { createdAt: "desc" } });
+  res.json(all);
+});
+
+// PUT /api/rsvp/carycyadmin/:id — update an RSVP
+app.put("/api/rsvp/carycyadmin/:id", async (req, res) => {
+  const id = parseInt(req.params.id);
+  const { name, phone, email, attending, message } = req.body;
+  if (!name?.trim() || !phone?.trim() || !attending) {
+    return res.status(400).json({ error: "Name, phone, and attendance are required." });
+  }
+  try {
+    const rsvp = await prisma.rSVP.update({
+      where: { id },
+      data: {
+        name: name.trim(),
+        phone: phone.trim(),
+        email: email?.trim() || null,
+        attending,
+        message: message?.trim() || null,
+      },
+    });
+    res.json({ ok: true, rsvp });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Server error." });
+  }
+});
+
+// DELETE /api/rsvp/carycyadmin/:id — delete an RSVP
+app.delete("/api/rsvp/carycyadmin/:id", async (req, res) => {
+  const id = parseInt(req.params.id);
+  try {
+    await prisma.rSVP.delete({ where: { id } });
+    res.json({ ok: true });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Server error." });
+  }
 });
 
 app.listen(PORT, () =>

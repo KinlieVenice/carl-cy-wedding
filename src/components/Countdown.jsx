@@ -30,6 +30,7 @@ function Countdown({ targetDate }) {
         alignItems: "center",
         gap: "3px",
         background: "none",
+        filter: "drop-shadow(0 1px 3px rgba(0,0,0,0.7))",
       }}>
         <span style={{
           fontFamily: "'Cormorant Garamond', serif",
@@ -38,6 +39,7 @@ function Countdown({ targetDate }) {
           lineHeight: 1,
           color: "#fff",
           letterSpacing: "0.02em",
+          textShadow: "0 1px 4px rgba(0,0,0,0.8)",
         }}>
           {String(value).padStart(2, "0")}
         </span>
@@ -49,6 +51,7 @@ function Countdown({ targetDate }) {
           letterSpacing: "0.18em",
           color: "#fff",
           textTransform: "uppercase",
+          textShadow: "0 1px 3px rgba(0,0,0,0.8)",
         }}>
           {label}
         </span>
@@ -77,16 +80,16 @@ function Countdown({ targetDate }) {
         </div>
         <p style={{
           fontFamily: "'Cormorant Garamond', serif",
-          fontWeight: 400,
+          fontWeight: 500,
           fontStyle: "italic",
           fontSize: "1.6rem",
           letterSpacing: "0.12em",
           color: "#fff",
           margin: 0,
+          textShadow: "0 1px 4px rgba(0,0,0,0.8)",
         }}>
           Counting Down To
         </p>
-      </div>
 
       <div style={{ display: "flex", gap: "12px", alignItems: "center" }}>
         <Box value={timeLeft.days} label="Days" />
@@ -108,6 +111,7 @@ function Countdown({ targetDate }) {
         }}>·</span>
 
         <Box value={timeLeft.minutes} label="Minutes" />
+      </div>
       </div>
     </>
   );
