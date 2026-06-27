@@ -35,24 +35,26 @@ function Home () {
         className="bg-[url('/images/banner_bg_sm.webp')] bg-cover bg-no-repeat bg-position-[55%_55%] h-[650px]"
       >
         <div className="relative flex flex-col items-center pt-8 justify-start h-full">
-          <div className="relative w-full flex justify-center">
-            <ImageContainer height={210} rotation={-4}>
-              <img
-                src="/images/banner_inv.webp"
-                alt=""
-                className="h-full object-cover"
-                fetchpriority="high"
-                loading="eager"
+          <div className="w-full flex justify-center">
+            <div style={{ position: "relative", width: "fit-content", height: "210px" }}>
+              <ImageContainer height={210} rotation={-4}>
+                <img
+                  src="/images/banner_inv.webp"
+                  alt=""
+                  className="h-full object-cover"
+                  fetchpriority="high"
+                  loading="eager"
+                />
+              </ImageContainer>
+              <Sticker
+                src="/STICKERS/MONOG.webp"
+                width={90}
+                bottom="-40px"
+                left="-5px"
+                rotate={-8}
+                zIndex={20}
               />
-            </ImageContainer>
-            <Sticker
-              src="/STICKERS/MONOG.webp"
-              width={90}
-              bottom="-40px"
-              left="38px"
-              rotate={-8}
-              zIndex={20}
-            />
+            </div>
           </div>
           <ImageContainer height={185} rotation={1}>
             <img
