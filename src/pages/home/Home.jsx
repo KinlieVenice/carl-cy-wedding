@@ -238,11 +238,11 @@ function Home () {
           <div className="flex flex-col items-center gap-10">
             <div className="relative">
               <ImageContainer>
-                <img src="/images/wed-deets.webp" alt="" loading="lazy" />
+                <img src="/images/wed-deets.webp" alt="" loading="lazy" className="w-80"/>
               </ImageContainer>
               <Sticker
                 src="/STICKERS/32.webp"
-                width={280}
+                width={220}
                 top="-35px"
                 right="-105px"
                 rotate={-12}
@@ -255,7 +255,7 @@ function Home () {
                   src="/images/chapel-h.webp"
                   alt=""
                   loading="lazy"
-                  className="w-100"
+                  className="w-80"
                 />
               </ImageContainer>
               <ImageContainer>
@@ -263,7 +263,7 @@ function Home () {
                   src="/images/windsong-t.webp"
                   alt=""
                   loading="lazy"
-                  className="w-100"
+                  className="w-80"
                 />
               </ImageContainer>
             </div>
@@ -299,7 +299,7 @@ function Home () {
               </span>
               <Sticker
                 src="/STICKERS/36.webp"
-                width={270}
+                width={230}
                 bottom="-155px"
                 left="-75px"
                 rotate={-12}
@@ -321,62 +321,26 @@ function Home () {
                 src="/images/ento1.webp"
                 alt=""
                 loading="lazy"
-                className="w-90"
+                className="w-80"
               />
             </ImageContainer>
-            <div className="relative">
-              <ImageContainer className="shadow-xl">
-                <img
-                  src="/images/ento2.webp"
-                  alt=""
-                  loading="lazy"
-                  className="w-90"
-                />
-              </ImageContainer>
-              <Sticker
-                src="/STICKERS/23.webp"
-                width={270}
-                top="-155px"
-                right="-95px"
-                rotate={10}
-                zIndex={20}
-              />
+            <div className="flex justify-center">
+              <div className="relative">
+                <img src="/images/ento2.webp" alt="" loading="lazy" className="w-80 shadow-xl" />
+                <Sticker src="/STICKERS/23.webp" width={230} top="-155px" right="-95px" rotate={10} zIndex={20} />
+              </div>
             </div>
-            <div className="relative">
-              <ImageContainer className="shadow-xl">
-                <img
-                  src="/images/ento3.webp"
-                  alt=""
-                  loading="lazy"
-                  className="w-90"
-                />
-              </ImageContainer>
-              <Sticker
-                src="/STICKERS/46.webp"
-                width={250}
-                top="-135px"
-                left="-85px"
-                rotate={-10}
-                zIndex={20}
-              />
+            <div className="flex justify-center">
+              <div className="relative">
+                <img src="/images/ento3.webp" alt="" loading="lazy" className="w-80 shadow-xl" />
+                <Sticker src="/STICKERS/46.webp" width={200} top="-115px" left="-85px" rotate={-10} zIndex={20} />
+              </div>
             </div>
-            <div className="relative">
-              <ImageContainer className="shadow-xl">
-                <img
-                  src="/images/timeline.webp"
-                  alt=""
-                  loading="lazy"
-                  className="w-90"
-                />
-              </ImageContainer>
-              <Sticker
-                src="/STICKERS/45.webp"
-                width={270}
-                top="-145px"
-                right="-95px"
-                rotate={10}
-                zIndex={20}
-              />
+            <div className="flex justify-center">
+              <div className="relative">
+                <img src="/images/timeline.webp" alt="" loading="lazy" className="w-80 shadow-xl" />
+                <Sticker src="/STICKERS/45.webp" width={230} top="-115px" right="-95px" rotate={10} zIndex={20} />
+              </div>
             </div>
           </div>
 
@@ -411,8 +375,8 @@ function Home () {
               </span>
               <Sticker
                 src="/STICKERS/26.webp"
-                width={270}
-                top="-155px"
+                width={230}
+                top="-135px"
                 left="-45px"
                 rotate={-10}
                 zIndex={-1}
@@ -452,35 +416,37 @@ function Home () {
           </div>
 
           {/* RIGHT — Principal Sponsors */}
-          <div className="relative flex justify-end">
-            <PolaroidCard
-              image="/images/dress-new.webp"
-              rotation={5}
-              selectedColor={color2}
-              onColorSelect={setColor2}
-              colors={["#f3e0c7", "#d8c1a5", "#b8a28e"]}
-              scrapPosition="outside-bottom"
-              scrapWidth={400}
-              scrapHeight={300}
-              scrapRotation={-20}
-              scrapClassName="translate-y-40 -translate-x-50"
-              scrapTextMaxWidth={300}
-              scrapTextClassName="pl-10"
-              tapeText="Principal Sponsors"
-              scrapText={[
-                "Formal / black-tie attire",
-                "Soft pastels & neutrals",
-                "Elegant floor-length gowns",
-              ]}
-            />
-            <Sticker
-              src="/STICKERS/27.webp"
-              width={220}
-              bottom="-55px"
-              left="-22px"
-              rotate={-10}
-              zIndex={20}
-            />
+          <div className="flex justify-end">
+            <div className="relative">
+              <PolaroidCard
+                image="/images/dress-new.webp"
+                rotation={5}
+                selectedColor={color2}
+                onColorSelect={setColor2}
+                colors={["#f3e0c7", "#d8c1a5", "#b8a28e"]}
+                scrapPosition="outside-bottom"
+                scrapWidth={400}
+                scrapHeight={300}
+                scrapRotation={-20}
+                scrapClassName="translate-y-40 -translate-x-50"
+                scrapTextMaxWidth={300}
+                scrapTextClassName="pl-10"
+                tapeText="Principal Sponsors"
+                scrapText={[
+                  "Formal / black-tie attire",
+                  "Soft pastels & neutrals",
+                  "Elegant floor-length gowns",
+                ]}
+              />
+              <Sticker
+                src="/STICKERS/27.webp"
+                width={220}
+                bottom="-55px"
+                left="-22px"
+                rotate={-10}
+                zIndex={20}
+              />
+            </div>
           </div>
 
           {/* LEFT — Secondary Sponsors */}
@@ -508,35 +474,37 @@ function Home () {
           </div>
 
           {/* RIGHT — Guests */}
-          <div className="relative flex justify-end">
-            <PolaroidCard
-              image="/images/dress-new.webp"
-              rotation={6}
-              selectedColor={color4}
-              onColorSelect={setColor4}
-              colors={["#722F37", "#8c4a50", "#c9a09c"]}
-              scrapPosition="outside-left"
-              scrapWidth={500}
-              scrapHeight={300}
-              scrapRotation={-12}
-              scrapClassName="translate-y-14"
-              scrapTextMaxWidth={350}
-              scrapTextClassName="pl-10"
-              tapeText="Guests"
-              scrapText={[
-                "Assigned colors per role",
-                "Formal attire required",
-                "Coordinate with the couple",
-              ]}
-            />
-            <Sticker
-              src="/STICKERS/22.webp"
-              width={230}
-              top="-155px"
-              right="-72px"
-              rotate={10}
-              zIndex={0}
-            />
+          <div className="flex justify-end">
+            <div className="relative">
+              <PolaroidCard
+                image="/images/dress-new.webp"
+                rotation={6}
+                selectedColor={color4}
+                onColorSelect={setColor4}
+                colors={["#722F37", "#8c4a50", "#c9a09c"]}
+                scrapPosition="outside-left"
+                scrapWidth={500}
+                scrapHeight={300}
+                scrapRotation={-12}
+                scrapClassName="translate-y-14"
+                scrapTextMaxWidth={350}
+                scrapTextClassName="pl-10"
+                tapeText="Guests"
+                scrapText={[
+                  "Assigned colors per role",
+                  "Formal attire required",
+                  "Coordinate with the couple",
+                ]}
+              />
+              <Sticker
+                src="/STICKERS/22.webp"
+                width={230}
+                top="-155px"
+                right="-72px"
+                rotate={10}
+                zIndex={0}
+              />
+            </div>
           </div>
 
           {/* LEFT — Guests */}
