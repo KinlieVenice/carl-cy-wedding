@@ -94,7 +94,7 @@ app.post("/api/send-digest", async (req, res) => {
         <tbody>${rows}</tbody>
       </table>`;
 
-    const recipients = ["deguzmankinlie@gmail.com", "kinsellshere@gmail.com"];
+    const recipients = ["deguzmankinlie@gmail.com", "loriocyrielle@gmail.com", "carl.richnald@gmail.com"];
     for (const to_email of recipients) {
       const r = await fetch("https://api.emailjs.com/api/v1.0/email/send", {
         method: "POST",
