@@ -4,7 +4,7 @@ import { ChevronDown } from "lucide-react";
 const faqs = [
   {
     q: "Do I need to RSVP?",
-    a: "Yes. Please RSVP on or before October 27, 2026 so we can plan everything—from the food and seating to all the little details—just right for you.",
+    a: "Yes. Please RSVP on or before September 30, 2026 so we can plan everything—from the food and seating to all the little details—just right for you.",
   },
   {
     q: "Is parking available at the venue?",
@@ -33,10 +33,10 @@ const faqs = [
   {
     q: "Do you have a gift preference?",
     a: "Your presence at our wedding is truly the greatest gift we could ask for. However, if you would like to bless us with a gift, a monetary contribution would be sincerely appreciated as we begin this new chapter of our lives together.",
+    giftLink: true,
   },
 ];
 
-// One delicate tape strip per card — thin, translucent, refined
 const TAPE_CONFIGS = [
   { left: "22px",           top: "-11px", width: "90px",  rotate: "-6deg"  },
   { left: "calc(50% - 50px)", top: "-10px", width: "100px", rotate: "-1deg"  },
@@ -52,6 +52,8 @@ const ROTATIONS = ["-0.6deg", "0.8deg", "-0.9deg", "0.5deg", "-0.7deg", "0.6deg"
 
 export default function ScrapbookFAQ() {
   const [open, setOpen] = useState(null);
+  const [giftModal, setGiftModal] = useState(false);
+  const [qrZoom, setQrZoom] = useState(null); // { src, label }
 
   return (
     <>
@@ -74,11 +76,27 @@ export default function ScrapbookFAQ() {
         .faq-answer { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.35s ease; }
         .faq-answer.open { grid-template-rows: 1fr; }
         .faq-answer-inner { overflow: hidden; }
+        .gift-link {
+          display: inline-block;
+          margin-top: 0.7rem;
+          font-family: 'Cormorant Garamond', serif;
+          font-style: italic;
+          font-size: 0.95rem;
+          color: #722F37;
+          border-bottom: 1px dotted rgba(114,47,55,0.5);
+          cursor: pointer;
+          background: none;
+          border-top: none;
+          border-left: none;
+          border-right: none;
+          padding: 0;
+          letter-spacing: 0.02em;
+          transition: opacity 0.2s;
+        }
+        .gift-link:hover { opacity: 0.7; }
       `}</style>
 
       <section style={{ position: "relative", maxWidth: "660px", margin: "0 auto", padding: "2rem 1.5rem 5rem" }}>
-
-        {/* ── Cards ── */}
         <div style={{ display: "flex", flexDirection: "column", gap: "2rem", position: "relative", zIndex: 1 }}>
           {faqs.map((faq, i) => {
             const isOpen = open === i;
@@ -96,76 +114,42 @@ export default function ScrapbookFAQ() {
                   padding: "1.6rem 1.5rem 1.4rem",
                 }}
               >
-                {/* Tape — single thin translucent strip */}
                 <div style={{
                   position: "absolute",
-                  top: tape.top,
-                  left: tape.left,
-                  right: tape.right,
-                  width: tape.width,
-                  height: "14px",
+                  top: tape.top, left: tape.left, right: tape.right,
+                  width: tape.width, height: "14px",
                   transform: `rotate(${tape.rotate})`,
                   background: "rgba(114,47,55,0.13)",
                   backdropFilter: "blur(1px)",
                 }} />
+                <div style={{ position: "absolute", inset: "9px", border: "1px solid rgba(114,47,55,0.08)", pointerEvents: "none" }} />
 
-                {/* Inner border */}
-                <div style={{
-                  position: "absolute", inset: "9px",
-                  border: "1px solid rgba(114,47,55,0.08)",
-                  pointerEvents: "none",
-                }} />
-
-                {/* Question row */}
                 <button
                   className="faq-btn"
                   onClick={() => setOpen(isOpen ? null : i)}
                   style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: "1rem" }}
                 >
                   <div style={{ display: "flex", alignItems: "baseline", gap: "10px" }}>
-                    <span style={{
-                      fontFamily: "'Cormorant Garamond', serif",
-                      color: "rgba(114,47,55,0.35)",
-                      fontSize: "0.75rem",
-                      flexShrink: 0,
-                      lineHeight: 1.6,
-                    }}>✦</span>
-                    <span style={{
-                      fontFamily: "'Cormorant Garamond', serif",
-                      fontStyle: "italic",
-                      fontWeight: 400,
-                      fontSize: "1.12rem",
-                      color: "#3d1a1e",
-                      letterSpacing: "0.01em",
-                      lineHeight: 1.45,
-                    }}>
+                    <span style={{ fontFamily: "'Cormorant Garamond', serif", color: "rgba(114,47,55,0.35)", fontSize: "0.75rem", flexShrink: 0, lineHeight: 1.6 }}>✦</span>
+                    <span style={{ fontFamily: "'Cormorant Garamond', serif", fontStyle: "italic", fontWeight: 400, fontSize: "1.12rem", color: "#3d1a1e", letterSpacing: "0.01em", lineHeight: 1.45 }}>
                       {faq.q}
                     </span>
                   </div>
                   <ChevronDown size={16} className={`faq-chevron ${isOpen ? "open" : ""}`} />
                 </button>
 
-                {/* Divider */}
-                <div style={{
-                  height: "1px",
-                  margin: "0.9rem 0 0",
-                  background: "linear-gradient(to right, transparent, rgba(114,47,55,0.1), transparent)",
-                }} />
+                <div style={{ height: "1px", margin: "0.9rem 0 0", background: "linear-gradient(to right, transparent, rgba(114,47,55,0.1), transparent)" }} />
 
-                {/* Answer */}
                 <div className={`faq-answer ${isOpen ? "open" : ""}`}>
                   <div className="faq-answer-inner">
-                    <p style={{
-                      fontFamily: "'Cormorant Garamond', serif",
-                      fontWeight: 300,
-                      fontSize: "1rem",
-                      color: "#6b5c5e",
-                      lineHeight: 1.9,
-                      paddingTop: "0.85rem",
-                      letterSpacing: "0.01em",
-                    }}>
+                    <p style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 300, fontSize: "1rem", color: "#6b5c5e", lineHeight: 1.9, paddingTop: "0.85rem", letterSpacing: "0.01em" }}>
                       {faq.a}
                     </p>
+                    {faq.giftLink && (
+                      <button className="gift-link" onClick={() => setGiftModal(true)}>
+                        Send a monetary gift ›
+                      </button>
+                    )}
                   </div>
                 </div>
               </div>
@@ -173,6 +157,61 @@ export default function ScrapbookFAQ() {
           })}
         </div>
       </section>
+
+      {/* Gift Modal */}
+      {giftModal && (
+        <div
+          style={{ position: "fixed", inset: 0, zIndex: 1000, background: "rgba(0,0,0,0.7)", display: "flex", alignItems: "center", justifyContent: "center", padding: "1.5rem" }}
+          onClick={() => setGiftModal(false)}
+        >
+          <div
+            style={{ background: "#fffdf8", borderRadius: 8, padding: "2rem 1.8rem", maxWidth: 480, width: "100%", boxShadow: "0 20px 60px rgba(0,0,0,0.3)", position: "relative" }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              onClick={() => setGiftModal(false)}
+              style={{ position: "absolute", top: 14, right: 16, background: "none", border: "none", fontSize: 22, cursor: "pointer", color: "#999", lineHeight: 1 }}
+            >×</button>
+
+            <p style={{ fontFamily: "'Cormorant Garamond', serif", fontStyle: "italic", fontSize: "1.4rem", color: "#722F37", textAlign: "center", marginBottom: "0.3rem" }}>
+              Monetary Gift
+            </p>
+            <p style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 300, fontSize: "0.92rem", color: "#8a7070", textAlign: "center", marginBottom: "1.6rem", lineHeight: 1.6 }}>
+              Your generosity means the world to us. You may send your gift through any of the accounts below.
+            </p>
+
+            <div style={{ display: "flex", gap: "1.2rem", justifyContent: "center", flexWrap: "wrap" }}>
+              {[{ src: "/images/maribank.webp", label: "MariBank" }, { src: "/images/bpi.webp", label: "BPI" }].map(({ src, label }) => (
+                <div key={label} style={{ textAlign: "center" }}>
+                  <p style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 400, fontSize: "0.85rem", color: "#722F37", letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: "0.6rem" }}>
+                    {label}
+                  </p>
+                  <img
+                    src={src}
+                    alt={`${label} QR`}
+                    onClick={() => setQrZoom({ src, label })}
+                    style={{ width: 160, height: 160, objectFit: "contain", borderRadius: 6, border: "1px solid rgba(114,47,55,0.12)", cursor: "zoom-in" }}
+                  />
+                  <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "0.72rem", color: "#aaa", marginTop: "0.3rem" }}>tap to enlarge</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+      {/* QR Zoom */}
+      {qrZoom && (
+        <div
+          style={{ position: "fixed", inset: 0, zIndex: 1100, background: "rgba(0,0,0,0.88)", display: "flex", alignItems: "center", justifyContent: "center" }}
+          onClick={() => setQrZoom(null)}
+        >
+          <button onClick={() => setQrZoom(null)} style={{ position: "absolute", top: 16, right: 20, background: "none", border: "none", color: "#fff", fontSize: 32, cursor: "pointer", lineHeight: 1 }}>×</button>
+          <div style={{ textAlign: "center" }} onClick={(e) => e.stopPropagation()}>
+            <p style={{ fontFamily: "'Cormorant Garamond', serif", fontStyle: "italic", color: "rgba(255,255,255,0.7)", fontSize: "0.9rem", marginBottom: "1rem", letterSpacing: "0.06em" }}>{qrZoom.label}</p>
+            <img src={qrZoom.src} alt={qrZoom.label} style={{ maxWidth: "80vw", maxHeight: "80vh", objectFit: "contain", borderRadius: 8, background: "#fff", padding: 12 }} />
+          </div>
+        </div>
+      )}
     </>
   );
 }

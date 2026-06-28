@@ -34,6 +34,7 @@ function Home () {
         id="home"
         className="bg-[url('/images/banner_bg_sm.webp')] bg-cover bg-no-repeat bg-position-[55%_55%] h-[650px]"
       >
+        <div className="absolute inset-0 bg-black/20 pointer-events-none" />
         <div className="relative flex flex-col items-center pt-8 justify-start h-full">
           <div className="w-full flex justify-center">
             <div style={{ position: "relative", width: "fit-content", height: "210px" }}>
@@ -410,7 +411,7 @@ function Home () {
           <div className="flex justify-end">
             <div className="relative">
               <PolaroidCard
-                image="/images/dress-new.webp"
+                image="/images/parents.webp"
                 rotation={5}
                 selectedColor={color2}
                 onColorSelect={setColor2}
