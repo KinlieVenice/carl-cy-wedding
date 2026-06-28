@@ -56,10 +56,22 @@ app.post("/api/rsvp", rsvpLimiter, async (req, res) => {
 });
 
 // manually trigger to send RSVP list to both emails
+// GET version: open in browser/phone — https://carlcywedding.site/api/send-digest?key=kin_cy_carl_0401
+app.get("/api/send-digest", async (req, res) => {
+  if (req.query.key !== process.env.CRON_SECRET) {
+    return res.status(401).send("Unauthorized");
+  }
+  return handleDigest(req, res);
+});
+
 app.post("/api/send-digest", async (req, res) => {
   if (req.headers["x-cron-secret"] !== process.env.CRON_SECRET) {
     return res.status(401).json({ error: "Unauthorized" });
   }
+  return handleDigest(req, res);
+});
+
+async function handleDigest(_req, res) {
 
   try {
     const all = await prisma.rSVP.findMany({ orderBy: { createdAt: "asc" } });
