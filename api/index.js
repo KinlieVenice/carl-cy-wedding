@@ -2,7 +2,6 @@ import express from "express";
 import cors from "cors";
 import rateLimit from "express-rate-limit";
 import { PrismaClient } from "@prisma/client";
-import { Resend } from "resend";
 
 const app = express();
 app.set("trust proxy", 1);
@@ -56,63 +55,49 @@ app.post("/api/rsvp", rsvpLimiter, async (req, res) => {
   }
 });
 
-// Daily digest — called every 5 mins by cron-job.org
-// Sends once per day after 7PM PHT, retries until successful
+// manually trigger to send RSVP list to both emails
 app.post("/api/send-digest", async (req, res) => {
   if (req.headers["x-cron-secret"] !== process.env.CRON_SECRET) {
     return res.status(401).json({ error: "Unauthorized" });
   }
 
-  // current time in PHT (UTC+8)
-  const now = new Date();
-  const pht = new Date(now.toLocaleString("en-US", { timeZone: "Asia/Manila" }));
-  const phtHour = pht.getHours();
+  try {
+    const all = await prisma.rSVP.findMany({ orderBy: { createdAt: "asc" } });
+    if (all.length === 0) {
+      return res.json({ skip: true, reason: "No RSVPs yet" });
+    }
 
-  const force = req.query.force === "1";
-  if (!force && phtHour < 19) {
-    return res.json({ skip: true, reason: "Before 7PM PHT" });
+    const attending = all.filter((r) => r.attending === "yes").length;
+    const notAttending = all.filter((r) => r.attending === "no").length;
+    const table = all
+      .map((r, i) =>
+        `${i + 1}. ${r.name} | ${r.phone} | ${r.email || "-"} | ${r.attending} | guests: ${r.guestCount ?? "-"} | ${new Date(r.createdAt).toLocaleDateString("en-PH")}`
+      )
+      .join("\n");
+
+    const dateStr = new Date().toLocaleDateString("en-PH", { timeZone: "Asia/Manila" });
+
+    const recipients = ["deguzmankinlie@gmail.com", "kinsellshere@gmail.com"];
+    for (const to_email of recipients) {
+      const r = await fetch("https://api.emailjs.com/api/v1.0/email/send", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          service_id: process.env.EMAILJS_SERVICE_ID,
+          template_id: process.env.EMAILJS_TEMPLATE_ID,
+          user_id: process.env.EMAILJS_PUBLIC_KEY,
+          accessToken: process.env.EMAILJS_PRIVATE_KEY,
+          template_params: { to_email, date: dateStr, total: all.length, attending, not_attending: notAttending, table },
+        }),
+      });
+      if (!r.ok) throw new Error(`EmailJS ${r.status}: ${await r.text()}`);
+    }
+
+    res.json({ ok: true, total: all.length, attending, notAttending });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Server error." });
   }
-
-  const dateStr = `${pht.getFullYear()}-${String(pht.getMonth() + 1).padStart(2, "0")}-${String(pht.getDate()).padStart(2, "0")}`;
-
-  const existing = await prisma.digestLog.findUnique({ where: { date: dateStr } });
-  if (existing) {
-    return res.json({ skip: true, reason: "Already sent today" });
-  }
-
-  const all = await prisma.rSVP.findMany({ orderBy: { createdAt: "asc" } });
-  if (all.length === 0) {
-    return res.json({ skip: true, reason: "No RSVPs yet" });
-  }
-
-  const attending = all.filter((r) => r.attending === "yes").length;
-  const notAttending = all.filter((r) => r.attending === "no").length;
-
-  const table = all
-    .map((r, i) =>
-      `${i + 1}. ${r.name} | ${r.phone} | ${r.email || "-"} | ${r.attending} | guests: ${r.guestCount ?? "-"} | ${new Date(r.createdAt).toLocaleDateString("en-PH")}`
-    )
-    .join("\n");
-
-  const resend = new Resend(process.env.RESEND_API_KEY);
-  const recipients = ["deguzmankinlie@gmail.com", "kinsellshere@gmail.com"];
-
-  await resend.emails.send({
-    from: "Carl & Cy Wedding <onboarding@resend.dev>",
-    to: recipients,
-    subject: `RSVP Digest ${dateStr} — ${all.length} total`,
-    text: [
-      `Date: ${dateStr}`,
-      `Total: ${all.length} | Attending: ${attending} | Not attending: ${notAttending}`,
-      ``,
-      `--- Guest List ---`,
-      table,
-    ].join("\n"),
-  });
-
-  await prisma.digestLog.create({ data: { date: dateStr, sentAt: new Date() } });
-
-  res.json({ ok: true, total: all.length, date: dateStr });
 });
 
 app.get("/api/rsvp/carycyadmin", async (_req, res) => {
