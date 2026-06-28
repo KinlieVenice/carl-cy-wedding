@@ -2,7 +2,6 @@ import express from "express";
 import cors from "cors";
 import rateLimit from "express-rate-limit";
 import { PrismaClient } from "@prisma/client";
-import emailjs from "@emailjs/nodejs";
 
 const app = express();
 app.set("trust proxy", 1);
@@ -96,12 +95,21 @@ app.post("/api/send-digest", async (req, res) => {
 
   const recipients = ["deguzmankinlie@gmail.com", "kinsellshere@gmail.com"];
   for (const to_email of recipients) {
-    await emailjs.send(
-      process.env.EMAILJS_SERVICE_ID,
-      process.env.EMAILJS_TEMPLATE_ID,
-      { to_email, date: dateStr, total: all.length, attending, not_attending: notAttending, table },
-      { publicKey: process.env.EMAILJS_PUBLIC_KEY, privateKey: process.env.EMAILJS_PRIVATE_KEY }
-    );
+    const res2 = await fetch("https://api.emailjs.com/api/v1.0/email/send", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        service_id: process.env.EMAILJS_SERVICE_ID,
+        template_id: process.env.EMAILJS_TEMPLATE_ID,
+        user_id: process.env.EMAILJS_PUBLIC_KEY,
+        accessToken: process.env.EMAILJS_PRIVATE_KEY,
+        template_params: { to_email, date: dateStr, total: all.length, attending, not_attending: notAttending, table },
+      }),
+    });
+    if (!res2.ok) {
+      const text = await res2.text();
+      throw new Error(`EmailJS ${res2.status}: ${text}`);
+    }
   }
 
   await prisma.digestLog.create({ data: { date: dateStr, sentAt: new Date() } });

@@ -482,7 +482,7 @@ function Home () {
                 tapeText="Guests"
                 scrapText={[
                   "Men: Barong & black slacks",
-                  "Women: Dress in preferred color",
+                  "Women: Formal dress in preferred color",
                 ]}
               />
               <Sticker
