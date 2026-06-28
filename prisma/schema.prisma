@@ -17,3 +17,9 @@ model RSVP {
   message    String?
   createdAt  DateTime @default(now())
 }
+
+model DigestLog {
+  id     Int      @id @default(autoincrement())
+  date   String   @unique // "YYYY-MM-DD" in PHT
+  sentAt DateTime
+}

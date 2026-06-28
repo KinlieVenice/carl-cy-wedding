@@ -2,20 +2,20 @@ import { useState, useEffect } from "react";
 
 // Define your images here
 const IMAGES = [
-  "/images/story1.webp",
-  "/images/story2.webp",
-  "/images/story3.webp",
-  "/images/story4.webp",
-  "/images/story5.webp",
-  "/images/story6.webp",
-  "/images/story7.webp",
-  "/images/story8.webp",
-  "/images/story9.webp",
-  "/images/story10.webp",
-  "/images/story11.webp",
-  "/images/story12.webp",
-  "/images/story13.webp",
-  "/images/story14.webp",
+  "/ourstory/1.webp",
+  "/ourstory/2.webp",
+  "/ourstory/3.webp",
+  "/ourstory/4.webp",
+  "/ourstory/5.webp",
+  "/ourstory/6.webp",
+  "/ourstory/7.webp",
+  "/ourstory/8.webp",
+  "/ourstory/9.webp",
+  "/ourstory/10.webp",
+  "/ourstory/11.webp",
+  "/ourstory/12.webp",
+  "/ourstory/13.webp",
+  "/ourstory/14.webp",
 ];
 
 const W = 340;
