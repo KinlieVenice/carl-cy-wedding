@@ -11,8 +11,8 @@ const prisma = new PrismaClient();
 app.use(cors({
   origin: [
     "http://localhost:5173",
-    "https://carl-cy-wedding.site",
-    "https://www.carl-cy-wedding.site",
+    "https://carlcywedding.site",
+    "https://www.carlcywedding.site",
   ],
 }));
 app.use(express.json());
