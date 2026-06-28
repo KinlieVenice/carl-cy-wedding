@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import rateLimit from "express-rate-limit";
 import { PrismaClient } from "@prisma/client";
+import { Resend } from "resend";
 
 const app = express();
 app.set("trust proxy", 1);
@@ -93,24 +94,21 @@ app.post("/api/send-digest", async (req, res) => {
     )
     .join("\n");
 
+  const resend = new Resend(process.env.RESEND_API_KEY);
   const recipients = ["deguzmankinlie@gmail.com", "kinsellshere@gmail.com"];
-  for (const to_email of recipients) {
-    const res2 = await fetch("https://api.emailjs.com/api/v1.0/email/send", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        service_id: process.env.EMAILJS_SERVICE_ID,
-        template_id: process.env.EMAILJS_TEMPLATE_ID,
-        user_id: process.env.EMAILJS_PUBLIC_KEY,
-        accessToken: process.env.EMAILJS_PRIVATE_KEY,
-        template_params: { to_email, date: dateStr, total: all.length, attending, not_attending: notAttending, table },
-      }),
-    });
-    if (!res2.ok) {
-      const text = await res2.text();
-      throw new Error(`EmailJS ${res2.status}: ${text}`);
-    }
-  }
+
+  await resend.emails.send({
+    from: "Carl & Cy Wedding <onboarding@resend.dev>",
+    to: recipients,
+    subject: `RSVP Digest ${dateStr} — ${all.length} total`,
+    text: [
+      `Date: ${dateStr}`,
+      `Total: ${all.length} | Attending: ${attending} | Not attending: ${notAttending}`,
+      ``,
+      `--- Guest List ---`,
+      table,
+    ].join("\n"),
+  });
 
   await prisma.digestLog.create({ data: { date: dateStr, sentAt: new Date() } });
 
