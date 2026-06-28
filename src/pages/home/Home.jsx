@@ -4,7 +4,7 @@ import Countdown from "../../components/Countdown";
 import WeddingHeader from "../../components/WeddingHeader";
 import NotebookCarousel from "../../components/NotebookCarousel";
 import FilmStrip from "../../components/FilmStrip";
-import BookHalfSlider from "../../components/BookHalfSlider";
+import PagePeelStack from "../../components/PagePeelStack";
 import ScrapbookFAQ from "../../components/ScrapbookFAQ";
 import PolaroidSlider from "../../components/PolaroidSlider";
 import WeddingTimeline from "../../components/WeddingTimeline";
@@ -19,7 +19,7 @@ function Home () {
   const [color1, setColor1] = useState("#6c3f2e");
   const [color2, setColor2] = useState("#f3e0c7");
   const [color3, setColor3] = useState("#808000");
-  const [color4, setColor4] = useState("#722F37");
+  const [color4, setColor4] = useState("#cdc1ba");
   const [color5, setColor5] = useState("#cdc1ba");
 
   return (
@@ -209,9 +209,9 @@ function Home () {
         </div>
       </section>
 
-      <section className="bg-[url('/images/story-bg-sm.webp')] bg-cover bg-position-[1%_1%] bg-no-repeat h-[95svh] mt-26">
-        <div className="flex items-start justify-center h-full px-4 pt-[8vh]">
-          <BookHalfSlider />
+      <section className="bg-[url('/images/story-bg-sm-cp.webp')] bg-cover bg-position-[1%_1%] bg-no-repeat h-[800px] mt-26">
+        <div className="flex items-start justify-center h-full w-90 pt-20 mx-auto">
+          <PagePeelStack />
         </div>
       </section>
 
@@ -386,7 +386,7 @@ function Home () {
           {/* LEFT — Parents of the Bride & Groom */}
           <div className="flex justify-start mt-50">
             <PolaroidCard
-              image="/images/dress-new.webp"
+              image="/images/parents.webp"
               rotation={-5}
               selectedColor={color1}
               onColorSelect={setColor1}
@@ -400,9 +400,8 @@ function Home () {
               scrapTextClassName="pl-10 text-start"
               tapeText="Parents of the Bride & Groom"
               scrapText={[
-                "Semi-formal attire",
-                "Earth tones preferred",
-                "Avoid white outfits",
+                "Men: Barong & black slacks",
+                "Women: Brown or gray-brown gown",
               ]}
             />
           </div>
@@ -425,9 +424,8 @@ function Home () {
                 scrapTextClassName="pl-10"
                 tapeText="Principal Sponsors"
                 scrapText={[
-                  "Formal / black-tie attire",
-                  "Soft pastels & neutrals",
-                  "Elegant floor-length gowns",
+                  "Men: Barong & black slacks",
+                  "Women: Light orange or pastel gown",
                 ]}
               />
               <Sticker
@@ -448,7 +446,7 @@ function Home () {
               rotation={-4}
               selectedColor={color3}
               onColorSelect={setColor3}
-              colors={["#808000", "#6B7041", "#9a9c52"]}
+              colors={["#808000"]}
               scrapPosition="outside-bottom"
               scrapWidth={300}
               scrapHeight={300}
@@ -458,9 +456,8 @@ function Home () {
               scrapTextClassName="pl-10 text-start"
               tapeText="Secondary Sponsors"
               scrapText={[
-                "Semi-formal attire",
-                "Olive & sage tones",
-                "Coordinate with partners",
+                "Men: Barong & black slacks",
+                "Women: Dark olive gown",
               ]}
             />
           </div>
@@ -473,7 +470,7 @@ function Home () {
                 rotation={6}
                 selectedColor={color4}
                 onColorSelect={setColor4}
-                colors={["#722F37", "#8c4a50", "#c9a09c"]}
+                colors={["#cdc1ba", "#8f8177", "#d1aba6", "#6f3b3e", "#a7a376", "#414224", "#c2a35a", "#844f39"]}
                 scrapPosition="outside-left"
                 scrapWidth={500}
                 scrapHeight={300}
@@ -483,16 +480,15 @@ function Home () {
                 scrapTextClassName="pl-10"
                 tapeText="Guests"
                 scrapText={[
-                  "Assigned colors per role",
-                  "Formal attire required",
-                  "Coordinate with the couple",
+                  "Men: Barong & black slacks",
+                  "Women: Dress in preferred color",
                 ]}
               />
               <Sticker
                 src="/STICKERS/22.webp"
                 width={230}
                 top="-155px"
-                right="-72px"
+                right="172px"
                 rotate={10}
                 zIndex={0}
               />

@@ -26,7 +26,7 @@ for (const file of files) {
   const before = statSync(inputPath).size;
 
   try {
-    let pipeline = sharp(inputPath);
+    let pipeline = sharp(inputPath).rotate(); // auto-rotate from EXIF
     if (MAX_WIDTH) pipeline = pipeline.resize({ width: MAX_WIDTH, withoutEnlargement: true });
     await pipeline.webp({ quality: QUALITY }).toFile(outputPath);
 

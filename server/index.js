@@ -4,6 +4,7 @@ import rateLimit from "express-rate-limit";
 import { PrismaClient } from "@prisma/client";
 
 const app = express();
+app.set("trust proxy", 1);
 const prisma = new PrismaClient();
 const PORT = 3001;
 
