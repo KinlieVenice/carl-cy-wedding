@@ -68,7 +68,8 @@ app.post("/api/send-digest", async (req, res) => {
   const pht = new Date(now.toLocaleString("en-US", { timeZone: "Asia/Manila" }));
   const phtHour = pht.getHours();
 
-  if (phtHour < 19) {
+  const force = req.query.force === "1";
+  if (!force && phtHour < 19) {
     return res.json({ skip: true, reason: "Before 7PM PHT" });
   }
 
