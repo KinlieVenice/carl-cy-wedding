@@ -69,13 +69,30 @@ app.post("/api/send-digest", async (req, res) => {
 
     const attending = all.filter((r) => r.attending === "yes").length;
     const notAttending = all.filter((r) => r.attending === "no").length;
-    const table = all
-      .map((r, i) =>
-        `${i + 1}. ${r.name} | ${r.phone} | ${r.email || "-"} | ${r.attending} | guests: ${r.guestCount ?? "-"} | ${new Date(r.createdAt).toLocaleDateString("en-PH")}`
-      )
-      .join("\n");
+    const dateStr = new Date().toLocaleDateString("en-PH", { timeZone: "Asia/Manila", year: "numeric", month: "long", day: "numeric" });
 
-    const dateStr = new Date().toLocaleDateString("en-PH", { timeZone: "Asia/Manila" });
+    const rows = all.map((r, i) => `
+      <tr style="background:${i % 2 === 0 ? "#ffffff" : "#f9f9f9"}">
+        <td style="padding:8px 12px;border:1px solid #e0e0e0">${i + 1}</td>
+        <td style="padding:8px 12px;border:1px solid #e0e0e0">${r.name}</td>
+        <td style="padding:8px 12px;border:1px solid #e0e0e0;color:${r.attending === "yes" ? "#2e7d32" : "#c62828"};font-weight:600">${r.attending === "yes" ? "Attending" : "Not Attending"}</td>
+        <td style="padding:8px 12px;border:1px solid #e0e0e0">${r.phone}</td>
+        <td style="padding:8px 12px;border:1px solid #e0e0e0">${new Date(r.createdAt).toLocaleDateString("en-PH")}</td>
+      </tr>`).join("");
+
+    const html_table = `
+      <table style="border-collapse:collapse;width:100%;font-family:Arial,sans-serif;font-size:14px">
+        <thead>
+          <tr style="background:#722F37;color:#fff">
+            <th style="padding:10px 12px;border:1px solid #5a1f25;text-align:left">#</th>
+            <th style="padding:10px 12px;border:1px solid #5a1f25;text-align:left">Name</th>
+            <th style="padding:10px 12px;border:1px solid #5a1f25;text-align:left">Attending</th>
+            <th style="padding:10px 12px;border:1px solid #5a1f25;text-align:left">Phone</th>
+            <th style="padding:10px 12px;border:1px solid #5a1f25;text-align:left">Date</th>
+          </tr>
+        </thead>
+        <tbody>${rows}</tbody>
+      </table>`;
 
     const recipients = ["deguzmankinlie@gmail.com", "kinsellshere@gmail.com"];
     for (const to_email of recipients) {
@@ -87,7 +104,7 @@ app.post("/api/send-digest", async (req, res) => {
           template_id: process.env.EMAILJS_TEMPLATE_ID,
           user_id: process.env.EMAILJS_PUBLIC_KEY,
           accessToken: process.env.EMAILJS_PRIVATE_KEY,
-          template_params: { to_email, date: dateStr, total: all.length, attending, not_attending: notAttending, table },
+          template_params: { to_email, date: dateStr, total: all.length, attending, not_attending: notAttending, html_table },
         }),
       });
       if (!r.ok) throw new Error(`EmailJS ${r.status}: ${await r.text()}`);
