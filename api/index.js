@@ -127,7 +127,7 @@ async function handleDigest(_req, res) {
     console.error(err);
     res.status(500).json({ error: "Server error." });
   }
-});
+}
 
 app.get("/api/rsvp/carycyadmin", async (_req, res) => {
   try {

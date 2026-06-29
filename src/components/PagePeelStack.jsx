@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 // Define your images here
 const IMAGES = [
@@ -26,6 +26,8 @@ export default function PagePeelStack() {
   const [current, setCurrent] = useState(0);
   const [dealing, setDealing] = useState(false);
   const [returning, setReturning] = useState(false);
+  const [goingBack, setGoingBack] = useState(false);
+  const prevRef = useRef(null); // index of card sliding back in
   const total = IMAGES.length;
   const isLast = current === total - 1;
 
@@ -46,14 +48,25 @@ export default function PagePeelStack() {
   };
 
   const goPrev = () => {
-    if (dealing || returning || current === 0) return;
-    setCurrent((c) => c - 1);
+    if (dealing || returning || goingBack || current === 0) return;
+    prevRef.current = current - 1;
+    setGoingBack(true);
+    setTimeout(() => {
+      setCurrent((c) => c - 1);
+      setGoingBack(false);
+      prevRef.current = null;
+    }, DEAL_MS);
   };
 
   return (
     <>
       <style>{`
-@keyframes cardDeal {
+@keyframes cardSlideIn {
+          0%   { transform: translateX(130%) rotate(20deg); opacity: 0; }
+          60%  { transform: translateX(-3%)  rotate(-1deg); opacity: 1; }
+          100% { transform: translateX(0)    rotate(0deg);  opacity: 1; }
+        }
+        @keyframes cardDeal {
           0%   { transform: translateX(0)     rotate(0deg);   opacity: 1; }
           25%  { transform: translateX(20%)   rotate(6deg);   opacity: 1; }
           100% { transform: translateX(130%)  rotate(20deg);  opacity: 0; }
@@ -67,8 +80,9 @@ export default function PagePeelStack() {
 
       <div style={{ position: "relative", width: W, aspectRatio: "3/4" }}>
         {IMAGES.map((src, i) => {
-          const depth = i - current;
-          if (depth < 0) return null;
+          const isSlideIn = goingBack && i === prevRef.current;
+          const depth = isSlideIn ? 0 : i - current;
+          if (depth < 0 && !isSlideIn) return null;
           const isTop = depth === 0;
           const stackShift = Math.min(depth, 3);
 
@@ -76,8 +90,10 @@ export default function PagePeelStack() {
           if (isTop && dealing) {
             animation = `cardDeal ${DEAL_MS}ms cubic-bezier(0.4,0,1,0.8) forwards`;
           }
+          if (isSlideIn) {
+            animation = `cardSlideIn ${DEAL_MS}ms cubic-bezier(0.2,0,0.3,1) forwards`;
+          }
           if (returning) {
-            // deeper cards fly back first (delay=0), top card last
             const delay = (total - 1 - depth) * RETURN_INTERVAL;
             animation = `cardFlyBack ${DEAL_MS}ms cubic-bezier(0.2,0,0.4,1) ${delay}ms both`;
           }
@@ -109,7 +125,7 @@ export default function PagePeelStack() {
                 fetchpriority={i === 0 ? "high" : "auto"}
               />
               {/* prev / next arrows */}
-              {isTop && !dealing && !returning && (
+              {isTop && !dealing && !returning && !goingBack && (
                 <div style={{
                   position: "absolute",
                   bottom: 12,
