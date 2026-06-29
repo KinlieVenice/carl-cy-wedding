@@ -32,40 +32,56 @@ function Home () {
       />
       <section
         id="home"
-        className="bg-[url('/images/banner_bg_sm.webp')] bg-cover bg-no-repeat bg-position-[55%_55%] h-[650px]"
+        className="bg-[url('/images/banner_bg_sm.webp')] bg-cover bg-no-repeat bg-position-[55%_55%] h-[650px] md:h-[720px]"
       >
         <div className="absolute inset-0 bg-black/20 pointer-events-none" />
         <div className="relative flex flex-col items-center pt-8 justify-start h-full">
-          <div className="w-full flex justify-center">
-            <div style={{ position: "relative", width: "fit-content", height: "210px" }}>
-              <ImageContainer height={210} rotation={-4}>
+          <div className="flex flex-col items-center md:flex-row md:items-start md:justify-center md:gap-0 md:mt-10">
+            <div className="w-full flex justify-center md:w-auto">
+              <div style={{ position: "relative", width: "fit-content", height: "210px" }}>
+                <ImageContainer height={210} mdHeight={280} lgHeight={330} rotation={-4}>
+                  <img
+                    src="/images/banner_inv.webp"
+                    alt=""
+                    className="h-full object-cover"
+                    fetchpriority="high"
+                    loading="eager"
+                  />
+                </ImageContainer>
+                <Sticker
+                  src="/STICKERS/MONOG.webp"
+                  width={90}
+                  bottom="-40px"
+                  left="-5px"
+                  rotate={-8}
+                  zIndex={20}
+                  className="md:hidden"
+                />
+                <Sticker
+                  src="/STICKERS/MONOG.webp"
+                  width={100}
+                  lgWidth={120}
+                  lgBottom="-140px"
+                  bottom="-90px"
+                  right="-45px"
+                  rotate={8}
+                  zIndex={20}
+                  className="hidden md:block"
+                />
+              </div>
+            </div>
+            <div className="md:mt-15">
+              <ImageContainer height={185} mdHeight={240} lgHeight={290} rotation={1} mdRotation={10}>
                 <img
-                  src="/images/banner_inv.webp"
+                  src="/images/banner_pic.webp"
                   alt=""
                   className="h-full object-cover"
                   fetchpriority="high"
                   loading="eager"
                 />
               </ImageContainer>
-              <Sticker
-                src="/STICKERS/MONOG.webp"
-                width={90}
-                bottom="-40px"
-                left="-5px"
-                rotate={-8}
-                zIndex={20}
-              />
             </div>
           </div>
-          <ImageContainer height={185} rotation={1}>
-            <img
-              src="/images/banner_pic.webp"
-              alt=""
-              className="h-full object-cover"
-              fetchpriority="high"
-              loading="eager"
-            />
-          </ImageContainer>
           <Countdown targetDate="2026-11-26T00:00:00" />
           <ImageContainer
             className="absolute -bottom-35 z-10 object-cover"
