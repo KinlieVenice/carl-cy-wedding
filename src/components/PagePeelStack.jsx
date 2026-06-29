@@ -107,7 +107,7 @@ export default function PagePeelStack() {
                 height: "100%",
                 top: stackShift * 3,
                 left: stackShift * 3,
-                zIndex: total - depth,
+                zIndex: isSlideIn ? total + 1 : total - depth,
                 borderRadius: 6,
                 overflow: "hidden",
                 boxShadow: "0 6px 24px rgba(0,0,0,0.18)",
