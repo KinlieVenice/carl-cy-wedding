@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useEffect } from "react";
 
 // Define your images here
 const IMAGES = [
@@ -18,16 +18,26 @@ const IMAGES = [
   "/ourstory/14.webp",
 ];
 
-const W = 340;
+const W_SM = 340;
+const W_MD = 480;
 const DEAL_MS = 420;
 const RETURN_INTERVAL = 90;
 
 export default function PagePeelStack() {
+  const [W, setW] = useState(W_SM);
+
+  useEffect(() => {
+    function update() { setW(window.innerWidth >= 768 ? W_MD : W_SM); }
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, []);
+
   const [current, setCurrent] = useState(0);
   const [dealing, setDealing] = useState(false);
   const [returning, setReturning] = useState(false);
   const [goingBack, setGoingBack] = useState(false);
-  const prevRef = useRef(null); // index of card sliding back in
+  const [prevIndex, setPrevIndex] = useState(null);
   const total = IMAGES.length;
   const isLast = current === total - 1;
 
@@ -49,12 +59,12 @@ export default function PagePeelStack() {
 
   const goPrev = () => {
     if (dealing || returning || goingBack || current === 0) return;
-    prevRef.current = current - 1;
+    setPrevIndex(current - 1);
     setGoingBack(true);
     setTimeout(() => {
       setCurrent((c) => c - 1);
       setGoingBack(false);
-      prevRef.current = null;
+      setPrevIndex(null);
     }, DEAL_MS);
   };
 
@@ -80,7 +90,7 @@ export default function PagePeelStack() {
 
       <div style={{ position: "relative", width: W, aspectRatio: "3/4" }}>
         {IMAGES.map((src, i) => {
-          const isSlideIn = goingBack && i === prevRef.current;
+          const isSlideIn = goingBack && i === prevIndex;
           const depth = isSlideIn ? 0 : i - current;
           if (depth < 0 && !isSlideIn) return null;
           const isTop = depth === 0;

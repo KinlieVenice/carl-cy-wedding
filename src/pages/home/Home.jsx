@@ -1,4 +1,4 @@
-﻿import { useState } from "react";
+﻿import { useState, useEffect } from "react";
 import ImageContainer from "../../components/ImageContainer";
 import Countdown from "../../components/Countdown";
 import WeddingHeader from "../../components/WeddingHeader";
@@ -14,7 +14,18 @@ import RSVPModal from "../../components/RSVPModal";
 import StickyControls from "../../components/StickyControls";
 import Sticker from "../../components/Sticker";
 
+function useIsMd() {
+  const [isMd, setIsMd] = useState(() => typeof window !== "undefined" && window.innerWidth >= 768);
+  useEffect(() => {
+    const update = () => setIsMd(window.innerWidth >= 768);
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, []);
+  return isMd;
+}
+
 function Home () {
+  const isMd = useIsMd();
   const [isRSVPOpen, setIsRSVPOpen] = useState(false);
   const [color1, setColor1] = useState("#6c3f2e");
   const [color2, setColor2] = useState("#f3e0c7");
@@ -32,14 +43,14 @@ function Home () {
       />
       <section
         id="home"
-        className="bg-[url('/images/banner_bg_sm.webp')] bg-cover bg-no-repeat bg-position-[55%_55%] h-[650px] md:h-[720px]"
+        className="relative bg-[url('/images/banner_bg_sm.webp')] md:bg-[url('/images/banner_bg.webp')] bg-cover bg-no-repeat bg-position-[55%_55%] h-[650px] md:h-[720px]"
       >
         <div className="absolute inset-0 bg-black/20 pointer-events-none" />
-        <div className="relative flex flex-col items-center pt-8 justify-start h-full">
+        <div className="relative flex flex-col items-center pt-8 justify-start md:pt-14 lg:pt-10 h-full">
           <div className="flex flex-col items-center md:flex-row md:items-start md:justify-center md:gap-0 md:mt-10">
             <div className="w-full flex justify-center md:w-auto">
               <div style={{ position: "relative", width: "fit-content", height: "210px" }}>
-                <ImageContainer height={210} mdHeight={280} lgHeight={330} rotation={-4}>
+                <ImageContainer height={210} mdHeight={265} lgHeight={330} rotation={-4}>
                   <img
                     src="/images/banner_inv.webp"
                     alt=""
@@ -71,7 +82,7 @@ function Home () {
               </div>
             </div>
             <div className="md:mt-15">
-              <ImageContainer height={185} mdHeight={240} lgHeight={290} rotation={1} mdRotation={10}>
+              <ImageContainer height={185} mdHeight={230} lgHeight={290} rotation={1} mdRotation={10}>
                 <img
                   src="/images/banner_pic.webp"
                   alt=""
@@ -85,7 +96,7 @@ function Home () {
           <Countdown targetDate="2026-11-26T00:00:00" />
           <ImageContainer
             className="absolute -bottom-35 z-10 object-cover"
-            height={170}
+            height={170} mdHeight={220} lgHeight={250}
           >
             <div
               style={{ position: "relative", height: "100%", width: "100%" }}
@@ -143,10 +154,11 @@ function Home () {
         </div>
       </section>
 
-      <section id="our-story">
-        <div className="relative">
+      <section id="our-story" className="relative">
+        <div className="md:flex md:flex-row md:items-start md:relative">
+        <div className="relative md:flex-1">
           <div className="relative">
-            <ImageContainer className="mt-25">
+            <ImageContainer className="mt-25 md:mt-24">
               <img
                 src="/images/bride-cy.webp"
                 alt=""
@@ -157,8 +169,11 @@ function Home () {
             <Sticker
               src="/STICKERS/camera.webp"
               width={170}
+              mdWidth={190}
               bottom="-75px"
               right="10px"
+              mdRight={-100}
+              mdBottom={40}
               rotate={-10}
               zIndex={40}
             />
@@ -171,8 +186,9 @@ function Home () {
               zIndex={40}
             />
           </div>
+          {/* sm only scrapaper under bride-cy */}
           <ImageContainer
-            className="absolute -bottom-17 z-10 object-cover"
+            className="absolute -bottom-17 z-10 object-cover md:hidden"
             height={100}
           >
             <img
@@ -183,8 +199,8 @@ function Home () {
             />
           </ImageContainer>
         </div>
-        <div className="relative">
-          <ImageContainer className="relative z-20">
+        <div className="relative z-20 md:z-auto md:flex-1 md:mt-24">
+          <ImageContainer className="relative">
             <img
               src="/images/groom-carl.webp"
               alt=""
@@ -192,8 +208,9 @@ function Home () {
               loading="lazy"
             />
           </ImageContainer>
+          {/* sm only scrapaper under groom-carl */}
           <ImageContainer
-            className="absolute -bottom-40 z-30 object-cover"
+            className="absolute -bottom-40 z-30 object-cover md:hidden"
             height={200}
           >
             <div
@@ -203,7 +220,37 @@ function Home () {
                 src="/images/scrapaper.webp"
                 alt=""
                 className="h-full w-full object-cover object-left"
-              loading="lazy"
+                loading="lazy"
+              />
+              <span
+                style={{
+                  position: "absolute",
+                  top: "50%",
+                  left: "50%",
+                  transform: "translate(-50%, -50%)",
+                  fontFamily: "'Great Vibes', cursive",
+                  fontSize: "clamp(2.2rem, 7vw, 3.2rem)",
+                  color: "#722F37",
+                  whiteSpace: "nowrap",
+                  pointerEvents: "none",
+                  textShadow: "0 1px 6px rgba(255,253,248,0.6)",
+                }}
+              >
+                Our Story
+              </span>
+            </div>
+          </ImageContainer>
+        </div>
+        </div>
+        {/* md+ shared scrapaper below both images */}
+        <div className="hidden md:block relative -mt-10 z-30">
+          <ImageContainer height={200}>
+            <div style={{ position: "relative", height: "100%", width: "100%" }}>
+              <img
+                src="/images/scrapaper.webp"
+                alt=""
+                className="h-full w-full object-cover object-left"
+                loading="lazy"
               />
               <span
                 style={{
@@ -226,8 +273,11 @@ function Home () {
         </div>
       </section>
 
-      <section className="bg-[url('/images/story-bg-sm-cp.webp')] bg-cover bg-position-[1%_1%] bg-no-repeat h-[800px] mt-26">
-        <div className="flex items-start justify-center h-full w-90 pt-20 mx-auto">
+      <section
+        className="bg-cover bg-position-[1%_1%] bg-no-repeat h-[800px] md:h-[900px] mt-26 md:-mt-20"
+        style={{ backgroundImage: isMd ? "url('/images/story-bg.webp')" : "url('/images/story-bg-sm-cp.webp')" }}
+      >
+        <div className="flex items-start md:items-center justify-center h-full w-90 md:w-full pt-20 md:pt-0 mx-auto">
           <PagePeelStack />
         </div>
       </section>
