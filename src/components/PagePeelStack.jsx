@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 // Define your images here
 const IMAGES = [
@@ -28,19 +28,10 @@ export default function PagePeelStack() {
   const [returning, setReturning] = useState(false);
   const total = IMAGES.length;
   const isLast = current === total - 1;
-  const [hintVisible, setHintVisible] = useState(true);
 
-  useEffect(() => {
-    setHintVisible(true);
-    if (current === 0) return;
-    const t = setTimeout(() => setHintVisible(false), 7000);
-    return () => clearTimeout(t);
-  }, [current]);
-
-  const deal = () => {
+  const goNext = () => {
     if (dealing || returning) return;
     if (isLast) {
-      // fly all back to deck
       setReturning(true);
       setCurrent(0);
       const totalDuration = DEAL_MS + (total - 1) * RETURN_INTERVAL;
@@ -54,14 +45,15 @@ export default function PagePeelStack() {
     }
   };
 
+  const goPrev = () => {
+    if (dealing || returning || current === 0) return;
+    setCurrent((c) => c - 1);
+  };
+
   return (
     <>
       <style>{`
-        @keyframes hintBreathe {
-          0%, 100% { transform: translateX(-50%) scale(1); }
-          50%       { transform: translateX(-50%) scale(1.13); }
-        }
-        @keyframes cardDeal {
+@keyframes cardDeal {
           0%   { transform: translateX(0)     rotate(0deg);   opacity: 1; }
           25%  { transform: translateX(20%)   rotate(6deg);   opacity: 1; }
           100% { transform: translateX(130%)  rotate(20deg);  opacity: 0; }
@@ -106,7 +98,7 @@ export default function PagePeelStack() {
                 animation,
                 cursor: isTop ? "pointer" : "default",
               }}
-              onClick={isTop ? deal : undefined}
+              onClick={isTop ? goNext : undefined}
             >
               <img
                 src={src}
@@ -116,25 +108,58 @@ export default function PagePeelStack() {
                 loading={i === 0 ? "eager" : "lazy"}
                 fetchpriority={i === 0 ? "high" : "auto"}
               />
-              {/* tap hint */}
-              {isTop && !dealing && !returning && hintVisible && (
+              {/* prev / next arrows */}
+              {isTop && !dealing && !returning && (
                 <div style={{
                   position: "absolute",
                   bottom: 12,
                   left: "50%",
                   transform: "translateX(-50%)",
-                  fontSize: 11,
-                  fontWeight: 400,
-                  color: "rgba(255,255,255,0.92)",
-                  background: "rgba(0,0,0,0.38)",
-                  padding: "4px 12px",
-                  borderRadius: 20,
-                  pointerEvents: "none",
-                  whiteSpace: "nowrap",
-                  letterSpacing: "0.05em",
-                  animation: "hintBreathe 2.2s ease-in-out infinite",
+                  display: "flex",
+                  gap: 10,
+                  alignItems: "center",
                 }}>
-                  {isLast ? "tap to restart" : "tap anywhere to flip"}
+                  {/* prev */}
+                  <button
+                    onClick={(e) => { e.stopPropagation(); goPrev(); }}
+                    disabled={current === 0}
+                    style={{
+                      background: "rgba(0,0,0,0.38)",
+                      border: "none",
+                      color: current === 0 ? "rgba(255,255,255,0.25)" : "rgba(255,255,255,0.92)",
+                      fontSize: 22,
+                      cursor: current === 0 ? "default" : "pointer",
+                      borderRadius: "50%",
+                      width: 36, height: 36,
+                      display: "flex", alignItems: "center", justifyContent: "center",
+                      lineHeight: 1,
+                    }}
+                  >‹</button>
+                  {/* counter */}
+                  <span style={{
+                    fontSize: 11,
+                    color: "rgba(255,255,255,0.85)",
+                    background: "rgba(0,0,0,0.38)",
+                    padding: "4px 10px",
+                    borderRadius: 20,
+                    letterSpacing: "0.06em",
+                    whiteSpace: "nowrap",
+                  }}>{current + 1} / {total}</span>
+                  {/* next */}
+                  <button
+                    onClick={(e) => { e.stopPropagation(); goNext(); }}
+                    style={{
+                      background: "rgba(0,0,0,0.38)",
+                      border: "none",
+                      color: "rgba(255,255,255,0.92)",
+                      fontSize: 22,
+                      cursor: "pointer",
+                      borderRadius: "50%",
+                      width: 36, height: 36,
+                      display: "flex", alignItems: "center", justifyContent: "center",
+                      lineHeight: 1,
+                    }}
+                  >{isLast ? "↺" : "›"}</button>
                 </div>
               )}
             </div>
