@@ -110,6 +110,7 @@ export default function RSVPModal({ isOpen, onClose }) {
   const [submitted, setSubmitted] = useState(false);
   const [errors, setErrors] = useState({});
   const [pinVerified, setPinVerified] = useState(false);
+  const [duplicateWarning, setDuplicateWarning] = useState(null);
 
   if (!isOpen) return null;
 
@@ -121,10 +122,7 @@ export default function RSVPModal({ isOpen, onClose }) {
     return e;
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const e2 = validate();
-    if (Object.keys(e2).length) { setErrors(e2); return; }
+  const doSubmit = async () => {
     try {
       const res = await fetch("/api/rsvp", {
         method: "POST",
@@ -142,11 +140,27 @@ export default function RSVPModal({ isOpen, onClose }) {
     }
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const e2 = validate();
+    if (Object.keys(e2).length) { setErrors(e2); return; }
+    try {
+      const res = await fetch(`/api/rsvp/check-name?name=${encodeURIComponent(form.name.trim())}`);
+      const data = await res.json();
+      if (data.exists) {
+        setDuplicateWarning(data.matchedName);
+        return;
+      }
+    } catch { /* network error — proceed anyway */ }
+    await doSubmit();
+  };
+
   const handleClose = () => {
     setForm(INITIAL);
     setSubmitted(false);
     setErrors({});
     setPinVerified(false);
+    setDuplicateWarning(null);
     onClose();
   };
 
@@ -213,6 +227,34 @@ export default function RSVPModal({ isOpen, onClose }) {
           >
             <X size={18} />
           </button>
+
+          {duplicateWarning && (
+            <div style={{
+              position: "absolute", inset: 0, background: "rgba(255,253,248,0.96)",
+              zIndex: 10, display: "flex", flexDirection: "column",
+              alignItems: "center", justifyContent: "center", padding: "2rem",
+              borderRadius: "inherit", gap: "1.2rem", textAlign: "center",
+            }}>
+              <div style={{ fontFamily: FONT_TITLE, fontStyle: "italic", fontSize: "1.5rem", color: BURGUNDY }}>Just a moment</div>
+              <p style={{ fontFamily: FONT_BODY, fontWeight: 300, fontSize: "0.85rem", color: "#3a1a1e", lineHeight: 1.6, maxWidth: "280px" }}>
+                <strong style={{ fontFamily: FONT_TITLE, fontStyle: "italic", fontWeight: 400 }}>{duplicateWarning}</strong> has already answered the RSVP.<br />Are you sure you want to submit another?
+              </p>
+              <div style={{ display: "flex", gap: "0.8rem" }}>
+                <button
+                  onClick={() => setDuplicateWarning(null)}
+                  style={{ fontFamily: FONT_BODY, fontSize: "0.75rem", letterSpacing: "0.12em", padding: "0.5rem 1.4rem", border: `1.5px solid ${BURGUNDY}`, background: "none", color: BURGUNDY, borderRadius: "2px", cursor: "pointer" }}
+                >
+                  Go back
+                </button>
+                <button
+                  onClick={() => { setDuplicateWarning(null); doSubmit(); }}
+                  style={{ fontFamily: FONT_BODY, fontSize: "0.75rem", letterSpacing: "0.12em", padding: "0.5rem 1.4rem", border: "none", background: BURGUNDY, color: "#fffdf8", borderRadius: "2px", cursor: "pointer" }}
+                >
+                  Submit anyway
+                </button>
+              </div>
+            </div>
+          )}
 
           {!pinVerified ? (
             <PinScreen onUnlock={() => setPinVerified(true)} />

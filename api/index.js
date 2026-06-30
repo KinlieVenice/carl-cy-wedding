@@ -129,6 +129,20 @@ async function handleDigest(_req, res) {
   }
 }
 
+app.get("/api/rsvp/check-name", async (req, res) => {
+  const { name } = req.query;
+  if (!name?.trim()) return res.json({ exists: false });
+  try {
+    const all = await prisma.rSVP.findMany({ select: { name: true } });
+    const normalized = name.trim().toLowerCase();
+    const match = all.find(r => r.name.toLowerCase() === normalized);
+    res.json({ exists: !!match, matchedName: match?.name ?? null });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ exists: false });
+  }
+});
+
 app.get("/api/rsvp/carycyadmin", async (_req, res) => {
   try {
     const all = await prisma.rSVP.findMany({ orderBy: { createdAt: "desc" } });

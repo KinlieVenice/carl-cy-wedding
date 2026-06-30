@@ -451,7 +451,7 @@ function Home () {
       >
         <div className="relative flex flex-col gap-40">
           {/* LEFT — Parents of the Bride & Groom */}
-          <div className="flex justify-start md:justify-center mt-50">
+          <div className="flex justify-start md:justify-center mt-50 md:pr-50 lg:pr-100">
             <PolaroidCard
               image="/images/parents.webp"
               rotation={-5}
@@ -477,7 +477,7 @@ function Home () {
           </div>
 
           {/* RIGHT — Principal Sponsors */}
-          <div className="flex justify-end md:justify-center">
+          <div className="flex justify-end md:justify-center md:pl-50 lg:pl-100">
             <div className="relative">
               <PolaroidCard
                 image="/images/parents.webp"
@@ -513,7 +513,7 @@ function Home () {
           </div>
 
           {/* LEFT — Secondary Sponsors */}
-          <div className="relative flex justify-start md:justify-center">
+          <div className="relative flex justify-start md:justify-center md:pr-50 lg:pr-100">
             <PolaroidCard
               image="/images/dress-new.webp"
               rotation={-4}
@@ -539,7 +539,7 @@ function Home () {
           </div>
 
           {/* RIGHT — Guests */}
-          <div className="flex justify-end md:justify-center">
+          <div className="flex justify-end md:justify-center md:pl-50 lg:pl-100">
             <div className="relative">
               <PolaroidCard
                 image="/images/dress-new.webp"
