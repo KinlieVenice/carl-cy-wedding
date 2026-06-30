@@ -381,6 +381,24 @@ export default function DressCodePicker() {
           .cb.ca { border-bottom: 2px solid rgba(201,162,90,0.55); }
           .ds, .sp { max-width: 100%; }
         }
+
+        @media (min-width: 768px) {
+          .gl { max-width: 1000px; grid-template-columns: 260px 1fr; gap: 2.4rem; }
+          .gt { font-size: 2.8rem; }
+          .gs { font-size: 0.72rem; }
+          .cn { font-size: 1.05rem; }
+          .cc { font-size: 0.68rem; }
+          .cb { padding: 0.9rem 1.1rem; }
+          .ds { max-width: 460px; margin-left: auto; margin-right: auto; }
+          .sp { max-width: 460px; margin-left: auto; margin-right: auto; }
+          .sc { align-items: center; }
+          .din { font-size: 1.1rem; }
+          .dic { font-size: 0.65rem; }
+          .dih { font-size: 0.68rem; }
+          .swc { width: 52px; height: 52px; }
+          .swl { font-size: 0.7rem; max-width: 60px; }
+          .sh { font-size: 0.65rem; }
+        }
       `}</style>
 
       <div className="gr">

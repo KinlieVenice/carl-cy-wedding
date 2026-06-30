@@ -243,8 +243,8 @@ function Home () {
         </div>
         </div>
         {/* md+ shared scrapaper below both images */}
-        <div className="hidden md:block relative -mt-10 z-30">
-          <ImageContainer height={200}>
+        <div className="hidden md:block relative -mt-10 z-30 lg:-mt-15">
+          <ImageContainer height={200}  lgHeight={270}>
             <div style={{ position: "relative", height: "100%", width: "100%" }}>
               <img
                 src="/images/scrapaper.webp"
@@ -301,13 +301,13 @@ function Home () {
 
       <section
         id="wedding-overview"
-        className="bg-[url('/images/banner5cp.webp')] bg-cover bg-no-repeat bg-[position:50%_top] relative z-10"
+        className="bg-[url('/images/banner5cp.webp')] bg-cover md:bg-center bg-bottom bg-no-repeat bg-[position:60%_50%] relative z-10"
       >
         <div className="relative pb-10 flex flex-col items-center">
-          <div className="flex flex-col items-center gap-10">
+          <div className="flex flex-col items-center gap-10 md:flex-row md:gap-10 md:h-[600px]">
             <div className="relative">
               <ImageContainer>
-                <img src="/images/wed-deets.webp" alt="" loading="lazy" className="w-80"/>
+                <img src="/images/wed-deets.webp" alt="" loading="lazy" className="w-80 md:w-100"/>
               </ImageContainer>
               <Sticker
                 src="/STICKERS/32.webp"
@@ -318,13 +318,13 @@ function Home () {
                 zIndex={20}
               />
             </div>
-            <div className="flex flex-col items-center gap-5 pb-15">
+            <div className="flex flex-col items-center justify-center gap-5 pb-15 md:pb-0">
               <ImageContainer>
                 <img
                   src="/images/chapel-h.webp"
                   alt=""
                   loading="lazy"
-                  className="w-80"
+                  className="w-80 md:w-100"
                 />
               </ImageContainer>
               <ImageContainer>
@@ -332,7 +332,7 @@ function Home () {
                   src="/images/windsong-t.webp"
                   alt=""
                   loading="lazy"
-                  className="w-80"
+                  className="w-80 md:w-100"
                 />
               </ImageContainer>
             </div>
@@ -376,28 +376,28 @@ function Home () {
         className="bg-[url('/images/banner3cp.webp')] bg-cover bg-position-[1%_1%] bg-no-repeat"
       >
         <div className="relative pt-40">
-          <div className="flex flex-col gap-8 pb-20">
-            <div className="flex justify-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 pb-20 lg:pb-40">
+            <div className="flex justify-center lg:justify-end">
               <div className="relative">
-                <img src="/images/ento1.webp" alt="" loading="lazy" className="w-80 shadow-xl" />
+                <img src="/images/ento1.webp" alt="" loading="lazy" className="w-80 shadow-xl md:w-100" />
                 <Sticker src="/STICKERS/36.webp" width={230} top="-90px" left="-95px" rotate={-12} zIndex={20} />
               </div>
             </div>
-            <div className="flex justify-center">
+            <div className="flex justify-center lg:justify-start">
               <div className="relative">
-                <img src="/images/ento2.webp" alt="" loading="lazy" className="w-80 shadow-xl" />
+                <img src="/images/ento2.webp" alt="" loading="lazy" className="w-80 shadow-xl md:w-100" />
                 <Sticker src="/STICKERS/23.webp" width={230} top="-155px" right="-95px" rotate={10} zIndex={20} />
               </div>
             </div>
-            <div className="flex justify-center">
+            <div className="flex justify-center lg:justify-end">
               <div className="relative">
-                <img src="/images/ento3.webp" alt="" loading="lazy" className="w-80 shadow-xl" />
+                <img src="/images/ento3.webp" alt="" loading="lazy" className="w-80 shadow-xl md:w-100" />
                 <Sticker src="/STICKERS/46.webp" width={200} top="-115px" left="-85px" rotate={-10} zIndex={20} />
               </div>
             </div>
-            <div className="flex justify-center">
+            <div className="flex justify-center lg:justify-start">
               <div className="relative">
-                <img src="/images/timeline.webp" alt="" loading="lazy" className="w-80 shadow-xl" />
+                <img src="/images/timeline.webp" alt="" loading="lazy" className="w-80 shadow-xl md:w-100" />
                 <Sticker src="/STICKERS/45.webp" width={230} top="-115px" right="-95px" rotate={10} zIndex={20} />
               </div>
             </div>
@@ -405,7 +405,7 @@ function Home () {
 
           <ImageContainer
             className="absolute -bottom-34 object-cover"
-            height={200}
+            height={200} lgHeight={270}
           >
             <div
               style={{ position: "relative", height: "100%", width: "100%" }}
@@ -451,7 +451,7 @@ function Home () {
       >
         <div className="relative flex flex-col gap-40">
           {/* LEFT — Parents of the Bride & Groom */}
-          <div className="flex justify-start mt-50">
+          <div className="flex justify-start md:justify-center mt-50">
             <PolaroidCard
               image="/images/parents.webp"
               rotation={-5}
@@ -461,10 +461,13 @@ function Home () {
               scrapPosition="outside-bottom"
               scrapWidth={300}
               scrapHeight={300}
+              mdScrapWidth={375}
+              mdScrapHeight={375}
               scrapRotation={12}
               scrapClassName="translate-y-40 -translate-x-45"
               scrapTextMaxWidth={250}
               scrapTextClassName="pl-10 text-start"
+              scrapTextMdClassName="md:pt-20"
               tapeText="Parents of the Bride & Groom"
               scrapText={[
                 "Men: Barong & black slacks",
@@ -474,7 +477,7 @@ function Home () {
           </div>
 
           {/* RIGHT — Principal Sponsors */}
-          <div className="flex justify-end">
+          <div className="flex justify-end md:justify-center">
             <div className="relative">
               <PolaroidCard
                 image="/images/parents.webp"
@@ -485,10 +488,13 @@ function Home () {
                 scrapPosition="outside-bottom"
                 scrapWidth={400}
                 scrapHeight={300}
+                mdScrapWidth={500}
+                mdScrapHeight={375}
                 scrapRotation={-20}
                 scrapClassName="translate-y-40 -translate-x-50"
                 scrapTextMaxWidth={300}
                 scrapTextClassName="pl-10"
+                scrapTextMdClassName="md:pt-20"
                 tapeText="Principal Sponsors"
                 scrapText={[
                   "Men: Barong & black slacks",
@@ -507,7 +513,7 @@ function Home () {
           </div>
 
           {/* LEFT — Secondary Sponsors */}
-          <div className="relative flex justify-start">
+          <div className="relative flex justify-start md:justify-center">
             <PolaroidCard
               image="/images/dress-new.webp"
               rotation={-4}
@@ -517,10 +523,13 @@ function Home () {
               scrapPosition="outside-bottom"
               scrapWidth={300}
               scrapHeight={300}
+              mdScrapWidth={375}
+              mdScrapHeight={375}
               scrapRotation={-2}
               scrapClassName="translate-y-40 -translate-x-20"
               scrapTextMaxWidth={250}
               scrapTextClassName="pl-10 text-start"
+              scrapTextMdClassName="md:pt-10 lg:pt-20"
               tapeText="Secondary Sponsors"
               scrapText={[
                 "Men: Barong & black slacks",
@@ -530,7 +539,7 @@ function Home () {
           </div>
 
           {/* RIGHT — Guests */}
-          <div className="flex justify-end">
+          <div className="flex justify-end md:justify-center">
             <div className="relative">
               <PolaroidCard
                 image="/images/dress-new.webp"
@@ -541,10 +550,13 @@ function Home () {
                 scrapPosition="outside-left"
                 scrapWidth={500}
                 scrapHeight={300}
+                mdScrapWidth={625}
+                mdScrapHeight={375}
                 scrapRotation={-12}
                 scrapClassName="translate-y-14"
                 scrapTextMaxWidth={350}
                 scrapTextClassName="pl-10"
+                scrapTextMdClassName="md:pt-10"
                 tapeText="Guests"
                 scrapText={[
                   "Men: Barong & black slacks",
@@ -554,10 +566,20 @@ function Home () {
               <Sticker
                 src="/STICKERS/22.webp"
                 width={230}
-                top="-155px"
-                right="172px"
+                bottom="-15px"
+                right="252px"
                 rotate={10}
-                zIndex={0}
+                zIndex={30}
+                className="block md:hidden"
+              />
+              <Sticker
+                src="/STICKERS/22.webp"
+                width={230}
+                bottom="-15px"
+                right="372px"
+                rotate={10}
+                zIndex={30}
+                className="hidden md:block"
               />
             </div>
           </div>
@@ -592,7 +614,7 @@ function Home () {
         <div className="relative">
           <ImageContainer
             className="absolute -top-34 object-cover"
-            height={200}
+            height={200} lgHeight={270}
           >
             <div
               style={{ position: "relative", height: "100%", width: "100%" }}
@@ -626,9 +648,9 @@ function Home () {
 
       <section
         id="faqs"
-        className="bg-[url('/images/banner4.webp')] bg-cover bg-position-[1%_1%] bg-no-repeat"
+        className="bg-[url('/images/banner4.webp')] md:bg-center bg-cover bg-no-repeat"
       >
-        <div className="relative pt-20 overflow-y-hidden">
+        <div className="relative pt-20 lg:pt-30 overflow-y-hidden">
           <div className="flex flex-col gap-8 pb-20 px-5">
             <ScrapbookFAQ></ScrapbookFAQ>
           </div>

@@ -1,4 +1,16 @@
+import { useState, useEffect } from "react";
+
 const FONT_IMPORT = `@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:ital,wght@1,300;1,400&family=Jost:wght@300;400&display=swap');`;
+
+function useIsMd() {
+  const [isMd, setIsMd] = useState(() => window.innerWidth >= 768);
+  useEffect(() => {
+    const update = () => setIsMd(window.innerWidth >= 768);
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, []);
+  return isMd;
+}
 
 export default function PolaroidCard({
   image,
@@ -17,6 +29,8 @@ export default function PolaroidCard({
   // Scrap
   scrapWidth = 120,
   scrapHeight = 60,
+  mdScrapWidth,
+  mdScrapHeight,
   scrapPosition = "bottom-right",
   scrapRotation = -12,
   scrapClassName = "",
@@ -25,11 +39,16 @@ export default function PolaroidCard({
   scrapText = [],
   scrapTextMaxWidth = 120,
   scrapTextClassName = "",
+  scrapTextMdClassName = "",
 
   // Tape
   tapeText = "",
   tapeClassName = "",
 }) {
+  const isMd = useIsMd();
+  const resolvedScrapWidth = isMd && mdScrapWidth ? mdScrapWidth : scrapWidth;
+  const resolvedScrapHeight = isMd && mdScrapHeight ? mdScrapHeight : scrapHeight;
+
   const scrapPositions = {
     "bottom-left": "bottom-2 left-2",
     "bottom-right": "bottom-2 right-2",
@@ -56,7 +75,7 @@ export default function PolaroidCard({
           transform-origin: center center;
           padding: 7px 32px;
           font-family: 'Great Vibes', cursive;
-          font-size: 1.4rem;
+          font-size: clamp(1.4rem, 2.5vw, 1.9rem);
           letter-spacing: 0.04em;
           color: #fffdf8;
           text-shadow: 0 1px 3px rgba(80,20,25,0.35);
@@ -100,8 +119,8 @@ export default function PolaroidCard({
           ${scrapClassName}
         `}
         style={{
-          width: scrapWidth,
-          height: scrapHeight,
+          width: resolvedScrapWidth,
+          height: resolvedScrapHeight,
           transform: `rotate(${scrapRotation}deg)`,
         }}
       >
@@ -113,7 +132,7 @@ export default function PolaroidCard({
 
         {scrapText?.length > 0 && (
           <ul
-            className={`absolute inset-0 flex flex-col justify-center gap-1 px-5 ${scrapTextClassName}`}
+            className={`absolute inset-0 flex flex-col justify-center gap-1 px-5 ${scrapTextClassName} ${scrapTextMdClassName}`}
             style={{
               transform: `rotate(${-scrapRotation}deg)`,
               maxWidth: scrapTextMaxWidth,
@@ -128,7 +147,7 @@ export default function PolaroidCard({
                   fontFamily: "'Cormorant Garamond', serif",
                   fontStyle: "italic",
                   fontWeight: 400,
-                  fontSize: "1.05rem",
+                  fontSize: "clamp(1.05rem, 1.6vw, 1.3rem)",
                   lineHeight: 1.5,
                   color: "#3a1a1e",
                   letterSpacing: "0.01em",
@@ -141,7 +160,7 @@ export default function PolaroidCard({
                   fontFamily: "'Jost', sans-serif",
                   fontStyle: "normal",
                   fontWeight: 300,
-                  fontSize: "0.7rem",
+                  fontSize: "clamp(0.7rem, 1.1vw, 0.88rem)",
                   color: "#722F37",
                   opacity: 0.7,
                   flexShrink: 0,
@@ -158,10 +177,10 @@ export default function PolaroidCard({
         className={`
           relative
           z-10
-          w-[350px]
+          w-[350px] md:w-[460px]
           bg-white
-          p-3
-          pb-6
+          p-3 md:p-4
+          pb-6 md:pb-8
           shadow-xl
           ${polaroidClassName}
         `}
@@ -184,7 +203,7 @@ export default function PolaroidCard({
             <p style={{
               fontFamily: "'Cormorant Garamond', serif",
               fontStyle: "italic",
-              fontSize: "0.9rem",
+              fontSize: "clamp(0.9rem, 1.5vw, 1.15rem)",
               color: "#722F37",
               textAlign: "center",
             }}>{caption}</p>
@@ -201,7 +220,7 @@ export default function PolaroidCard({
               <span style={{
                 fontFamily: "'Jost', sans-serif",
                 fontWeight: 300,
-                fontSize: "0.6rem",
+                fontSize: "clamp(0.6rem, 1vw, 0.78rem)",
                 letterSpacing: "0.2em",
                 textTransform: "uppercase",
                 color: "#a08080",
