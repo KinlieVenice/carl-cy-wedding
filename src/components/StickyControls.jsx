@@ -106,6 +106,17 @@ export default function StickyControls({ onOpenRSVP }) {
           0%, 100% { transform: scale(1); }
           50%       { transform: scale(1.35); }
         }
+        @keyframes vinyl-spin {
+          from { transform: rotate(0deg); }
+          to   { transform: rotate(360deg); }
+        }
+        .vinyl-disc {
+          animation: vinyl-spin 1.8s linear infinite;
+          animation-play-state: paused;
+        }
+        .vinyl-disc.spinning {
+          animation-play-state: running;
+        }
         @keyframes tip-in {
           0%   { opacity: 0; transform: translateX(6px); }
           15%  { opacity: 1; transform: translateX(0); }
@@ -264,7 +275,7 @@ export default function StickyControls({ onOpenRSVP }) {
       {/* Music — just below nav bar, right side */}
       <div style={{
         position: "fixed",
-        top: "96px",
+        top: "106px",
         right: "1.2rem",
         zIndex: 50,
         opacity: visible ? 1 : 0,
@@ -311,28 +322,43 @@ export default function StickyControls({ onOpenRSVP }) {
             onMouseLeave={() => setHoverMusicTip(false)}
             title={isPlaying ? "Pause music" : "Play music"}
             style={{
-              width: "52px",
-              height: "52px",
+              width: "64px",
+              height: "64px",
               borderRadius: "50%",
-              border: "2px solid #6B7041",
-              background: "#fffdf8",
-              color: "#6B7041",
+              border: "none",
+              background: "transparent",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
               cursor: "pointer",
-              boxShadow: "0 4px 20px rgba(0,0,0,0.2), 0 1px 4px rgba(0,0,0,0.12)",
-              transition: "transform 0.2s ease, box-shadow 0.2s ease",
+              boxShadow: "none",
+              transition: "transform 0.2s ease",
             }}
           >
-            {isPlaying ? (
-              <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-                <rect x="3" y="2" width="4" height="14" rx="1.5" fill="#6B7041" />
-                <rect x="11" y="2" width="4" height="14" rx="1.5" fill="#6B7041" />
-              </svg>
-            ) : (
-              <span className="music-note-pulse" style={{ fontSize: "1.6rem", lineHeight: 1 }}>♪</span>
-            )}
+            <svg
+              className={`vinyl-disc${isPlaying ? " spinning" : ""}`}
+              width="60" height="60" viewBox="0 0 36 36"
+            >
+              {/* outer black disc */}
+              <circle cx="18" cy="18" r="17" fill="#1a1208" />
+              {/* groove rings */}
+              <circle cx="18" cy="18" r="14" fill="none" stroke="#2a2010" strokeWidth="0.8" />
+              <circle cx="18" cy="18" r="11" fill="none" stroke="#2a2010" strokeWidth="0.8" />
+              <circle cx="18" cy="18" r="8"  fill="none" stroke="#2a2010" strokeWidth="0.8" />
+              {/* center label */}
+              <circle cx="18" cy="18" r="6" fill="#722F37" />
+              <circle cx="18" cy="18" r="1.5" fill="#1a1208" />
+              {/* off-center dot for visible spin */}
+              <circle cx="18" cy="12.5" r="1" fill="rgba(255,253,248,0.5)" />
+              <circle cx="23" cy="10" r="0.8" fill="rgba(255,253,248,0.2)" />
+              {/* pause bars overlay when not playing */}
+              {!isPlaying && (
+                <>
+                  <rect x="15" y="14" width="2.5" height="8" rx="1" fill="rgba(255,253,248,0.85)" />
+                  <rect x="19" y="14" width="2.5" height="8" rx="1" fill="rgba(255,253,248,0.85)" />
+                </>
+              )}
+            </svg>
           </button>
         </div>
       </div>
