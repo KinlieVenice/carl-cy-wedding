@@ -79,6 +79,9 @@ export default function Sticker({
           display: "block",
           width: r(lgWidth, mdWidth, width),
           height: "auto",
+          pointerEvents: "none",
+          transform: `rotate(${r(lgRotate, mdRotate, rotate)}deg)`,
+          transformOrigin: "center center",
         }}
       >
         <img
@@ -90,7 +93,7 @@ export default function Sticker({
             width: "100%",
             height: "auto",
             opacity,
-            transform: `rotate(${r(lgRotate, mdRotate, rotate)}deg) scaleX(${scaleX}) scaleY(${scaleY})`,
+            transform: `scaleX(${scaleX}) scaleY(${scaleY})`,
             transformOrigin: "center center",
             ...style,
           }}
