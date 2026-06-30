@@ -43,7 +43,7 @@ function Home () {
       >
         <div className="absolute inset-0 bg-black/20 pointer-events-none" />
         <div className="relative flex flex-col items-center pt-8 justify-start md:pt-14 lg:pt-10 h-full">
-          <div className="flex flex-col items-center md:flex-row md:items-start md:justify-center md:gap-0 md:mt-10">
+          <Reveal animation="fade-up" className="flex flex-col items-center md:flex-row md:items-start md:justify-center md:gap-0 md:mt-10">
             <div className="w-full flex justify-center md:w-auto">
               <div style={{ position: "relative", width: "fit-content", height: "210px" }}>
                 <ImageContainer height={210} mdHeight={265} lgHeight={330} rotation={-4}>
@@ -88,7 +88,7 @@ function Home () {
                 />
               </ImageContainer>
             </div>
-          </div>
+          </Reveal>
           <Countdown targetDate="2026-11-26T00:00:00"/>
           <ImageContainer
             className="absolute -bottom-35 z-10 object-cover"
@@ -307,9 +307,11 @@ function Home () {
         <div className="relative pb-10 flex flex-col items-center">
           <div className="flex flex-col items-center gap-10 md:flex-row md:gap-10 md:h-[600px]">
             <div className="relative">
-              <ImageContainer>
-                <img src="/images/wed-deets.webp" alt="" loading="lazy" className="w-80 md:w-100" />
-              </ImageContainer>
+              <Reveal animation="zoom-in">
+                <ImageContainer>
+                  <img src="/images/wed-deets.webp" alt="" loading="lazy" className="w-80 md:w-100" />
+                </ImageContainer>
+              </Reveal>
               <Sticker
               aos="zoom-in"
                 src="/STICKERS/32.webp"
@@ -321,22 +323,16 @@ function Home () {
               />
             </div>
             <div className="flex flex-col items-center justify-center gap-5 pb-15 md:pb-0">
-              <ImageContainer>
-                <img
-                  src="/images/chapel-h.webp"
-                  alt=""
-                  loading="lazy"
-                  className="w-80 md:w-100"
-                />
-              </ImageContainer>
-              <ImageContainer>
-                <img
-                  src="/images/windsong-t.webp"
-                  alt=""
-                  loading="lazy"
-                  className="w-80 md:w-100"
-                />
-              </ImageContainer>
+              <Reveal animation="zoom-in" delay={100}>
+                <ImageContainer>
+                  <img src="/images/chapel-h.webp" alt="" loading="lazy" className="w-80 md:w-100" />
+                </ImageContainer>
+              </Reveal>
+              <Reveal animation="zoom-in" delay={200}>
+                <ImageContainer>
+                  <img src="/images/windsong-t.webp" alt="" loading="lazy" className="w-80 md:w-100" />
+                </ImageContainer>
+              </Reveal>
             </div>
           </div>
           <ImageContainer
@@ -661,9 +657,11 @@ function Home () {
         className="bg-[url('/images/banner4.webp')] md:bg-center bg-cover bg-no-repeat"
       >
         <div className="relative pt-20 lg:pt-30 overflow-y-hidden">
-          <div className="flex flex-col gap-8 pb-20 px-5">
-            <ScrapbookFAQ></ScrapbookFAQ>
-          </div>
+          <Reveal animation="fade-up">
+            <div className="flex flex-col gap-8 pb-20 px-5">
+              <ScrapbookFAQ></ScrapbookFAQ>
+            </div>
+          </Reveal>
           <Sticker
             src="/STICKERS/33.webp" // ← your actual sticker PNG
             width={320} // size in px

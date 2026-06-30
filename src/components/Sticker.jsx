@@ -45,12 +45,18 @@ export default function Sticker({
   useEffect(() => {
     const el = spanRef.current;
     if (!el) return;
+    let done = false;
     const obs = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) { setVisible(true); obs.disconnect(); } },
-      { threshold: 0, rootMargin: "0px 0px -30px 0px" }
+      ([entry]) => {
+        if (entry.isIntersecting && !done) { done = true; setVisible(true); obs.disconnect(); }
+      },
+      { threshold: 0, rootMargin: "0px" }
     );
     obs.observe(el);
-    return () => obs.disconnect();
+    const img = el.querySelector("img");
+    const recheck = () => { if (!done) { obs.unobserve(el); obs.observe(el); } };
+    img?.addEventListener("load", recheck);
+    return () => { obs.disconnect(); img?.removeEventListener("load", recheck); };
   }, []);
 
   const r = (lg, md, sm) => bp === "lg" ? (lg ?? md ?? sm) : bp === "md" ? (md ?? sm) : sm;
