@@ -17,7 +17,7 @@ const INITIAL = {
   message: "",
 };
 
-const PIN = "1020";
+const PIN = "0401";
 
 function PinScreen({ onUnlock }) {
   const [digits, setDigits] = useState("");
@@ -51,9 +51,6 @@ function PinScreen({ onUnlock }) {
         </div>
         <p style={{ fontFamily: FONT_BODY, fontWeight: 300, fontSize: "0.65rem", letterSpacing: "0.18em", color: OLIVE, textTransform: "uppercase", marginTop: "6px", marginBottom: 0 }}>
           Enter PIN to continue
-        </p>
-        <p style={{ fontFamily: FONT_TITLE, fontStyle: "italic", fontWeight: 300, fontSize: "0.8rem", color: BURGUNDY_DARK, opacity: 0.6, marginTop: "4px", marginBottom: 0 }}>
-          Clue: Carl &amp; Cy's anniversary
         </p>
       </div>
 
