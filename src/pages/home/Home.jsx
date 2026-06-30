@@ -2,17 +2,14 @@
 import ImageContainer from "../../components/ImageContainer";
 import Countdown from "../../components/Countdown";
 import WeddingHeader from "../../components/WeddingHeader";
-import NotebookCarousel from "../../components/NotebookCarousel";
 import FilmStrip from "../../components/FilmStrip";
 import PagePeelStack from "../../components/PagePeelStack";
 import ScrapbookFAQ from "../../components/ScrapbookFAQ";
-import PolaroidSlider from "../../components/PolaroidSlider";
-import WeddingTimeline from "../../components/WeddingTimeline";
-import DressCodePicker from "../../components/DressCodePicker";
 import PolaroidCard from "../../components/PolaroidCard";
 import RSVPModal from "../../components/RSVPModal";
 import StickyControls from "../../components/StickyControls";
 import Sticker from "../../components/Sticker";
+import Reveal from "../../components/Reveal";
 
 function useIsMd() {
   const [isMd, setIsMd] = useState(() => typeof window !== "undefined" && window.innerWidth >= 768);
@@ -31,7 +28,6 @@ function Home () {
   const [color2, setColor2] = useState("#f3e0c7");
   const [color3, setColor3] = useState("#808000");
   const [color4, setColor4] = useState("#cdc1ba");
-  const [color5, setColor5] = useState("#cdc1ba");
 
   return (
     <>
@@ -93,7 +89,7 @@ function Home () {
               </ImageContainer>
             </div>
           </div>
-          <Countdown targetDate="2026-11-26T00:00:00" />
+          <Countdown targetDate="2026-11-26T00:00:00"/>
           <ImageContainer
             className="absolute -bottom-35 z-10 object-cover"
             height={170} mdHeight={220} lgHeight={250}
@@ -102,6 +98,7 @@ function Home () {
               style={{ position: "relative", height: "100%", width: "100%" }}
             >
               <Sticker
+              aos="fade-left"
                 src="/STICKERS/19.webp"
                 width={250}
                 bottom="-50px"
@@ -167,6 +164,7 @@ function Home () {
               />
             </ImageContainer>
             <Sticker
+              aos="fade-left"
               src="/STICKERS/camera.webp"
               width={170}
               mdWidth={190}
@@ -178,6 +176,7 @@ function Home () {
               zIndex={40}
             />
             <Sticker
+            aos="fade-right"
               src="/STICKERS/15.webp"
               width={180}
               bottom="-85px"
@@ -278,7 +277,9 @@ function Home () {
         style={{ backgroundImage: isMd ? "url('/images/story-bg.webp')" : "url('/images/story-bg-sm-cp.webp')" }}
       >
         <div className="flex items-start md:items-center justify-center h-full w-90 md:w-full pt-20 md:pt-0 mx-auto">
-          <PagePeelStack />
+          <Reveal animation="zoom-in">
+            <PagePeelStack />
+          </Reveal>
         </div>
       </section>
 
@@ -307,9 +308,10 @@ function Home () {
           <div className="flex flex-col items-center gap-10 md:flex-row md:gap-10 md:h-[600px]">
             <div className="relative">
               <ImageContainer>
-                <img src="/images/wed-deets.webp" alt="" loading="lazy" className="w-80 md:w-100"/>
+                <img src="/images/wed-deets.webp" alt="" loading="lazy" className="w-80 md:w-100" />
               </ImageContainer>
               <Sticker
+              aos="zoom-in"
                 src="/STICKERS/32.webp"
                 width={220}
                 top="-35px"
@@ -378,28 +380,36 @@ function Home () {
         <div className="relative pt-40">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 pb-20 lg:pb-40">
             <div className="flex justify-center lg:justify-end">
-              <div className="relative">
-                <img src="/images/ento1.webp" alt="" loading="lazy" className="w-80 shadow-xl md:w-100" />
-                <Sticker src="/STICKERS/36.webp" width={230} top="-90px" left="-95px" rotate={-12} zIndex={20} />
-              </div>
+              <Reveal animation="fade-left">
+                <div className="relative">
+                  <img src="/images/ento1.webp" alt="" loading="lazy" className="w-80 shadow-xl md:w-100" />
+                  <Sticker src="/STICKERS/36.webp" width={230} top="-90px" left="-95px" rotate={-12} zIndex={20} />
+                </div>
+              </Reveal>
             </div>
             <div className="flex justify-center lg:justify-start">
-              <div className="relative">
-                <img src="/images/ento2.webp" alt="" loading="lazy" className="w-80 shadow-xl md:w-100" />
-                <Sticker src="/STICKERS/23.webp" width={230} top="-155px" right="-95px" rotate={10} zIndex={20} />
-              </div>
+              <Reveal animation="fade-right">
+                <div className="relative">
+                  <img src="/images/ento2.webp" alt="" loading="lazy" className="w-80 shadow-xl md:w-100" />
+                  <Sticker src="/STICKERS/23.webp" width={230} top="-155px" right="-95px" rotate={10} zIndex={20} />
+                </div>
+              </Reveal>
             </div>
             <div className="flex justify-center lg:justify-end">
-              <div className="relative">
-                <img src="/images/ento3.webp" alt="" loading="lazy" className="w-80 shadow-xl md:w-100" />
-                <Sticker src="/STICKERS/46.webp" width={200} top="-115px" left="-85px" rotate={-10} zIndex={20} />
-              </div>
+              <Reveal animation="fade-left">
+                <div className="relative">
+                  <img src="/images/ento3.webp" alt="" loading="lazy" className="w-80 shadow-xl md:w-100" />
+                  <Sticker src="/STICKERS/46.webp" width={200} top="-115px" left="-85px" rotate={-10} zIndex={20} />
+                </div>
+              </Reveal>
             </div>
             <div className="flex justify-center lg:justify-start">
-              <div className="relative">
-                <img src="/images/timeline.webp" alt="" loading="lazy" className="w-80 shadow-xl md:w-100" />
-                <Sticker src="/STICKERS/45.webp" width={230} top="-115px" right="-95px" rotate={10} zIndex={20} />
-              </div>
+              <Reveal animation="fade-right">
+                <div className="relative">
+                  <img src="/images/timeline.webp" alt="" loading="lazy" className="w-80 shadow-xl md:w-100" />
+                  <Sticker src="/STICKERS/45.webp" width={230} top="-115px" right="-95px" rotate={10} zIndex={20} />
+                </div>
+              </Reveal>
             </div>
           </div>
 
@@ -451,7 +461,7 @@ function Home () {
       >
         <div className="relative flex flex-col gap-40">
           {/* LEFT — Parents of the Bride & Groom */}
-          <div className="flex justify-start md:justify-center mt-50 md:pr-50 lg:pr-100">
+          <Reveal animation="fade-left" className="flex justify-start md:justify-center mt-50 md:pr-50 lg:pr-100">
             <PolaroidCard
               image="/images/parents.webp"
               rotation={-5}
@@ -474,10 +484,10 @@ function Home () {
                 "Women: Brown or gray-brown gown",
               ]}
             />
-          </div>
+          </Reveal>
 
           {/* RIGHT — Principal Sponsors */}
-          <div className="flex justify-end md:justify-center md:pl-50 lg:pl-100">
+          <Reveal animation="fade-right" className="flex justify-end md:justify-center md:pl-50 lg:pl-100">
             <div className="relative">
               <PolaroidCard
                 image="/images/parents.webp"
@@ -510,10 +520,10 @@ function Home () {
                 zIndex={20}
               />
             </div>
-          </div>
+          </Reveal>
 
           {/* LEFT — Secondary Sponsors */}
-          <div className="relative flex justify-start md:justify-center md:pr-50 lg:pr-100">
+          <Reveal animation="fade-left" className="relative flex justify-start md:justify-center md:pr-50 lg:pr-100">
             <PolaroidCard
               image="/images/dress-new.webp"
               rotation={-4}
@@ -536,10 +546,10 @@ function Home () {
                 "Women: Dark olive gown",
               ]}
             />
-          </div>
+          </Reveal>
 
           {/* RIGHT — Guests */}
-          <div className="flex justify-end md:justify-center md:pl-50 lg:pl-100">
+          <Reveal animation="fade-right" className="flex justify-end md:justify-center md:pl-50 lg:pl-100">
             <div className="relative">
               <PolaroidCard
                 image="/images/dress-new.webp"
@@ -582,7 +592,7 @@ function Home () {
                 className="hidden md:block"
               />
             </div>
-          </div>
+          </Reveal>
 
           {/* LEFT — Guests */}
           {/* <div className="flex justify-start">

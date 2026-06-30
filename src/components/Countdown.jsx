@@ -19,7 +19,7 @@ function Countdown({ targetDate }) {
   }, [targetDate]);
 
   const Box = ({ value, label }) => (
-    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "4px" }}>
+    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "4px" }} >
       <div style={{
         border: "2.5px solid rgba(255,255,255,1)",
         borderRadius: "6px",
@@ -72,7 +72,7 @@ function Countdown({ targetDate }) {
         gap: "4px",
         marginTop: "0.6rem",
         marginBottom: "0.4rem",
-      }}>
+      }} data-aos="fade-up" data-aos-delay="400">
         <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
           <div style={{ width: "40px", height: "1px", background: "rgba(255,255,255,0.6)" }} />
           <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "0.7rem", color: "rgba(255,255,255,0.8)", lineHeight: 1 }}>✦</span>

@@ -4,3 +4,13 @@ html, body {
   overflow-x: hidden;
   background-color: #fffdf8;
 }
+
+.reveal-hidden { opacity: 0; }
+@keyframes reveal-fade-up { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: none; } }
+@keyframes reveal-fade-left { from { opacity: 0; transform: translateX(-40px); } to { opacity: 1; transform: none; } }
+@keyframes reveal-fade-right { from { opacity: 0; transform: translateX(40px); } to { opacity: 1; transform: none; } }
+@keyframes reveal-zoom-in { from { opacity: 0; transform: scale(0.85); } to { opacity: 1; transform: none; } }
+.reveal-fade-up { animation: reveal-fade-up 0.7s ease-out both; }
+.reveal-fade-left { animation: reveal-fade-left 0.7s ease-out both; }
+.reveal-fade-right { animation: reveal-fade-right 0.7s ease-out both; }
+.reveal-zoom-in { animation: reveal-zoom-in 0.7s ease-out both; }
