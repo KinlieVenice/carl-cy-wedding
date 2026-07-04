@@ -55,10 +55,13 @@ app.post("/api/rsvp", rsvpLimiter, async (req, res) => {
   }
 });
 
-// manually trigger to send RSVP list to both emails
-// GET version: open in browser/phone — https://carlcywedding.site/api/send-digest?key=kin_cy_carl_0401
+// Vercel cron hits GET /api/send-digest daily at 8pm PHT (12:00 UTC)
+// Manual phone trigger: https://carlcywedding.site/api/send-digest?key=kin_cy_carl_0401
 app.get("/api/send-digest", async (req, res) => {
-  if (req.query.key !== process.env.CRON_SECRET) {
+  const cronHeader = req.headers["authorization"];
+  const validCron = cronHeader === `Bearer ${process.env.CRON_SECRET}`;
+  const validManual = req.query.key === process.env.CRON_SECRET;
+  if (!validCron && !validManual) {
     return res.status(401).send("Unauthorized");
   }
   return handleDigest(req, res);

@@ -24,7 +24,6 @@ const frames = [
   "/prenup/DSCF3653.webp",
   "/prenup/DSCF3711.webp",
   "/prenup/DSCF3727.webp",
-  "/prenup/DSCF3733-2.webp",
   "/prenup/DSCF3733.webp",
   "/prenup/DSCF3745.webp",
   "/prenup/DSCF3746.webp",
