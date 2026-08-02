@@ -1,4 +1,4 @@
-﻿import { useState, useEffect } from "react";
+﻿import { useState, useEffect, useRef } from "react";
 import ImageContainer from "../../components/ImageContainer";
 import Countdown from "../../components/Countdown";
 import WeddingHeader from "../../components/WeddingHeader";
@@ -28,6 +28,7 @@ function Home () {
   const [color2, setColor2] = useState("#f3e0c7");
   const [color3, setColor3] = useState("#808000");
   const [color4, setColor4] = useState("#cdc1ba");
+  const mapDialog = useRef(null);
 
   return (
     <>
@@ -335,6 +336,63 @@ function Home () {
               </Reveal>
             </div>
           </div>
+
+          {/* Ceremony → Reception map */}
+          <div className="w-full px-5 pb-20 md:px-10 lg:max-w-4xl lg:px-0">
+            <div className="relative">
+              <img
+                src="/images/gmaps.webp"
+                alt=""
+                loading="lazy"
+                onClick={() => mapDialog.current?.showModal()}
+                className="block w-full max-h-72 object-cover cursor-pointer md:max-h-80 lg:max-h-96"
+              />
+              <dialog
+                ref={mapDialog}
+                onClick={(e) => e.currentTarget.close()}
+                className="m-auto max-w-none max-h-none border-0 bg-transparent p-0 backdrop:bg-black/90"
+              >
+                <img
+                  src="/images/gmaps.webp"
+                  alt=""
+                  onClick={(e) => e.stopPropagation()}
+                  className="max-w-[92vw] max-h-[88vh]"
+                />
+              </dialog>
+              <div className="absolute bottom-4 right-4 w-1/2">
+                <a
+                  href="https://www.google.com/maps/dir/14.0574537,120.8360742/14.1059587,120.9548174"
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="Open directions from Don Bosco Chapel on the Hill to Gorio's Restaurant in Google Maps"
+                  className="block shadow-lg"
+                >
+                  <iframe
+                    title="Directions from Don Bosco Chapel on the Hill to Gorio's Restaurant"
+                    src="https://maps.google.com/maps?saddr=14.0574537,120.8360742&daddr=14.1059587,120.9548174&output=embed"
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                    tabIndex={-1}
+                    className="block w-full h-20 border-0 pointer-events-none md:h-28 lg:h-36"
+                  />
+                </a>
+              </div>
+            </div>
+            <p
+              className="mt-3 block w-fit ml-auto px-3 py-1.5 text-right bg-[#fffdf8]/90 shadow"
+              style={{
+                fontFamily: "'Cormorant Garamond', serif",
+                fontStyle: "italic",
+                fontSize: "0.9rem",
+                color: "#722F37",
+              }}
+            >
+              Windsong Tagaytay is right beside Gorio&rsquo;s Restaurant.
+              <br />
+              Click the map to view directions.
+            </p>
+          </div>
+
           <ImageContainer
             className="absolute -bottom-34 object-cover"
             height={200}
