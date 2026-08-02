@@ -283,6 +283,15 @@ export default function WeddingHeader({ coupleName = "Carl & Cy", weddingDate = 
           transition: background 0.25s;
         }
         .wh-mob-rsvp:hover { background: #5a2029; }
+
+        /* ── LG+ : bump the small type, it reads tiny on wide screens ── */
+        @media (min-width: 1024px) {
+          .wh-nav-link    { font-size: 0.78rem; padding: 5px 18px; }
+          .wh-date        { font-size: 0.62rem; }
+          .wh-rsvp-top    { font-size: 0.72rem; padding: 10px 24px; }
+          .wh-sep-ornament { font-size: 0.9rem; }
+          .wh-nav-link.active::after { left: 18px; right: 18px; }
+        }
       `}</style>
 
       <header
@@ -460,7 +469,7 @@ export default function WeddingHeader({ coupleName = "Carl & Cy", weddingDate = 
         )}
       </header>
 
-      <div style={{ height: "88px" }} />
+      <div className="h-[88px] lg:h-[104px]" />
     </>
   );
 }
