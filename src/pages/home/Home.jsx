@@ -390,6 +390,20 @@ function Home () {
               Windsong Tagaytay is right beside Gorio&rsquo;s Restaurant.
               <br />
               Click the map to view directions.
+              <br />
+            </p>
+            <p
+              className="mt-3 block w-fit ml-auto px-3 py-1.5 text-right bg-[#fffdf8]/90 shadow"
+              style={{
+                fontFamily: "'Cormorant Garamond', serif",
+                fontStyle: "italic",
+                fontSize: "0.9rem",
+                color: "#722F37",
+              }}
+            >
+              NOTE: If using Waze, please pin Gorio’s Restaurant. 
+              <br />
+              Following the Windsong pin may lead to incorrect directions.
             </p>
           </div>
 
@@ -548,7 +562,7 @@ function Home () {
                 rotation={5}
                 selectedColor={color2}
                 onColorSelect={setColor2}
-                colors={["#f3e0c7", "#d8c1a5", "#b8a28e"]}
+                colors={["#f3e0c7", "#d8c1a5"]}
                 scrapPosition="outside-bottom"
                 scrapWidth={400}
                 scrapHeight={300}
