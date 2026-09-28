@@ -190,6 +190,22 @@ function Dashboard() {
   const yesCount = rows.filter(r => r.attending === "yes").length;
   const noCount = rows.filter(r => r.attending === "no").length;
 
+  const exportCSV = () => {
+    const esc = v => `"${String(v ?? "").replace(/"/g, '""')}"`;
+    const header = ["#", "Name", "Phone", "Email", "Attending", "Message", "Date"];
+    const lines = [header, ...visible.map(r => [
+      r.id, r.name, r.phone, r.email || "", r.attending === "yes" ? "Yes" : "No",
+      r.message || "", new Date(r.createdAt).toLocaleDateString("en-PH", { month: "short", day: "numeric", year: "numeric" }),
+    ])].map(row => row.map(esc).join(","));
+    const blob = new Blob([lines.join("\n")], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `rsvp-export-${new Date().toISOString().slice(0, 10)}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
   const cellStyle = { padding: "10px 12px", fontFamily: FB, fontSize: "0.82rem", color: BD, borderBottom: "1px solid rgba(114,47,55,0.1)", verticalAlign: "middle" };
   const headStyle = { padding: "10px 12px", fontFamily: FB, fontSize: "0.6rem", letterSpacing: "0.15em", textTransform: "uppercase", color: OLIVE, borderBottom: `2px solid rgba(114,47,55,0.15)`, textAlign: "left", whiteSpace: "nowrap" };
 
@@ -233,6 +249,10 @@ function Dashboard() {
               {f === "all" ? "All" : f === "yes" ? "Attending" : "Declining"}
             </button>
           ))}
+          <button onClick={exportCSV}
+            style={{ padding: "0.45rem 1rem", fontFamily: FB, fontSize: "0.65rem", letterSpacing: "0.12em", textTransform: "uppercase", border: `1px solid ${OLIVE}`, borderRadius: "4px", background: OLIVE, color: CREAM, cursor: "pointer" }}>
+            Export CSV
+          </button>
         </div>
 
         {/* Table */}
