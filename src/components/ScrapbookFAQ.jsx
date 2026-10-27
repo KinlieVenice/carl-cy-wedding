@@ -177,11 +177,11 @@ export default function ScrapbookFAQ() {
               Monetary Gift
             </p>
             <p style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 300, fontSize: "0.92rem", color: "#8a7070", textAlign: "center", marginBottom: "1.6rem", lineHeight: 1.6 }}>
-              Your generosity means the world to us. You may send your gift through any of the accounts below.
+              Your generosity means the world to us. You may send your gift through the account below.
             </p>
 
             <div style={{ display: "flex", gap: "1.2rem", justifyContent: "center", flexWrap: "wrap" }}>
-              {[{ src: "/images/maribank.webp", label: "MariBank" }, { src: "/images/bpi.webp", label: "BPI" }].map(({ src, label }) => (
+              {[{ src: "/images/bpi.webp", label: "BPI" }].map(({ src, label }) => (
                 <div key={label} style={{ textAlign: "center" }}>
                   <p style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 400, fontSize: "0.85rem", color: "#722F37", letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: "0.6rem" }}>
                     {label}
